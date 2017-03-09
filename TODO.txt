@@ -1,0 +1,27 @@
+TODO
+
+Hecho		Calificación	Tarea
+[/]		0.75				Crearla en HTML5 que pase la validación.
+[X]		1					Contenido común
+									- Header con logotipo, nombre/título del sitio web y un pequeño texto explicativo del objetivo del sitio
+									- Navegación con index, buscar, login, registro, logout y nueva entrada.
+									- Footer con información de contacto, copyright, año de creación, etc. Enlace a "acerca.html" con info de la práctica.
+
+[ ]		0.5				Destacar campos de formulario con eventos :hover y :focus
+[X]		0.5				Usar pseudo-elementos y pseudo-clases para reducir el uso de id y class.
+[X]		0.25				Usar Web Fonts
+[X]		0.25				Usar Icon Fonts
+[/]		1					Diseño responsive Mobile First
+[X]		0.5				Usar el burguer menu por debajo de 480px
+[/]		1					Página index.html
+[ ]		0.5				Página login.html
+[ ]		0.5				Página registro.html
+[ ]		1					Página buscar.html
+[ ]		1					Página entrada.html
+[ ]		0.75				Página nueva-entrada.html
+[ ]		0.5				Página acerca.html
+
+
+
+[ ] Añadir selector de fuente (requiere javascript)
+[ ] Cambiar media-query por 640px?
