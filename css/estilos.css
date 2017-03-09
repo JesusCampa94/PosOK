@@ -51,6 +51,16 @@ a
 	color: inherit;
 }
 
+hr
+{
+  margin: 10px auto;
+  border: none;
+  width: 84%;
+  height: 1px;
+  background: #FF5722;
+  display:block;
+}
+
 /*Estructura general*/
 header
 {

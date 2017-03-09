@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700"><!-- Ubuntu Web Font -->	
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"><!-- Material Icons -->
+		<link rel="stylesheet" type="text/css" href="css/estilos.css">
+		<title>PosOK</title>
+	</head>
+	<body>
+		<input type="checkbox" id="burger-ckb">
+		<header>
+			<div>
+				<label for="burger-ckb"><i class="material-icons menu">&#xE5D2;</i><i class="material-icons flecha">&#xE5CE;</i></label>
+				<div id="logo-container">
+					<img src="img/com/logo.png" height="500" width="500" alt="Logo PosOK">
+					<div>
+						<h1>PosOK</h1>
+						<p>Comenta y dale a OK.</p>
+					</div>
+				</div>
+			</div>
+			<div id="login-container">
+				<p>Hola, <span class="usu">Yisus</span></p>
+				<div>
+					<a href="registro.html" title="Registrarse"><i class="material-icons">&#xE7FE;</i><span class="solo-en-movil">Registrarse</span></a>
+					<a href="login.html" title="Iniciar Sesión"><i class="material-icons">&#xE879;</i><span class="solo-en-movil">Iniciar Sesión</span></a>
+					<a href="index.html" title="Cerrar Sesión"><i class="material-icons">&#xE8AC;</i><span class="solo-en-movil">Cerrar Sesión</span></a>
+				</div>
+			</div>
+			<nav>
+				<ul>
+					<li><a href="index.html" class="actual"><i class="material-icons">&#xE88A;</i>Inicio</a></li>
+					<li><a href="buscar.html"><i class="material-icons">&#xE8B6;</i>Buscar</a></li>
+					<li><a href="nueva-entrada.html"><i class="material-icons">&#xE89C;</i>Nueva entrada</a></li>
+				</ul>
+			</nav>
+		</header>
+		<main>
+			<section class="big-card">
+				<section>
+					<h1>Registro de usuario</h1>
+					<p>Rellene los campos para registrarse en la página.</p>
+					<p><strong>Todos los campos son obligatorios.</strong></p>
+				</section>
+				<hr />
+				<section>
+					<form action="index.html" method="POST">
+						<p><label for="nick">Nombre de Usuario</label></p>
+						<p><input type="text" name="nick" id="nick" placeholder="Escribe un nick de maximo 20 carácteres" maxlength="20" pattern="[A-Za-z]+[A-Za-z0-9]*" required autofocus/></p>
+						<p><label for="nombre">Nombre</label></p>
+						<p><input type="text" name="nombre" id="nombre" placeholder="Escribe tu nombre completo" required/></p>
+						<p><label for="pass">Contraseña</label></p>
+						<p><input type="password" name="pass" id="pass" placeholder="Introduce una contraseña" maxlength="20" pattern="[A-Za-z0-9_\-]+" required/></p>
+						<p><label for="repetirPass">Repetir contraseña</label></p>
+						<p><input type="password" name="repetirPass" id="repetirPass" placeholder="Repite la contraseña" maxlength="20" pattern="[A-Za-z0-9_\-]+" required/></p>
+						<p><label for="email">Dirección de email</label></p>
+						<p><input type="email" name="email" id="email" placeholder="Introduce tu email" required/></p>
+						<input type="submit" value="Registarse" />
+					</form>
+				</section>
+			</section>
+		</main>
+		<footer>
+			<p>PosOK &copy; 2017 Jesús Fernández Vidal y Manuel Quirante Artiaga</p>
+			<p><a href="acerca.html">Información</a></p>
+		</footer>
+	</body>
+</html>
