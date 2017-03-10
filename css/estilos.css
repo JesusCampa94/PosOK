@@ -2,11 +2,7 @@
 *
 {
 	box-sizing: border-box;
-}
-
-*:focus
-{
-	outline: #FF5722 solid 1px;
+	outline-color: #FF5722;
 }
 
 ::selection
@@ -309,7 +305,6 @@ main
 			}
 
 		/*Comentarios*/
-
 		main .medium-card>div>a
 		{
 			color: inherit;
@@ -323,7 +318,7 @@ main
 
 				main .comentario>h3
 				{
-					/*white-space: nowrap;*/
+					white-space: nowrap;
 					overflow: hidden;
 					text-overflow: ellipsis;
 				}
@@ -332,7 +327,26 @@ main
 			{
 				text-align: right;
 			}
+		
+		/*Texto-entrada*/
+		main .texto-entrada
+		{
+			transition: none;
+		}
+			main .texto-entrada:hover
+			{
+				box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+			}
 
+			main .texto-entrada p
+			{
+				text-align: left;
+			}
+
+				main .texto-entrada p + p
+				{
+					margin-top: 10px;
+				}
 
 		main section>footer
 		{
@@ -515,6 +529,12 @@ body>footer
 				main section .comentario
 				{
 					margin: 10px 0;
+					width: 100%;
+				}
+
+				main section .texto-entrada
+				{
+					margin: 0;
 					width: 100%;
 				}
 	}

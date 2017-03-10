@@ -22,10 +22,11 @@ form
 		form input[type="email"],
 		form input[type="date"]
 		{
+			display: inline-block;
 			outline: none;
 			border: none;
 			border-bottom: 2px solid #FF5722;
-			/*width: 150%;*/
+			width: 100%;
 			background: transparent;
 			transition: border .5s ease-in-out;
 		}

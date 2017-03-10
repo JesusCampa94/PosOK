@@ -1,5 +1,4 @@
-TODO
-
+CALIFICACIÓN
 Hecho		Calificación	Tarea
 [/]		0.75				Crearla en HTML5 que pase la validación.
 [X]		1					Contenido común
@@ -16,17 +15,19 @@ Hecho		Calificación	Tarea
 [X]		1					Página index.html
 [X]		0.5				Página login.html
 [X]		0.5				Página registro.html
-[/]		1					Página buscar.html
-[ ]		1					Página entrada.html
+[X]		1					Página buscar.html
+[/]		1					Página entrada.html
 [ ]		0.75				Página nueva-entrada.html
 [ ]		0.5				Página acerca.html
 
 
 
-[ ] Añadir selector de fuente (requiere javascript)
+TAREAS
+[ ] Añadir selector de fuente (requiere javascript) (opcional)
 [ ] Cambiar media-query por 640px?
-[ ] Problema con ellipsis
+[X] Problema con ellipsis
 [ ] Sustituir bordes inferiores naranjas en el nav por un background
+[ ] Quitar efecto de imagen transparente fuera del index
 
 
 PARA ACERCA.HTML

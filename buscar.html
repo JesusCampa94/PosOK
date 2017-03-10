@@ -6,6 +6,7 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700"><!-- Ubuntu Web Font -->	
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"><!-- Material Icons -->
 		<link rel="stylesheet" type="text/css" href="css/estilos.css">
+		<link rel="stylesheet" type="text/css" href="css/forms.css">
 		<title>PosOK</title>
 	</head>
 	<body>
@@ -43,20 +44,22 @@
 					<p>Busque en la web con los siguientes criterios.</p>
 				<hr />
 				<form action="buscar-respuesta.html" method="POST">
-					<p><label for="titulo">Por título</label></p>
-					<p><input type="text" name="titulo" id="titulo" placeholder="Introduce titulo aproximado" /></p>
-					<p><label for="texto">Por texto</label></p>
-					<p><input type="text" name="texto" id="texto" placeholder="Introduce alguna palabra que aparezca" /></p>
-					<p><label for="autor">Por autor</label></p>
-					<p><input type="text" name="autor" id="autor" placeholder="Introduce el autor" /></p>
-					<p><label for="fechaInicio" class="resaltado">Por fecha</label></p>
-					<p><label for="fechaInicio">Introduce una fecha de inicio y otra de fin para la búsqueda</label></p>
-					<p>
-						<input type="date" name="fechaInicio" id="fechaInicio" />
-						<label for="fechaFin">y: </label>
-						<input type="date" name="fechaFin" id="fechaFin" />
-					</p>
-					<input type="submit" value="Buscar" />
+					<div>
+						<p><label for="titulo">Por título</label></p>
+						<p><input type="text" name="titulo" id="titulo" placeholder="Introduce titulo aproximado" /></p>
+						<p><label for="texto">Por texto</label></p>
+						<p><input type="text" name="texto" id="texto" placeholder="Introduce alguna palabra que aparezca" /></p>
+						<p><label for="autor">Por autor</label></p>
+						<p><input type="text" name="autor" id="autor" placeholder="Introduce el autor" /></p>
+						<p><label for="fechaInicio" class="resaltado">Por fecha</label></p>
+						<p><label for="fechaInicio">Introduce una fecha de inicio y otra de fin para la búsqueda</label></p>
+						<p>
+							<input type="date" name="fechaInicio" id="fechaInicio" />
+							<label for="fechaFin">y: </label>
+							<input type="date" name="fechaFin" id="fechaFin" />
+						</p>
+						<input type="submit" value="Buscar" />
+					</div>
 				</form>
 			</section>
 		</main>
