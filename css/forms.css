@@ -1,0 +1,78 @@
+/*Estilos para formularios*/
+form
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+	form label
+	{
+		margin-bottom: 6px;
+		display: block;
+	}
+		form input
+		{
+			margin-bottom: 20px;
+			font-family: inherit;
+			font-size: 1rem;
+		}
+
+		form input[type="text"],
+		form input[type="password"],
+		form input[type="email"],
+		form input[type="date"]
+		{
+			outline: none;
+			border: none;
+			border-bottom: 2px solid #FF5722;
+			/*width: 150%;*/
+			background: transparent;
+			transition: border .5s ease-in-out;
+		}
+			form input[type="text"]:hover,
+			form input[type="password"]:hover,
+			form input[type="email"]:hover,
+			form input[type="date"]:hover,
+			form input[type="text"]:focus,
+			form input[type="password"]:focus,
+			form input[type="email"]:focus,
+			form input[type="date"]:focus
+			{
+				border-bottom: 2px solid #FF9E80;
+			}
+
+		form input[type="submit"],
+		select
+		{
+			outline: none;
+			border: none;
+			border-radius: 3px;
+			padding: 10px;
+			background-color: #FF5722;
+			color: #ECEFF1;
+			transition: all .5s ease-in-out;
+		}
+			form input[type="submit"]:hover,
+			select:hover,
+			form input[type="submit"]:active,
+			select:active,
+			form input[type="submit"]:focus,
+			select:focus
+			{
+				background-color: #FF9E80;
+				color: inherit;
+			}
+
+
+
+
+
+
+
+
+
+/*Pantallas grandes*/
+@media all and (min-width: 480px)
+{
+
+}

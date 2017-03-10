@@ -4,9 +4,14 @@
 	box-sizing: border-box;
 }
 
+*:focus
+{
+	outline: #FF5722 solid 1px;
+}
+
 ::selection
 {
-	background-color: #80CBC4;
+	background-color: #FF9E80;
 }
 
 body
@@ -207,6 +212,7 @@ main
 
 	main section
 	{
+		width: 100%;
 		padding: 6px;
 		background-color: #ECEFF1;
 		box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
@@ -476,6 +482,7 @@ body>footer
 
 		main section
 		{
+			padding: 10px;
 			display: flex;
 			flex-direction: column;
 		}

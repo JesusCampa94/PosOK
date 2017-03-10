@@ -6,6 +6,7 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700"><!-- Ubuntu Web Font -->	
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"><!-- Material Icons -->
 		<link rel="stylesheet" type="text/css" href="css/estilos.css">
+		<link rel="stylesheet" type="text/css" href="css/forms.css">
 		<title>PosOK</title>
 	</head>
 	<body>
@@ -31,28 +32,26 @@
 			</div>
 			<nav>
 				<ul>
-					<li><a href="index.html" class="actual"><i class="material-icons">&#xE88A;</i>Inicio</a></li>
+					<li><a href="index.html"><i class="material-icons">&#xE88A;</i>Inicio</a></li>
 					<li><a href="buscar.html"><i class="material-icons">&#xE8B6;</i>Buscar</a></li>
 					<li><a href="nueva-entrada.html"><i class="material-icons">&#xE89C;</i>Nueva entrada</a></li>
 				</ul>
 			</nav>
 		</header>
 		<main>
-			<section class="big-card">
-				<section>
-					<h1>Iniciar sesión</h1>
-					<p>Rellene los campos para iniciar sesión.</p>
-				</section>
+			<section class="medium-card">
+				<h2>Iniciar sesión</h2>
+				<p>Rellene los campos para iniciar sesión.</p>
 				<hr />
-				<section>
-					<form action="index.html" method="POST">
+				<form action="index.html" method="POST">
+					<div>
 						<p><label for="nick">Nombre de Usuario</label></p>
 						<p><input type="text" name="nick" id="nick" placeholder="Introduce tu nick" pattern="[A-Za-z]+[A-Za-z0-9]*" required autofocus/></p>
 						<p><label for="pass">Contraseña</label></p>
 						<p><input type="password" name="pass" id="pass" placeholder="Introduce tu contraseña" pattern="[A-Za-z0-9_\-]+" required/></p>
-						<input type="submit" value="iniciar" />
-					</form>
-				</section>
+						<input type="submit" value="Iniciar sesión" />
+					</div>
+				</form>
 			</section>
 		</main>
 		<footer>

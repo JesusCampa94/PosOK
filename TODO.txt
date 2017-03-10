@@ -14,9 +14,9 @@ Hecho		Calificación	Tarea
 [/]		1					Diseño responsive Mobile First
 [X]		0.5				Usar el burguer menu por debajo de 480px
 [X]		1					Página index.html
-[ ]		0.5				Página login.html
-[ ]		0.5				Página registro.html
-[ ]		1					Página buscar.html
+[/]		0.5				Página login.html
+[/]		0.5				Página registro.html
+[/]		1					Página buscar.html
 [ ]		1					Página entrada.html
 [ ]		0.75				Página nueva-entrada.html
 [ ]		0.5				Página acerca.html
@@ -26,3 +26,10 @@ Hecho		Calificación	Tarea
 [ ] Añadir selector de fuente (requiere javascript)
 [ ] Cambiar media-query por 640px?
 [ ] Problema con ellipsis
+[ ] Sustituir bordes inferiores naranjas en el nav por un background
+
+
+PARA ACERCA.HTML
+- Los campos tipo date no son compatibles en todos los navegadores. No obstante, queremos que los que sí que lo admitan puedan aprovecharlos.
+
+- Los enlaces a cierta sección entran en conflicto porque el header tapa lo que queremos ver.
