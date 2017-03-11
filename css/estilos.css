@@ -453,19 +453,17 @@ body>footer
 
 					header>nav>ul>li>a
 					{
-						box-sizing: content-box;
 						border: none;
+						border-bottom: 6px solid transparent;
+						height: 84px;
 						padding: 0 10px;
-						line-height: 78px;
 						color: inherit;
-						transition: none;
+						transition: border .5s ease-in-out;
 					}
 						header>nav>ul>li>a:hover,
 						header>nav>ul>li>a.actual
 						{
 							border-bottom: 6px solid #FF5722;
-							height: 78px;
-							line-height: 78px;
 							color: inherit;
 						}
 
