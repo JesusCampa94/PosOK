@@ -49,9 +49,26 @@ a
 	color: #FF5722;
 	transition: all .5s ease-in-out;
 }
-	a:hover, a:active
+	a:hover, a:active, a:focus
 	{
 		color: #FF9E80;
+	}
+
+.boton
+{
+	display: inline-block;
+	outline: none;
+	border: none;
+	border-radius: 3px;
+	padding: 10px;
+	background-color: #FF5722;
+	color: #ECEFF1;
+	transition: all .5s ease-in-out;
+}
+	.boton:hover, .boton:active, .boton:focus
+	{
+		background-color: #FF9E80;
+		color: inherit;
 	}
 
 .resaltado
@@ -261,13 +278,13 @@ main
 					opacity: 1;
 					transition: opacity .5s ease-in-out;
 				}
-					article>figure:hover>img,
-					article>figure:focus>img
+					article>figure.con-transparencia:hover>img,
+					article>figure.con-transparencia:focus>img
 					{
 						opacity: .1;
 					}
 
-				article>figure>figcaption
+				article>figure.con-transparencia>figcaption
 				{
 					position: absolute;
 					top: 0;
@@ -276,7 +293,7 @@ main
 					transition: opacity .5s ease-in-out;
 				}
 
-				article>figure>footer
+				article>figure.con-transparencia>footer
 				{
 					position: absolute;
 					bottom: 0;
