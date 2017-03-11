@@ -61,6 +61,22 @@
 					</article>
 				</article>
 			</section>
+			<section>
+				<h2>Documentación</h2>
+				<p>Aquí encontrarás un listado de los puntos realizados en la práctica y de los problemas encontrados al realizarla.</p>
+				<hr>
+				<article class="texto">
+					<h3>Puntos realizados</h3>
+					<p>Se han realizado todos los apartados especificados en el enunciado de la práctica.</p>
+					<h3>Problemas e incompatibilidades</h3>
+					<p>Hemos encontrado algunos problemas a la hora de realizar la práctica:</p>
+					<ul>
+						<li>Los campos tipo <code>date</code> no son compatibles con ciertos navegadores, como Firefox. En dichos casos, los campos aparecen como si se tratara de un <code>input</code> con <code>type="text"</code> para que el usuario escriba la fecha manualmente.</li>
+						<li>En Firefox existe un problema de dispocición en el <code>header</code> del sitio. El contenido de la cabecera aparece más abajo de lo normal, invadiendo incluso la zona delimitada por el padding inferior y no pudiendo visualizarse el borde inferior en la zona de navegación.</li>
+						<li>Los enlaces que apuntan a una zona espeficica de una página (mediante el uso de <code>id</code>) entran en conflicto con el <code>header</code>, que al tener <code>position: fixed;</code> flota encima del sitio y tapa los píxeles superiores de la sección a la que nos hemos dirigido.</li>
+					</ul>
+				</article>
+			</section>
 		</main>
 		<footer>
 			<p>PosOK &copy; 2017 Jesús Fernández Vidal y Manuel Quirante Artiaga</p>

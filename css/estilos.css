@@ -391,19 +391,30 @@ main
 
 			main .texto h3
 			{
-				margin: 20px 0 10px 0;
+				margin-bottom: 10px;
 				text-align: left;
 			}
+
+				main .texto p+h3
+				{
+					margin-top: 30px;
+				}
 
 			main .texto p
 			{
 				text-align: left;
 			}
 
-				main .texto p + p
+				main .texto p+p,
+				main .texto li+li
 				{
 					margin-top: 10px;
 				}
+
+			main .texto code
+			{
+				background-color: #FFCCBC;
+			}
 
 		main section>footer
 		{
