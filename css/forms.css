@@ -21,7 +21,7 @@ form
 		form input[type="password"],
 		form input[type="email"],
 		form input[type="date"],
-		form textarea
+		textarea
 		{
 			display: inline-block;
 			outline: none;
@@ -35,12 +35,12 @@ form
 			form input[type="password"]:hover,
 			form input[type="email"]:hover,
 			form input[type="date"]:hover,
-			form textarea:hover,
+			textarea:hover,
 			form input[type="text"]:focus,
 			form input[type="password"]:focus,
 			form input[type="email"]:focus,
-			form input[type="date"]:focus
-			form textarea:focus
+			form input[type="date"]:focus,
+			textarea:focus
 			{
 				border-bottom: 2px solid #FF9E80;
 			}
@@ -66,6 +66,11 @@ form
 				background-color: #FF9E80;
 				color: inherit;
 			}
+
+		form .boton
+		{
+			margin-bottom: 10px;
+		}
 
 
 

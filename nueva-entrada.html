@@ -6,6 +6,7 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700"><!-- Ubuntu Web Font -->	
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"><!-- Material Icons -->
 		<link rel="stylesheet" type="text/css" href="css/estilos.css">
+		<link rel="stylesheet" type="text/css" href="css/forms.css">
 		<title>PosOK</title>
 	</head>
 	<body>
@@ -38,7 +39,64 @@
 			</nav>
 		</header>
 		<main>
-				
+			<section class="medium-card">
+				<h2>Nueva entrada</h2>
+				<p>Rellene el formulario para publicar una nueva entrada.</p>
+				<p><strong>Todos los campos son obligatorios.</strong></p>				
+				<hr>
+				<form action="nueva-entrada.html" method="POST" id="form-nueva-entrada">
+					<div>
+						<p><label for="titulo-entrada">Nombre de Usuario</label></p>
+						<p><input type="text" name="titulo-entrada" id="titulo-entrada" placeholder="Escribe un título de máximo 200 carácteres" maxlength="200" required autofocus></p>
+						<p><label for"descripcion-entrada">Descripción</label></p>
+						<p><textarea rows="10" cols="50" name="descripcion-entrada" id="descripcion-entrada" placeholder="Escriba el contenido de su entrada..." required></textarea></p>
+						<input type="submit" value="OK">
+					</div>
+				</form>
+			</section>
+			<section>
+				<h2>Imágenes de la entrada</h2>
+				<p>Fotos a incluir en la entrada. Seleccione los ficheros y añada una descripcion.</p>		
+				<hr>
+				<div>
+					<article>
+						<figure>
+							<img src="img/entradas/02.jpg" height="768" width="1024" alt="">
+						</figure>
+						<div>
+							<textarea form="form-nueva-entrada" name="desc-img-1" id="desc-img-1" cols="30" rows="6" placeholder="Escriba una descripción..." required></textarea>
+						</div>
+						<a href="#" class="boton"><i class="material-icons">&#xE2C6;</i>Seleccionar fichero</a>
+						<a href="#" class="boton peligro"><i class="material-icons">&#xE872;</i>Eliminar fichero</a>
+					</article>
+					<article>
+						<figure>
+							<img src="img/entradas/06.jpg" height="1024" width="1280" alt="">
+						</figure>
+						<div>
+							<textarea form="form-nueva-entrada" name="desc-img-2" id="desc-img-2" cols="30" rows="6" placeholder="Escriba una descripción..." required></textarea>
+						</div>
+						<a href="#" class="boton"><i class="material-icons">&#xE2C6;</i>Seleccionar fichero</a>
+						<a href="#" class="boton peligro"><i class="material-icons">&#xE872;</i>Eliminar fichero</a>
+					</article>
+					<article>
+						<figure>
+							<img src="img/entradas/03.jpg" height="1080" width="1920" alt="">
+						</figure>
+						<div>
+							<textarea form="form-nueva-entrada" name="desc-img-3" id="desc-img-3" cols="30" rows="6" placeholder="Escriba una descripción..." required></textarea>
+						</div>
+						<a href="#" class="boton"><i class="material-icons">&#xE2C6;</i>Seleccionar fichero</a>
+						<a href="#" class="boton peligro"><i class="material-icons">&#xE872;</i>Eliminar fichero</a>
+					</article>
+					<article>
+						<a href="#" class="nueva-imagen">
+							<p><i class="material-icons">&#xE148;</i></p>
+							<p>Añadir imagen</p>
+						</a>
+					</article>
+				</div>
+			</section>
 		</main>
 		<footer>
 			<p>PosOK &copy; 2017 Jesús Fernández Vidal y Manuel Quirante Artiaga</p>

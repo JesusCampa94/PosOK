@@ -56,7 +56,6 @@ a
 
 .boton
 {
-	display: inline-block;
 	outline: none;
 	border: none;
 	border-radius: 3px;
@@ -64,11 +63,45 @@ a
 	background-color: #FF5722;
 	color: #ECEFF1;
 	transition: all .5s ease-in-out;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 }
 	.boton:hover, .boton:active, .boton:focus
 	{
 		background-color: #FF9E80;
 		color: inherit;
+	}
+
+	.boton + .boton
+	{
+		margin-top: 10px;
+	}
+
+	.comentario .boton
+	{
+		max-width: 150px;
+	}
+
+	.peligro
+	{
+		background-color: #D50000;
+	}
+		.peligro:hover, .peligro:active, .peligro:focus
+		{
+			background-color: #FF5252;
+		}
+
+.nueva-imagen
+{
+	display: block;
+}
+
+	.nueva-imagen>p
+	{
+		font-size: 2.5em;
 	}
 
 .resaltado
@@ -319,6 +352,7 @@ main
 			article>div
 			{
 				margin: 10px 0;
+				flex-grow: 1;
 			}
 
 		/*Comentarios*/
