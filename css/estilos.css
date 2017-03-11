@@ -292,7 +292,7 @@ main
 				text-align: center;
 			}
 
-			article>figure
+			article>div
 			{
 				position: relative;
 				overflow: hidden;
@@ -304,20 +304,20 @@ main
 				align-items: center;
 			}
 
-				article>figure>img
+				article>div>figure>img
 				{
 					width: 300px;
 					height: auto;
 					opacity: 1;
 					transition: opacity .5s ease-in-out;
 				}
-					article>figure.con-transparencia:hover>img,
-					article>figure.con-transparencia:focus>img
+					article>div>figure.con-transparencia:hover>img,
+					article>div>figure.con-transparencia:focus>img
 					{
 						opacity: .1;
 					}
 
-				article>figure.con-transparencia>figcaption
+				article>div>figure.con-transparencia>figcaption
 				{
 					position: absolute;
 					top: 0;
@@ -326,7 +326,7 @@ main
 					transition: opacity .5s ease-in-out;
 				}
 
-				article>figure.con-transparencia>footer
+				article>div>footer
 				{
 					position: absolute;
 					bottom: 0;
@@ -336,20 +336,20 @@ main
 					background-color: #FAFAFA;
 					transition: opacity .5s ease-in-out;
 				}
-					article>figure:hover>figcaption,
-					article>figure:focus>figcaption,
-					article>figure:hover>footer,
-					article>figure:focus>footer
+					article>div:hover>figure>figcaption,
+					article>div:focus>figure>figcaption,
+					article>div:hover>footer,
+					article>div:focus>footer
 					{
 						opacity: 1;
 					}
 
-					article>figure>footer>a
+					article>div>figure>div>a
 					{
 						display: block;
 					}
 					
-			article>div
+			article>div:not(.no-grow)
 			{
 				margin: 10px 0;
 				flex-grow: 1;
@@ -379,22 +379,28 @@ main
 				text-align: right;
 			}
 		
-		/*Texto-entrada*/
-		main .texto-entrada
+		/*Article sin efectos especiales*/
+		main .texto
 		{
 			transition: none;
 		}
-			main .texto-entrada:hover
+			main .texto:hover
 			{
 				box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 			}
 
-			main .texto-entrada p
+			main .texto h3
+			{
+				margin: 20px 0 10px 0;
+				text-align: left;
+			}
+
+			main .texto p
 			{
 				text-align: left;
 			}
 
-				main .texto-entrada p + p
+				main .texto p + p
 				{
 					margin-top: 10px;
 				}
@@ -581,7 +587,7 @@ body>footer
 					width: 100%;
 				}
 
-				main section .texto-entrada
+				main section .texto
 				{
 					margin: 0;
 					width: 100%;

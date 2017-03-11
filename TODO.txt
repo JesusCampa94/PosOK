@@ -1,6 +1,6 @@
 CALIFICACIÓN
 Hecho		Calificación	Tarea
-[/]		0.75				Crearla en HTML5 que pase la validación.
+[X]		0.75				Crearla en HTML5 que pase la validación.
 [X]		1					Contenido común
 									- Header con logotipo, nombre/título del sitio web y un pequeño texto explicativo del objetivo del sitio
 									- Navegación con index, buscar, login, registro, logout y nueva entrada.
@@ -10,7 +10,7 @@ Hecho		Calificación	Tarea
 [X]		0.5				Usar pseudo-elementos y pseudo-clases para reducir el uso de id y class.
 [X]		0.25				Usar Web Fonts
 [X]		0.25				Usar Icon Fonts
-[/]		1					Diseño responsive Mobile First
+[X]		1					Diseño responsive Mobile First
 [X]		0.5				Usar el burguer menu por debajo de 480px
 [X]		1					Página index.html
 [X]		0.5				Página login.html
@@ -18,7 +18,7 @@ Hecho		Calificación	Tarea
 [X]		1					Página buscar.html
 [X]		1					Página entrada.html
 [X]		0.75				Página nueva-entrada.html
-[ ]		0.5				Página acerca.html
+[X]		0.5				Página acerca.html
 
 
 
@@ -29,7 +29,7 @@ TAREAS
 [X] Quitar efecto de imagen transparente fuera del index
 
 
-PARA ACERCA.HTML
+PROBLEMAS
 - Los campos tipo date no son compatibles en todos los navegadores. No obstante, queremos que los que sí que lo admitan puedan aprovecharlos.
 
 - Los enlaces a cierta sección entran en conflicto porque el header tapa lo que queremos ver.
