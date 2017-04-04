@@ -8,7 +8,7 @@ form
 	form label
 	{
 		margin-bottom: 6px;
-		display: block;
+		display: inline-block;
 	}
 		form input, textarea, select
 		{
@@ -71,6 +71,87 @@ form
 		{
 			margin-bottom: 10px;
 		}
+
+		/*Checkboxes y radio buttons personalizados*/
+		form input[type="checkbox"],
+		form input[type="radio"]
+		{
+			display: none;
+		}
+
+			form input[type="checkbox"] + label,
+			form input[type="radio"] + label
+			{
+				display: inline-block;
+				position: relative;
+				border-radius: 3px;
+				padding: 5px 10px 5px 29px;
+				cursor: pointer;
+				transition: all .3s ease-in-out;
+			}
+				form input[type="checkbox"] + label:hover,
+				form input[type="radio"] + label:hover,
+				form input[type="checkbox"]:checked + label:hover,
+				form input[type="radio"]:checked + label:hover
+				{
+					background-color: #FF9E80;
+					color: #263238;
+				}
+
+				form input[type="checkbox"] + label:before,
+				form input[type="radio"] + label:before
+				{
+					content: "";
+					display: inline-block;
+					position: absolute;
+					left: 10px;
+					border: 2px solid #FF5722;
+					border-radius: 3px;
+					width: 10px;
+					height: 10px;
+					background: none;
+				}
+
+				form input[type="radio"] + label:before
+				{
+					border-radius: 50%;
+				}
+
+				form input[type="checkbox"]:checked + label,
+				form input[type="radio"]:checked + label
+				{
+					padding: 5px 10px;
+					background-color: #FF5722;
+					color: #ECEFF1;
+				}
+
+				form input[type="checkbox"]:checked + label:before,
+				form input[type="radio"]:checked + label:before
+				{
+					display: none;
+				}
+
+				/*Para que los enlaces dentro de un custom checkbox/radio button sean visibles*/
+				form input[type="checkbox"] + label:hover>a,
+				form input[type="radio"] + label:hover>a,
+				form input[type="checkbox"]:checked + label>a,
+				form input[type="radio"]:checked + label>a
+				{
+					color: #263238;
+					text-decoration: underline;
+				}
+
+				form input[type="checkbox"]:checked + label>a,
+				form input[type="radio"]:checked + label>a
+				{
+					color: #ECEFF1;
+				}
+
+				form input[type="radio"]:checked + label:hover>a,
+				form input[type="checkbox"]:checked + label:hover>a
+				{
+					color: #263238;
+				}
 
 
 

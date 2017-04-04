@@ -56,6 +56,13 @@
 						<p><input type="password" name="repetirPass" id="repetirPass" placeholder="Repite la contraseña" maxlength="20" pattern="[A-Za-z0-9_\-]+" required></p>
 						<p><label for="email">Dirección de email</label></p>
 						<p><input type="email" name="email" id="email" placeholder="Introduce tu email" required></p>
+						<p><label for="hombre">Sexo</label></p>
+						<p>
+							<input type="radio" name="sexo" value="hombre" id="hombre"><label for="hombre">Hombre</label>
+							<input type="radio" name="sexo" value="mujer" id="mujer"><label for="mujer">Mujer</label>
+							<input type="radio" name="sexo" value="otro" id="otro"><label for="otro">Otro</label>
+						</p>
+						<p><input type="checkbox" name="condiciones" id="condiciones"><label for="condiciones">He leído y acepto las <a href="#">condiciones de la licencia</a></label></p>
 						<input type="submit" value="Registarse">
 					</div>
 				</form>
