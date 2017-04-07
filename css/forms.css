@@ -26,10 +26,10 @@ form
 			display: inline-block;
 			outline: none;
 			border: none;
-			border-bottom: 2px solid #FF5722;
+			border-bottom: 2px solid #2196F3;
 			width: 100%;
 			background: transparent;
-			transition: border .5s ease-in-out;
+			transition: border .3s ease-in-out;
 		}
 			form input[type="text"]:hover,
 			form input[type="password"]:hover,
@@ -42,7 +42,7 @@ form
 			form input[type="date"]:focus,
 			textarea:focus
 			{
-				border-bottom: 2px solid #FF9E80;
+				border-bottom: 2px solid #FFB74D;
 			}
 
 		form input[type="submit"],
@@ -52,9 +52,9 @@ form
 			border: none;
 			border-radius: 3px;
 			padding: 10px;
-			background-color: #FF5722;
+			background-color: #2196F3;
 			color: #ECEFF1;
-			transition: all .5s ease-in-out;
+			transition: all .3s ease-in-out;
 		}
 			form input[type="submit"]:hover,
 			select:hover,
@@ -63,7 +63,7 @@ form
 			form input[type="submit"]:focus,
 			select:focus
 			{
-				background-color: #FF9E80;
+				background-color: #FFB74D;
 				color: inherit;
 			}
 
@@ -94,7 +94,7 @@ form
 				form input[type="checkbox"]:checked + label:hover,
 				form input[type="radio"]:checked + label:hover
 				{
-					background-color: #FF9E80;
+					background-color: #BBDEFB;
 					color: #263238;
 				}
 
@@ -105,7 +105,7 @@ form
 					display: inline-block;
 					position: absolute;
 					left: 10px;
-					border: 2px solid #FF5722;
+					border: 2px solid #2196F3;
 					border-radius: 3px;
 					width: 10px;
 					height: 10px;
@@ -121,8 +121,8 @@ form
 				form input[type="radio"]:checked + label
 				{
 					padding: 5px 10px;
-					background-color: #FF5722;
-					color: #ECEFF1;
+					background-color: #64B5F6;
+					color: #263238;
 				}
 
 				form input[type="checkbox"]:checked + label:before,
@@ -144,14 +144,9 @@ form
 				form input[type="checkbox"]:checked + label>a,
 				form input[type="radio"]:checked + label>a
 				{
-					color: #ECEFF1;
-				}
-
-				form input[type="radio"]:checked + label:hover>a,
-				form input[type="checkbox"]:checked + label:hover>a
-				{
 					color: #263238;
 				}
+
 
 
 

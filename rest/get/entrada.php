@@ -113,8 +113,10 @@ else
         $regsPorPagina = sanatize($PARAMS['lpag']);
         $ELEMENTO_INICIAL = $pagina * $regsPorPagina;
         
-        if(substr($mysql, -5) == 'where')
-            $mysql = substr($mysql,0,strlen($mysql) - 6);
+        if(substr($mysql, -5) == 'where'){
+            $mysql  = substr($mysql,0,strlen($mysql) - 6);
+            $mysql .= ' order by e.fecha desc';
+        }
 
         // =================================================================================
         // Para sacar el total de coincidencias que hay en la BD:

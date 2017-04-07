@@ -2,12 +2,12 @@
 *
 {
 	box-sizing: border-box;
-	outline-color: #FF5722;
+	outline-color: #2196F3;
 }
 
 ::selection
 {
-	background-color: #FF9E80;
+	background-color: #BBDEFB;
 }
 
 body
@@ -31,7 +31,7 @@ h1, h2, h3, h4, h5, h6, p
 
 h1, h2, h3, h4, h5, h6
 {
-	color: #FF5722;
+	color: #2196F3;
 }
 
 h2, h3
@@ -47,12 +47,12 @@ h2
 a
 {
 	text-decoration: none;
-	color: #FF5722;
-	transition: all .5s ease-in-out;
+	color: #2196F3;
+	transition: all .3s ease-in-out;
 }
 	a:hover, a:active, a:focus
 	{
-		color: #FF9E80;
+		color: #FFB74D;
 	}
 
 .boton
@@ -61,9 +61,9 @@ a
 	border: none;
 	border-radius: 3px;
 	padding: 10px;
-	background-color: #FF5722;
+	background-color: #2196F3;
 	color: #ECEFF1;
-	transition: all .5s ease-in-out;
+	transition: all .3s ease-in-out;
 
 	display: flex;
 	flex-direction: row;
@@ -72,7 +72,7 @@ a
 }
 	.boton:hover, .boton:active, .boton:focus
 	{
-		background-color: #FF9E80;
+		background-color: #FFB74D;
 		color: inherit;
 	}
 
@@ -107,7 +107,7 @@ a
 
 .resaltado
 {
-	color: #FF5722;
+	color: #2196F3;
 }
 
 .material-icons
@@ -123,7 +123,7 @@ hr
 	border: none;
 	width: 84%;
 	height: 1px;
-	background: #FF5722;
+	background: #2196F3;
 	display:block;
 }
 
@@ -141,7 +141,7 @@ header
 	color: #ECEFF1;
 	overflow: hidden;
 	z-index: 6;
-	transition: max-height .5s ease-in-out;
+	transition: max-height .3s ease-in-out;
 }
 
 	header a
@@ -212,7 +212,7 @@ header
 
 		.usu
 		{
-			color: #FF5722;
+			color: #2196F3;
 			font-weight: bold;
 		}
 
@@ -310,7 +310,7 @@ main
 					width: 300px;
 					height: auto;
 					opacity: 1;
-					transition: opacity .5s ease-in-out;
+					transition: opacity .3s ease-in-out;
 				}
 					article>div>figure.con-transparencia:hover>img,
 					article>div>figure.con-transparencia:focus>img
@@ -324,7 +324,7 @@ main
 					top: 0;
 					left: 0;
 					opacity: 0;
-					transition: opacity .5s ease-in-out;
+					transition: opacity .3s ease-in-out;
 				}
 
 				article>div>footer
@@ -335,7 +335,7 @@ main
 					opacity: 0;
 					width: 100%;
 					background-color: #FAFAFA;
-					transition: opacity .5s ease-in-out;
+					transition: opacity .3s ease-in-out;
 				}
 					article>div:hover>figure>figcaption,
 					article>div:focus>figure>figcaption,
@@ -510,12 +510,12 @@ body>footer
 						height: 84px;
 						padding: 0 10px;
 						color: inherit;
-						transition: border .5s ease-in-out;
+						transition: border .3s ease-in-out;
 					}
 						header>nav>ul>li>a:hover,
 						header>nav>ul>li>a.actual
 						{
-							border-bottom: 6px solid #FF5722;
+							border-bottom: 6px solid #2196F3;
 							color: inherit;
 						}
 
@@ -543,11 +543,11 @@ body>footer
 
 				#login-container a
 				{
-					color:#FF5722;
+					color:#2196F3;
 				}
 					#login-container a:hover
 					{
-						color: #FF9E80;
+						color: #FFB74D;
 					}
 					#login-container a:not(:last-of-type)
 					{
