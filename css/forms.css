@@ -29,7 +29,7 @@ form
 			border-bottom: 2px solid #2196F3;
 			width: 100%;
 			background: transparent;
-			transition: border .3s ease-in-out;
+			transition: border .3s linear;
 		}
 			form input[type="text"]:hover,
 			form input[type="password"]:hover,
@@ -54,7 +54,7 @@ form
 			padding: 10px;
 			background-color: #2196F3;
 			color: #ECEFF1;
-			transition: all .3s ease-in-out;
+			transition: all .3s linear;
 		}
 			form input[type="submit"]:hover,
 			select:hover,
@@ -87,7 +87,7 @@ form
 				border-radius: 3px;
 				padding: 5px 10px 5px 29px;
 				cursor: pointer;
-				transition: all .3s ease-in-out;
+				transition: all .3s linear;
 			}
 				form input[type="checkbox"] + label:hover,
 				form input[type="radio"] + label:hover,

@@ -13,6 +13,7 @@
 body
 {
 	margin: 0;
+	min-width: 300px;
 	min-height: 100vh;
 	font-family: "Ubuntu", Arial, Helvetica, sans-serif;
 	font-size: 10pt;
@@ -22,11 +23,16 @@ body
 	flex-direction: column;
 }
 
+img
+{
+	max-width: 100%;
+	max-height: 100%;
+}
+
 h1, h2, h3, h4, h5, h6, p
 {
 	margin: 0;
 	padding: 0;
-	word-break: break-all; /* Hace que se rompa la linea aunque no haya espacios en blanco */
 }
 
 h1, h2, h3, h4, h5, h6
@@ -48,7 +54,7 @@ a
 {
 	text-decoration: none;
 	color: #2196F3;
-	transition: all .3s ease-in-out;
+	transition: all .3s linear;
 }
 	a:hover, a:active, a:focus
 	{
@@ -63,7 +69,7 @@ a
 	padding: 10px;
 	background-color: #2196F3;
 	color: #ECEFF1;
-	transition: all .3s ease-in-out;
+	transition: all .3s linear;
 
 	display: flex;
 	flex-direction: row;
@@ -110,6 +116,11 @@ a
 	color: #2196F3;
 }
 
+.negrita
+{
+	font-weight: bold;
+}
+
 .material-icons
 {
 	margin-right: 3px;
@@ -141,7 +152,7 @@ header
 	color: #ECEFF1;
 	overflow: hidden;
 	z-index: 6;
-	transition: max-height .3s ease-in-out;
+	transition: max-height .3s linear;
 }
 
 	header a
@@ -172,15 +183,27 @@ header
 		label[for="burger-ckb"]
 		{
 			margin-right: 10px;
+			cursor: pointer;
+			transition: color .3s linear;
 		}
-			#burger-ckb:checked+header label[for="burger-ckb"] .menu
+
+			label[for="burger-ckb"]>i
 			{
-				display: none;
+				transition: all .15s linear;
+			}
+				label[for="burger-ckb"]>i:hover
+				{
+					color: #FFB74D;
+				}
+
+			#burger-ckb:checked+header label[for="burger-ckb"] i
+			{
+				transform: rotate(180deg);
 			}
 
-			#burger-ckb:not(:checked)+header label[for="burger-ckb"] .flecha
+			#burger-ckb:not(:checked)+header label[for="burger-ckb"] i
 			{
-				display: none;
+				
 			}
 
 	#logo-container
@@ -226,7 +249,12 @@ header
 			{
 				margin-top: 10px;
 				color: inherit;
+				transition: color .3s linear;
 			}
+				#login-container a:hover
+				{
+					color: #FFB74D;
+				}
 
 	header>nav>ul
 	{
@@ -256,7 +284,8 @@ main
 	align-items: center;
 	flex-grow: 1;
 }
-
+	
+	/* Zonas separadas */
 	main section
 	{
 		width: 100%;
@@ -275,91 +304,123 @@ main
 			text-align: center;
 		}
 
-		/*Entradas*/
-		main article
+		/* Tarjetas */
+		main article,
+		main .tarjeta
 		{
 			margin: 6px 0;
 			box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-			width: 100%;
 			padding: 10px;
 			background-color: #FAFAFA;
+			transition: all .3s cubic-bezier(.25,.8,.25,1);
 
 			display: flex;
 			flex-direction: column;
 		}
-
-			article h3, article p, article figcaption
+			main article:hover,
+			main article:focus,
+			main .tarjeta:hover,
+			main .tarjeta:focus
 			{
-				text-align: center;
+				box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 			}
 
-			article>div
-			{
-				position: relative;
-				overflow: hidden;
-				margin: 0;
+		/*Galerias*/
+		main section>div.galeria
+		{
+			display: flex;
+			flex-flow: row wrap;
+			justify-content: center; 
+		}
 
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-				align-items: center;
+
+			main div.galeria>article
+			{
+				max-width: 320px;
 			}
 
-				article>div>figure>img
+				div.galeria>article h3, div.galeria>article p, div.galeria>article figcaption
 				{
-					width: 300px;
-					height: auto;
-					opacity: 1;
-					transition: opacity .3s ease-in-out;
-				}
-					article>div>figure.con-transparencia:hover>img,
-					article>div>figure.con-transparencia:focus>img
-					{
-						opacity: .1;
-					}
-
-				article>div>figure.con-transparencia>figcaption
-				{
-					position: absolute;
-					top: 0;
-					left: 0;
-					opacity: 0;
-					transition: opacity .3s ease-in-out;
+					text-align: center;
 				}
 
-				article>div>footer
+				div.galeria>article>div
 				{
-					position: absolute;
-					bottom: 0;
-					left: 0;
-					opacity: 0;
-					width: 100%;
-					background-color: #FAFAFA;
-					transition: opacity .3s ease-in-out;
+					position: relative;
+					overflow: hidden;
+					margin: 0;
+
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
 				}
-					article>div:hover>figure>figcaption,
-					article>div:focus>figure>figcaption,
-					article>div:hover>footer,
-					article>div:focus>footer
+
+					div.galeria>article>div>figure
 					{
-						opacity: 1;
+						margin: 0;
 					}
 
-					article>div>figure>div>a
+						div.galeria>article>div>figure>img
+						{
+							width: 300px;
+							height: auto;
+							opacity: 1;
+							transition: opacity .3s linear;
+						}
+							
+						div.galeria>article>div>figure.con-transparencia>figcaption
+						{
+							position: absolute;
+							top: 0;
+							left: 0;
+							opacity: 0;
+							transition: opacity .3s linear;
+						}
+
+					div.galeria>article>div>footer
 					{
-						display: block;
+						position: absolute;
+						bottom: 0;
+						width: 100%;
+						opacity: 0;
+						background-color: #FAFAFA;
+						transition: opacity .3s linear;
 					}
-					
-			article>div:not(.no-grow)
-			{
-				margin: 10px 0;
-				flex-grow: 1;
-			}
+						div.galeria>article>div:hover>figure>figcaption,
+						div.galeria>article>div:focus>figure>figcaption,
+						div.galeria>article>div:hover>footer,
+						div.galeria>article>div:focus>footer
+						{
+							opacity: 1;
+						}
+
+						div.galeria>article>div:hover>figure.con-transparencia>img,
+						div.galeria>article>div:hover>figure.con-transparencia>img
+						{
+							opacity: .1;
+						}
+
+
+						div.galeria>article>div>figure>div>a
+						{
+							width: 100%;
+							text-align: center;
+							display: block;
+						}
+						
+				div.galeria>article>div:not(.no-grow)
+				{
+					margin: 10px 0;
+					flex-grow: 1;
+				}
 
 		/*Comentarios*/
 		main .medium-card>div>a
 		{
+			max-width: 100%;
 			color: inherit;
+			display: block;
 		}
 		
 			main .comentario>h3,
@@ -380,14 +441,17 @@ main
 				text-align: right;
 			}
 		
-		/*Article sin efectos especiales*/
+		/*Article solo con texto */
 		main .texto
 		{
+			/*padding: 10px;*/
+			background: transparent;
+			box-shadow: none;
 			transition: none;
 		}
 			main .texto:hover
 			{
-				box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+				box-shadow: none;
 			}
 
 			main .texto h3
@@ -412,9 +476,16 @@ main
 					margin-top: 10px;
 				}
 
+			main .texto>div
+			{
+				display: flex;
+				flex-flow: row wrap;
+				justify-content: flex-start;
+			}
+
 			main .texto code
 			{
-				background-color: #FFCCBC;
+				background-color: #BBDEFB;
 			}
 
 		main section>footer
@@ -460,10 +531,56 @@ body>footer
 
 
 
-/*Pantallas grandes*/
+
+/* ----------------------------------------------- MEDIA QUERIES ----------------------------------------------- */
+/*Aparece el fondo*/
 @media all and (min-width: 480px)
 {
-	/*Cabecera*/
+	main
+	{
+		padding: 10px;
+		padding-top: 94px;
+	}
+
+		main section
+		{
+			padding: 10px;
+			display: flex;
+			flex-direction: column;
+		}
+
+			main section div.galeria>article,
+			main .tarjeta
+			{
+				margin: 10px;
+			}
+
+				main section .comentario
+				{
+					margin: 10px 0;
+					width: 100%;
+				}
+
+				main section .texto
+				{
+					margin: 0;
+					width: 100%;
+				}
+	
+}
+
+
+
+
+
+
+
+
+
+
+/* Cambio de header y mas padding en el fondo*/
+@media all and (min-width: 650px)
+{
 	header
 	{
 		display: flex;
@@ -510,7 +627,7 @@ body>footer
 						height: 84px;
 						padding: 0 10px;
 						color: inherit;
-						transition: border .3s ease-in-out;
+						transition: border .3s linear;
 					}
 						header>nav>ul>li>a:hover,
 						header>nav>ul>li>a.actual
@@ -553,55 +670,46 @@ body>footer
 					{
 						margin-right: 10px;
 					}
-	
-	/* Contenido principal */
+
 	main
 	{
 		padding: 30px;
 		padding-top: 114px;
 	}
+}
 
-		main section
-		{
-			padding: 10px;
-			display: flex;
-			flex-direction: column;
-		}
 
-		main .medium-card
-		{
-			width: 50%;
-		}
-	
-			main section>div
-			{
-				display: flex;
-				flex-flow: row wrap;
-				justify-content: center;
-			}
 
-			main section article
-			{
-				margin: 10px;
-				padding: 10px;
-				width: 30%;
-				transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-			}
-				main section article:hover,
-				main section article:focus
-				{
-					box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-				}
 
-				main section .comentario
-				{
-					margin: 10px 0;
-					width: 100%;
-				}
 
-				main section .texto
-				{
-					margin: 0;
-					width: 100%;
-				}
+
+
+
+
+
+/* Tarjetas medias ya se reducen */
+@media all and (min-width: 768px)
+{
+	main .medium-card
+	{
+		max-width: 50%;
 	}
+}
+
+
+
+
+
+
+
+
+
+
+/* Aun mas padding al fondo */
+@media all and (min-width: 1350px)
+{
+	main
+	{
+		padding: 114px 140px 30px 140px;
+	}
+}
