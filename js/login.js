@@ -1,5 +1,5 @@
 // Loguea un usuario
-function hacerLogin(form)
+function iniciarSesion(form)
 {
 	let xhr = new XMLHttpRequest(),
 		url = 'http://localhost/PosOK/rest/login/',
@@ -9,15 +9,15 @@ function hacerLogin(form)
 
 	xhr.onload = function()
 	{
-		console.log(xhr.responseText);
-
+		// console.log(xhr.responseText);
 		let obj = JSON.parse(xhr.responseText);
 		
-		//Confirmar inicio de sesion
-		form.parentNode.querySelector('form + p').innerHTML = "Nos alegra tenerte de vuelta, <span class='usu'>" + obj.nombre + "</span>";
-
 		if (obj.RESULTADO == 'ok')
 		{
+			//Confirmar inicio de sesion
+			form.parentNode.querySelector('form + p').innerHTML = "Nos alegra tenerte de vuelta, <span class='usu'>" + obj.nombre + "</span>";
+
+			//Almacenamos los datos de usuario en sessionStorage
 			sessionStorage['dU'] = xhr.responseText;			
 		}
 	};

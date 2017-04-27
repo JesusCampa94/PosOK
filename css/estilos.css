@@ -13,7 +13,7 @@
 body
 {
 	margin: 0;
-	min-width: 300px;
+	min-width: 340px;
 	min-height: 100vh;
 	font-family: "Ubuntu", Arial, Helvetica, sans-serif;
 	font-size: 10pt;
@@ -50,6 +50,11 @@ h2
 	text-align: center;
 }
 
+p+p
+{
+	margin-top: 3px;
+}
+
 a
 {
 	text-decoration: none;
@@ -59,6 +64,12 @@ a
 	a:hover, a:active, a:focus
 	{
 		color: #FFB74D;
+	}
+
+	.paginacion>a+a
+	{
+		margin-left: 3px;
+		display: inline-block;
 	}
 
 .boton
@@ -336,7 +347,7 @@ main
 
 			main div.galeria>article
 			{
-				max-width: 320px;
+				width: 320px;
 			}
 
 				div.galeria>article h3, div.galeria>article p, div.galeria>article figcaption
@@ -359,12 +370,18 @@ main
 					div.galeria>article>div>figure
 					{
 						margin: 0;
+
+						display: flex;
+						flex-direction: column;
+						align-items: center;
 					}
 
 						div.galeria>article>div>figure>img
 						{
-							width: 300px;
+							margin-bottom: 10px;
+							max-width: 300px;
 							height: auto;
+							max-height: 169px;
 							opacity: 1;
 							transition: opacity .3s linear;
 						}
@@ -411,7 +428,6 @@ main
 						
 				div.galeria>article>div:not(.no-grow)
 				{
-					margin: 10px 0;
 					flex-grow: 1;
 				}
 
