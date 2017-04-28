@@ -8,6 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="css/estilos.css">
 		<link rel="stylesheet" type="text/css" href="css/forms.css">
 		<script src="js/basico.js" async defer></script>
+		<script src="js/buscar.js" async defer></script>
 		<title>Buscar entradas - PosOK</title>
 	</head>
 	<body>
@@ -31,20 +32,20 @@
 			</div>
 			<nav>
 				<ul>
-					<li><a href="index.html" class="actual"><i class="material-icons">&#xE88A;</i>Inicio</a></li>
-					<li><a href="buscar.html"><i class="material-icons">&#xE8B6;</i>Buscar</a></li>					
+					<li><a href="index.html"><i class="material-icons">&#xE88A;</i>Inicio</a></li>
+					<li><a href="buscar.html" class="actual"><i class="material-icons">&#xE8B6;</i>Buscar</a></li>					
 				</ul>
 			</nav>
 		</header>
 		<main>
 			<section class="medium-card">
-					<h2>Formulario de búsqueda</h2>
-					<p>Busque en la web con los siguientes criterios.</p>
+				<h2>Formulario de búsqueda</h2>
+				<p>Busque en la web con los siguientes criterios.</p>
 				<hr />
-				<form action="buscar-respuesta.html" method="POST">
+				<form onsubmit="return buscar();">
 					<div>
 						<p><label for="titulo">Por título</label></p>
-						<p><input type="text" name="titulo" id="titulo" placeholder="Introduce titulo aproximado"></p>
+						<p><input type="text" name="titulo" id="titulo" placeholder="Introduce el título aproximado"></p>
 						<p><label for="texto">Por texto</label></p>
 						<p><input type="text" name="texto" id="texto" placeholder="Introduce alguna palabra que aparezca"></p>
 						<p><label for="autor">Por autor</label></p>

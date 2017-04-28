@@ -7,6 +7,15 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"><!-- Material Icons -->
 		<link rel="stylesheet" type="text/css" href="css/estilos.css">
 		<link rel="stylesheet" type="text/css" href="css/forms.css">
+
+		<!-- Control de Acceso Inverso -->
+		<script type="text/javascript">
+			if (typeof sessionStorage['dU'] !== 'undefined')
+			{
+				window.location.replace('http://localhost/PosOK/index.html');
+			}
+		</script>
+
 		<script src="js/basico.js" async defer></script>
 		<script src="js/login.js" async defer></script>
 		<title>Login - PosOK</title>

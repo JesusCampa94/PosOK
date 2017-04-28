@@ -1,9 +1,49 @@
-//Muestra las 6 ultimas entradas
-! function mostrarEntradas()
+//Paginacion de entradas
+var pagEnt = 1,	//Pagina actual
+	lPagEnt = 2;	//Longitud pagina
+	pagsEnt = 0;	//Paginas totales
+
+//Cuenta las entradas totales, necesario para determinar cuantas paginas hacen falta al mostrarlas
+! function contarEntradas()
 {
 	let xhr = new XMLHttpRequest(),
-		url = 'http://localhost/PosOK/rest/entrada/?pag=0&lpag=6',
-		divGaleria = document.getElementsByClassName('galeria')[0];
+		url = 'http://localhost/PosOK/rest/entrada/';
+
+	xhr.open('GET', url, true);
+
+	xhr.onload = function()
+	{
+		// console.log(xhr.responseText);
+		let obj = JSON.parse(xhr.responseText);
+		// console.log(obj.FILAS);
+
+		if (obj.RESULTADO = 'ok')
+		{
+			let numEnt = obj.FILAS.length;
+
+			if (numEnt == 0)
+			{
+				pagsEnt = 1;
+			}
+
+			else
+			{
+				pagsEnt = Math.ceil(numEnt/lPagEnt);
+			}
+				
+			mostrarEntradas();
+		}
+	};
+
+	xhr.send();
+}();
+
+//Muestra las 6 ultimas entradas paginadas. Es llamada justo despues de contar las entradas y en cada cambio de pagina
+function mostrarEntradas()
+{
+	let xhr = new XMLHttpRequest(),
+		url = 'http://localhost/PosOK/rest/entrada/?pag=' + (pagEnt-1) + '&lpag=' + lPagEnt,
+		divGaleria = document.querySelector('.galeria');
 
 	xhr.open('GET', url, true);
 
@@ -46,12 +86,54 @@
 				html += '</article>';
 			}
 
+			if (obj.FILAS.length == 0)
+			{
+				html += '<p>No hay entradas que mostrar</p>';
+			}
+
 			divGaleria.innerHTML = html;			
 		}
 	};
 
 	xhr.send();
-}();
+}
+
+
+//Muestra la primera pagina de entradas
+function primeraPagina()
+{
+	pagEnt = 1;
+	mostrarEntradas();
+}
+
+//Muestra la pagina anterior de entradas
+function paginaAnterior()
+{
+	if (pagEnt > 1)
+	{
+		pagEnt--;
+		mostrarEntradas();
+	}
+}
+
+
+//Muestra la pagina siguiente de entradas
+function paginaSiguiente()
+{
+	if (pagEnt < pagsEnt)
+	{
+		pagEnt++;
+		mostrarEntradas();
+	}
+}
+
+
+//Muestra la ultima pagina de entradas
+function ultimaPagina()
+{
+	pagEnt = pagsEnt;
+	mostrarEntradas();
+}
 
 
 //Muestra los 10 ultimos comentarios

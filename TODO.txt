@@ -25,11 +25,11 @@ PRÁCTICA 2
 Hecho		Calificación	Tarea
 [ ]		0.5				Validación
 [X]		0.5				Cambiar header según esté el usuario logueado o no
-[>]		0.25				Control de acceso a las páginas que lo requieran
+[X]		0.25				Control de acceso a las páginas que lo requieran
 [ ]		0.75				Alternativa al input de tipo fecha para Firefox
 Index
 [X]		0.5				Mostrar 6 entradas en index y mostrar el detalle de entrada con el id en la URL
-[?]		0.75				Paginación
+[X]		0.75				Paginación
 [X]		0.5				Mostrar los últimos 10 comentarios
 Nueva entrada
 [ ]		0.75				Mostrar las fotos en la zona en blanco cada vez que se añada una
@@ -37,17 +37,17 @@ Nueva entrada
 [ ]		0.75				Validación previa antes de enviar datos de formulario.
 Entrada
 [X]		0.5				Cargar datos de entrada a partir de su id
-[>]		0.5				Carga condicional del formulario de comentario, según estes o no logueado
+[X]		0.5				Carga condicional del formulario de comentario, según estes o no logueado
 [ ]		0.5				Guardar comentarios
 [ ]		0.5				Responder comentarios
 Buscar
-[ ]		0.75				Implementar búsqueda
+[/]		0.75				Implementar búsqueda (falta la paginacion y que solo añada UN section)
 Login
-[/]		0.5				Implementar login
+[X]		0.5				Implementar login
 Registro
-[ ]		0.5				Comprobar la validez del login mientras se escribe
-[ ]		0.25				Mensaje junto a uno de los campos de contraseña si no coinciden
-[>]		0.25				Mensaje semitransparente con animación después de un registro correcto
+[X]		0.5				Comprobar la disponibilidad del login mientras se escribe
+[X]		0.25				Mensaje junto a uno de los campos de contraseña si no coinciden
+[/]		0.25				Mensaje semitransparente con animación después de un registro correcto (falta el propio registro)
 
 
 TAREAS

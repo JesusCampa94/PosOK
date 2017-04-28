@@ -148,16 +148,58 @@ form
 				}
 
 
-
-
-
-
-
-
-
-
-/*Pantallas grandes*/
-@media all and (min-width: 480px)
+/*Mensajes emergentes*/
+.fondo-mensaje
 {
-
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(38,50,56,.7);
+	z-index: 7;
+	transition: all .5s linear;
 }
+
+.contenedor-mensaje
+{
+	position: fixed;
+	top: 6em;
+	left: 50%;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	width: 20em;
+	padding: 1em;
+	background-color: #ECEFF1;
+	transform: translateX(-50%);
+	text-align: center;
+	transition: all .5s linear;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+	.contenedor-mensaje>a
+	{
+		margin-top: 10px;
+	}
+
+
+/* Validacion */
+#disponibilidad,
+#coincidencia
+{
+	display: inline-block;
+	margin-left: 10px;
+}
+	.correcto
+	{
+		color: #4CAF50;
+		font-weight: bold;
+	}
+
+	.incorrecto
+	{
+		color: #D50000;
+		font-weight: bold;
+	}

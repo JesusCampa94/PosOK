@@ -7,6 +7,15 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"><!-- Material Icons -->
 		<link rel="stylesheet" type="text/css" href="css/estilos.css">
 		<link rel="stylesheet" type="text/css" href="css/forms.css">
+
+		<!-- Control de Acceso Inverso -->
+		<script type="text/javascript">
+			if (typeof sessionStorage['dU'] !== 'undefined')
+			{
+				window.location.replace('http://localhost/PosOK/index.html');
+			}
+		</script>
+
 		<script src="js/basico.js" async defer></script>
 		<script src="js/registro.js" async defer></script>
 		<title>Registro - PosOK</title>
@@ -43,16 +52,22 @@
 				<p>Rellene los campos para registrarse en la página.</p>
 				<p><strong>Todos los campos son obligatorios.</strong></p>				
 				<hr>
-				<form action="index.html" method="POST">
+				<form onsubmit="return registrar(this);">
 					<div>
-						<p><label for="nick">Nombre de Usuario</label></p>
-						<p><input type="text" name="nick" id="nick" placeholder="Escribe un nick de máximo 20 carácteres" maxlength="20" pattern="[A-Za-z]+[A-Za-z0-9]*" required autofocus></p>
+						<p>
+							<label for="nick">Nombre de Usuario</label>
+							<span id="disponibilidad"></span>
+						</p>
+						<p><input type="text" name="nick" id="nick" placeholder="Escribe un nick de máximo 20 carácteres" maxlength="20" pattern="[A-Za-z]+[A-Za-z0-9]*" required autofocus oninput="nickDisponible();"></p>
 						<p><label for="nombre">Nombre</label></p>
 						<p><input type="text" name="nombre" id="nombre" placeholder="Escribe tu nombre completo" required></p>
 						<p><label for="pass">Contraseña</label></p>
-						<p><input type="password" name="pass" id="pass" placeholder="Introduce una contraseña" maxlength="20" pattern="[A-Za-z0-9_\-]+" required></p>
-						<p><label for="repetirPass">Repetir contraseña</label></p>
-						<p><input type="password" name="repetirPass" id="repetirPass" placeholder="Repite la contraseña" maxlength="20" pattern="[A-Za-z0-9_\-]+" required></p>
+						<p><input type="password" name="pass" id="pass" placeholder="Introduce una contraseña" maxlength="20" pattern="[A-Za-z0-9_\-]+" required onchange="passIguales();"></p>
+						<p>
+							<label for="repetirPass">Repetir contraseña</label>
+							<span id="coincidencia"></span>
+						</p>
+						<p><input type="password" name="repetirPass" id="repetirPass" placeholder="Repite la contraseña" maxlength="20" pattern="[A-Za-z0-9_\-]+" required onchange="passIguales();"></p>
 						<p><label for="email">Dirección de email</label></p>
 						<p><input type="email" name="email" id="email" placeholder="Introduce tu email" required></p>
 						<p><label for="hombre">Sexo</label></p>

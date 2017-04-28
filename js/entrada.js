@@ -18,7 +18,7 @@
 		{
 			// console.log(xhr.responseText);
 			let obj = JSON.parse(xhr.responseText);
-			// console.log(obj.FILAS);
+			console.log(obj.FILAS);
 
 			if (obj.RESULTADO = 'ok')
 			{
@@ -60,7 +60,7 @@ function mostrarFotos(idEntrada)
 	{
 		// console.log(xhr.responseText);
 		let obj = JSON.parse(xhr.responseText);
-		console.log(obj.FILAS);
+		// console.log(obj.FILAS);
 
 		if (obj.RESULTADO = 'ok')
 		{
@@ -130,4 +130,44 @@ function mostrarComentarios(idEntrada)
 	};
 
 	xhr.send();
+}
+
+
+//Carga condicional del formulario de nuevo comentario
+! function cargarFormulario()
+{
+	let sectionFormulario = document.querySelector('#zona-galeria+section'),
+		html = '';
+
+	//Logueado
+	if (typeof sessionStorage['dU'] !== 'undefined')
+	{
+
+		html += '<form onsubmit="return comentar(this);" id="escribir-comentario">';
+		html += '	<div>';
+		html += '		<p><label for="titulo-comentario">Título del comentario</label></p>';
+		html += '		<p><input type="text" name="titulo-comentario" id="titulo-comentario" placeholder="Escribe un título de máximo 50 carácteres" maxlength="50" required></p>';
+		html += '		<p><label for="texto-comentario">Comentario</label></p>';
+		html += '		<p><textarea rows="6" cols="50" name="texto-comentario" id="texto-comentario" placeholder="Escribe tu comentario..." required></textarea></p>';				
+		html += '		<p><input type="submit" value="OK"></p>';
+		html += '	</div>';
+		html += '</form>';
+	}
+
+	//No logueado
+	else
+	{
+		html += '<p>Debes <a href="login.html">iniciar sesión</a> para publicar un comentario.</p>';
+	}
+
+	sectionFormulario.innerHTML += html;
+}();
+
+
+//Publica un comentario
+function comentar(form)
+{
+	//TODO
+
+	return false;
 }
