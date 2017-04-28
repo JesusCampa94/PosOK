@@ -1,6 +1,6 @@
 //Paginacion de entradas
-var pagEnt = 1,	//Pagina actual
-	lPagEnt = 2;	//Longitud pagina
+let pagEnt = 1,	//Pagina actual
+	lPagEnt = 2,	//Longitud pagina
 	pagsEnt = 0;	//Paginas totales
 
 //Cuenta las entradas totales, necesario para determinar cuantas paginas hacen falta al mostrarlas
@@ -44,6 +44,8 @@ function mostrarEntradas()
 	let xhr = new XMLHttpRequest(),
 		url = 'http://localhost/PosOK/rest/entrada/?pag=' + (pagEnt-1) + '&lpag=' + lPagEnt,
 		divGaleria = document.querySelector('.galeria');
+
+	mostrarPaginacion();
 
 	xhr.open('GET', url, true);
 
@@ -96,6 +98,22 @@ function mostrarEntradas()
 	};
 
 	xhr.send();
+}
+
+
+//Muestra la botonera de paginacion
+function mostrarPaginacion()
+{
+	let p = document.querySelector('.paginacion'); 
+		html = '';
+
+	html += '<a onclick="primeraPagina();" title="Primera página"><i class="material-icons">&#xE045;</i></a>';
+	html += '<a onclick="paginaAnterior();" title="Página anterior"><i class="material-icons">&#xE020;</i></a>';
+	html += 'Página<span class="negrita">' + pagEnt +  '</span>de<span class="negrita">' + pagsEnt + '</span>';
+	html += '<a onclick="paginaSiguiente();" title="Página siguiente"><i class="material-icons">&#xE01F;</i></a>';
+	html += '<a onclick="ultimaPagina();" title="Última página"><i class="material-icons">&#xE044;</i></a>';
+
+	p.innerHTML = html;
 }
 
 

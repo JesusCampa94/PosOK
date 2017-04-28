@@ -1,7 +1,9 @@
-//Paginacion de entradas
+//Variables globales
 var pagEnt = 1,	//Pagina actual
-	lPagEnt = 2;	//Longitud pagina
-	pagsEnt = 0;	//Paginas totales
+	lPagEnt = 2,	//Longitud pagina
+	pagsEnt = 0,	//Paginas totales
+	estructuraCreada = false,
+	url = 'http://localhost/PosOK/rest/entrada/'; //La url ira creciendo entre diferentes funciones
 
 //Cuenta las entradas de los resultados, necesario para determinar cuantas paginas hacen falta al mostrarlas
 function contarEntradas(url)
@@ -29,34 +31,169 @@ function contarEntradas(url)
 			{
 				pagsEnt = Math.ceil(numEnt/lPagEnt);
 			}
-				
-			mostrarEntradas();
 		}
 	};
 
 	xhr.send();
 }
 
-//Busca entradas segun criterios y muestra los resultados
-function buscar()
+
+//Muestra la botonera de paginacion
+function mostrarPaginacion()
+{
+	let p = document.querySelector('.paginacion'); 
+		html = '';
+
+	html += '<a onclick="primeraPagina();" title="Primera página"><i class="material-icons">&#xE045;</i></a>';
+	html += '<a onclick="paginaAnterior();" title="Página anterior"><i class="material-icons">&#xE020;</i></a>';
+	html += 'Página<span class="negrita">' + pagEnt +  '</span>de<span class="negrita">' + pagsEnt + '</span>';
+	html += '<a onclick="paginaSiguiente();" title="Página siguiente"><i class="material-icons">&#xE01F;</i></a>';
+	html += '<a onclick="ultimaPagina();" title="Última página"><i class="material-icons">&#xE044;</i></a>';
+
+	p.innerHTML = html;
+}
+
+
+//Muestra la primera pagina de entradas
+function primeraPagina()
+{
+	pagEnt = 1;
+	mostrarResultados();
+}
+
+//Muestra la pagina anterior de entradas
+function paginaAnterior()
+{
+	if (pagEnt > 1)
+	{
+		pagEnt--;
+		mostrarResultados();
+	}
+}
+
+
+//Muestra la pagina siguiente de entradas
+function paginaSiguiente()
+{
+	if (pagEnt < pagsEnt)
+	{
+		pagEnt++;
+		mostrarResultados();
+	}
+}
+
+
+//Muestra la ultima pagina de entradas
+function ultimaPagina()
+{
+	pagEnt = pagsEnt;
+	mostrarResultados();
+}
+
+
+//Crea los nodos del section donde se localizan los resultados (sin incluirlos)
+function crearEstructura()
+{
+	let main = document.querySelector('main');
+
+	//Elementos
+	let section = document.createElement('section'),
+		h2 = document.createElement('h2'),
+		p = document.createElement('p'),
+		footer = document.createElement('footer'),
+		pFooter = document.createElement('p');
+
+	//Contenido de elementos
+	let contH2 = document.createTextNode('Resultado de la busqueda'),
+		contP = document.createTextNode('Estas son las entradas que cumplen los filtros indicados.');
+
+	//Incluimos los contenidos en los elementos
+	p.appendChild(contP);
+	h2.appendChild(contH2);
+	footer.appendChild(pFooter);
+
+	section.appendChild(h2);
+	section.appendChild(p);
+	section.innerHTML += '<hr />';
+	section.innerHTML += '<div class="galeria"></div>';
+	section.innerHTML += '<hr />';
+	section.appendChild(footer);
+
+	//Ponemos la clase al p del footer
+	pFooter.classList.add('paginacion');
+
+	//Lo incluimos en el main
+	main.appendChild(section);
+
+	estructuraCreada = true;
+}
+
+
+//A partir del formulario de busqueda, crea los parametros para la peticion AJAX
+function camposAParametros()
+{
+	//Recopilamos los datos del formulario
+	let titulo = document.getElementById('titulo').value,
+		texto = document.getElementById('texto').value,
+		autor = document.getElementById('autor').value,
+		fechaInicio = document.getElementById('fechaInicio').value,
+		fechaFin = document.getElementById('fechaFin').value;
+
+	//El caracter delante del nombre del atributo. Primero es '?' y luego '&'
+	let separador = '?';
+
+	if (titulo != '')
+	{
+		url += separador + 'n=' + titulo;
+		separador = '&';
+	}
+
+	if (texto != '')
+	{
+		url += separador + 'd=' + texto;
+		separador = '&';
+	}
+
+	if (autor != '')
+	{
+		url += separador + 'l=' + autor;
+		separador = '&';
+	}
+
+	if (fechaInicio != '')
+	{
+		url += separador + 'fi=' + fechaInicio;
+		separador = '&';
+	}
+
+	if (fechaFin != '')
+	{
+		url += separador + 'ff=' + fechaFin;
+		separador = '&';
+	}
+}
+
+
+//Recibe la url con los filtros y muestra los resultados de busqueda
+function mostrarResultados()
 {
 	let xhr = new XMLHttpRequest(),
-		url = 'http://localhost/PosOK/rest/entrada/';
+		urlPaginada = url;
+		divGaleria = document.querySelector('.galeria');
 
-	//Operaciones previas
-	crearEstructura();
-	url += camposAParametros();
-	contarEntradas(url);
 
-	let divGaleria = document.querySelector('.galeria');
+	//Agregamos la paginacion a la url con los parametros de busqueda
+	urlPaginada += '&pag=' + (pagEnt-1) + '&lpag=' + lPagEnt;
 
-	xhr.open('GET', url, true);
+	mostrarPaginacion();
+
+	xhr.open('GET', urlPaginada, true);
 
 	xhr.onload = function()
 	{
 		// console.log(xhr.responseText);
 		let obj = JSON.parse(xhr.responseText);
-		console.log(obj.FILAS);
+		// console.log(obj.FILAS);
 
 		if (obj.RESULTADO = 'ok')
 		{
@@ -101,103 +238,22 @@ function buscar()
 	};
 
 	xhr.send();
+}
+
+
+//Llama a las demas funciones
+function buscar()
+{
+	//Operaciones previas
+	camposAParametros();
+	contarEntradas(url);
+
+ 	if (estructuraCreada == false)
+	{
+		crearEstructura();
+	}
+
+	mostrarResultados(url);
 
 	return false;
-}
-
-
-//Crea los nodos del section donde se localizan los resultados (sin incluirlos)
-function crearEstructura()
-{
-	let main = document.querySelector('main');
-
-	//Elementos
-	let section = document.createElement('section'),
-		h2 = document.createElement('h2'),
-		p = document.createElement('p'),
-		footer = document.createElement('footer'),
-		pFooter = document.createElement('p');
-
-	//Contenido de elementos
-	let contH2 = document.createTextNode('Resultado de la busqueda'),
-		contP = document.createTextNode('Estas son las entradas que cumplen los filtros indicados.'),
-		contPFooter = '';
-
-	//Incluimos los contenidos en los elementos
-	p.appendChild(contP);
-	h2.appendChild(contH2);
-	footer.appendChild(pFooter);
-
-	section.appendChild(h2);
-	section.appendChild(p);
-	section.innerHTML += '<hr />';
-	section.innerHTML += '<div class="galeria"></div>';
-	section.innerHTML += '<hr />';
-	section.appendChild(footer);
-
-	contPFooter += '<a href="#" title="Ir al principio"><i class="material-icons">&#xE045;</i></a>';
-	contPFooter += '<a href="#" title="Página anterior"><i class="material-icons">&#xE020;</i></a>';
-	contPFooter += '1';
-	contPFooter += '<a href="#">2</a>';
-	contPFooter += '<a href="#">3</a>';
-	contPFooter += '<a href="#" title="Página siguiente"><i class="material-icons">&#xE01F;</i></a>';
-	contPFooter += '<a href="#" title="Ir al final"><i class="material-icons">&#xE044;</i></a>';
-
-	pFooter.innerHTML = contPFooter;
-
-	//Ponemos la clase al p del footer
-	pFooter.classList.add('paginacion');
-
-	//Lo incluimos en el main
-	main.appendChild(section);
-}
-
-
-//A partir del formulario de busqueda, crea los parametros para la peticion AJAX
-function camposAParametros()
-{
-	//Recopilamos los datos del formulario
-	let titulo = document.getElementById('titulo').value,
-		texto = document.getElementById('texto').value,
-		autor = document.getElementById('autor').value,
-		fechaInicio = document.getElementById('fechaInicio').value,
-		fechaFin = document.getElementById('fechaFin').value;
-
-	//El caracter delante del nombre del atributo. Primero es '?' y luego '&'
-	let separador = '?';
-
-	//La cadena de parametros, ira creciendo cada vez que un campo no este vacio
-	let parametros = '';
-
-	if (titulo != '')
-	{
-		parametros += separador + 'n=' + titulo;
-		separador = '&';
-	}
-
-	if (texto != '')
-	{
-		parametros += separador + 'd=' + texto;
-		separador = '&';
-	}
-
-	if (autor != '')
-	{
-		parametros += separador + 'l=' + autor;
-		separador = '&';
-	}
-
-	if (fechaInicio != '')
-	{
-		parametros += separador + 'fi=' + fechaInicio;
-		separador = '&';
-	}
-
-	if (fechaFin != '')
-	{
-		parametros += separador + 'ff=' + fechaFin;
-		separador = '&';
-	}
-
-	return parametros;
 }

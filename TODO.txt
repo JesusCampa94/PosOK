@@ -41,7 +41,7 @@ Entrada
 [ ]		0.5				Guardar comentarios
 [ ]		0.5				Responder comentarios
 Buscar
-[/]		0.75				Implementar búsqueda (falta la paginacion y que solo añada UN section)
+[X]		0.75				Implementar búsqueda 
 Login
 [X]		0.5				Implementar login
 Registro

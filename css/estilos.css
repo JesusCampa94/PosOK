@@ -72,6 +72,11 @@ a
 		display: inline-block;
 	}
 
+	.paginacion>span
+	{
+		margin: 0 3px;
+	}
+
 .boton
 {
 	outline: none;
