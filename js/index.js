@@ -167,7 +167,7 @@ function ultimaPagina()
 	{
 		// console.log(xhr.responseText);
 		let obj = JSON.parse(xhr.responseText);
-		// console.log(obj.FILAS);
+		console.log(obj.FILAS);
 
 		if (obj.RESULTADO = 'ok')
 		{
@@ -177,7 +177,7 @@ function ultimaPagina()
 			{
 				let comentario = obj.FILAS[i];
 
-				html += '<a href="entrada.html#zona-comentarios">';
+				html += '<a href="entrada.html?id=' + comentario.id_entrada + '#zona-comentarios">';
 				html += '	<article class="comentario">';
 				html += '		<h3>' + comentario.titulo + '</h3>';
 				html += '		<p><span class="resaltado">De: </span>' + comentario.login + '</p>';

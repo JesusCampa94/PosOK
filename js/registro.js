@@ -3,7 +3,7 @@ function nickDisponible()
 {
 	let xhr = new XMLHttpRequest(),
 		url = 'http://localhost/PosOK/rest/login/',
-		nick = document.getElementById('nick'),
+		nick = document.getElementById('login'),
 		disponibilidad = document.getElementById('disponibilidad');
 
 	url += nick.value;
@@ -52,8 +52,8 @@ function nickDisponible()
 //Comprueba que los pass coinciden
 function passIguales()
 {
-	let pass = document.getElementById('pass'), 
-		pass2 = document.getElementById('repetirPass'),
+	let pass = document.getElementById('pwd'), 
+		pass2 = document.getElementById('pwd2'),
 		coincidencia = document.getElementById('coincidencia');
 
 	//Coinciden
@@ -110,9 +110,25 @@ function mostrarMensajeRegistrado(nick)
 //Registra a un usuario
 function registrar(form)
 {
-	//TODO
+	let xhr = new XMLHttpRequest(),
+		url = 'http://localhost/PosOK/rest/usuario/',
+		fd = new FormData(form);
 
-	mostrarMensajeRegistrado(document.getElementById('nick').value);
+	xhr.open('POST', url, true);
+
+	xhr.onload = function()
+	{
+		console.log(xhr.responseText);
+		let obj = JSON.parse(xhr.responseText);
+		console.log(obj);
+		
+		if (obj.RESULTADO == 'ok')
+		{
+			mostrarMensajeRegistrado(document.getElementById('login').value);			
+		}
+	};
+
+	xhr.send(fd);
 
 	return false;
 }

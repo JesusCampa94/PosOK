@@ -120,11 +120,10 @@ function mostrarComentarios(idEntrada)
 				html += '	<hr>';
 				html += '	<footer>';
 				html += '		<p class="resaltado"><time datetime="' + comentario.fecha + '">' + formatearFecha(comentario.fecha, 3) + '</time></p>';
-
 				//Boton responder si se esta logueado
 				if (typeof sessionStorage['dU'] !== 'undefined')
 				{
-					html += '<a href="#escribir-comentario" class="boton" onclick="responder(this.parentNode.parentNode);">Responder</a>';
+					html += '<button class="boton" onclick="responder(this.parentNode.parentNode);">Responder</button>';
 				}
 
 				html += '	</footer>';
@@ -132,6 +131,7 @@ function mostrarComentarios(idEntrada)
 			}
 
 			divComentarios.innerHTML = html;
+			encuadrar();
 		}
 	};
 
@@ -237,5 +237,22 @@ function responder(comentario)
 	//Damos el foco al textarea
 	texto.focus();
 
+	//redirigir y hacer scroll extra, así evitamos que el header tape parte del contenido
+	let direccion = window.location.href.replace('#escribir-comentario', '');
+	direccion += '#escribir-comentario';
+	window.location.href = direccion;
+	window.scrollBy(0, -170);
+
 	//El resto lo hace la funcion comentar, que se invoca al pulsar en OK
+}
+
+function encuadrar()
+{
+	if(window.location.href.includes('#zona-comentarios'))
+	{
+		let direccion = window.location.href.replace('#zona-comentarios', '');
+		direccion += '#zona-comentarios';
+		window.location.href = direccion;
+		window.scrollBy(0, -94);
+	}
 }

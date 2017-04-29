@@ -47,7 +47,7 @@ Login
 Registro
 [X]		0.5				Comprobar la disponibilidad del login mientras se escribe
 [X]		0.25				Mensaje junto a uno de los campos de contraseña si no coinciden
-[/]		0.25				Mensaje semitransparente con animación después de un registro correcto (falta el propio registro)
+[/\]		0.25				Mensaje semitransparente con animación después de un registro correcto (falta animación)
 
 
 TAREAS
@@ -70,10 +70,8 @@ TAREAS
 [/] Las animaciones no se aprecian si pasamos muy rápido el cursor
 [X] En acerca de, strong se usa para la información importante, no para negrita. Usar spans.
 [X] Los article DEBEN tener un ÚNICO título de mayor nivel.
-[ ] En la navegación a una zona específica mediante id, el header tapa los píxeles superiores. Añadir scroll extra mediante JS.
+[X] En la navegación a una zona específica mediante id, el header tapa los píxeles superiores. Añadir scroll extra mediante JS.
 
 
 PROBLEMAS
 - Los campos tipo date no son compatibles en todos los navegadores. No obstante, queremos que los que sí que lo admitan puedan aprovecharlos.
-
-- Los enlaces a cierta sección entran en conflicto porque el header tapa lo que queremos ver.

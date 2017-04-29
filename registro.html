@@ -55,19 +55,19 @@
 				<form onsubmit="return registrar(this);">
 					<div>
 						<p>
-							<label for="nick">Nombre de Usuario</label>
+							<label for="login">Nombre de Usuario</label>
 							<span id="disponibilidad"></span>
 						</p>
-						<p><input type="text" name="nick" id="nick" placeholder="Escribe un nick de máximo 20 carácteres" maxlength="20" pattern="[A-Za-z]+[A-Za-z0-9]*" required autofocus oninput="nickDisponible();"></p>
+						<p><input type="text" name="login" id="login" placeholder="Escribe un nick de máximo 20 carácteres" maxlength="20" pattern="[A-Za-z]+[A-Za-z0-9]*" required autofocus oninput="nickDisponible();"></p>
 						<p><label for="nombre">Nombre</label></p>
 						<p><input type="text" name="nombre" id="nombre" placeholder="Escribe tu nombre completo" required></p>
-						<p><label for="pass">Contraseña</label></p>
-						<p><input type="password" name="pass" id="pass" placeholder="Introduce una contraseña" maxlength="20" pattern="[A-Za-z0-9_\-]+" required onchange="passIguales();"></p>
+						<p><label for="pwd">Contraseña</label></p>
+						<p><input type="password" name="pwd" id="pwd" placeholder="Introduce una contraseña" maxlength="20" pattern="[A-Za-z0-9_\-]+" required onchange="passIguales();"></p>
 						<p>
-							<label for="repetirPass">Repetir contraseña</label>
+							<label for="pwd2">Repetir contraseña</label>
 							<span id="coincidencia"></span>
 						</p>
-						<p><input type="password" name="repetirPass" id="repetirPass" placeholder="Repite la contraseña" maxlength="20" pattern="[A-Za-z0-9_\-]+" required onchange="passIguales();"></p>
+						<p><input type="password" name="pwd2" id="pwd2" placeholder="Repite la contraseña" maxlength="20" pattern="[A-Za-z0-9_\-]+" required onchange="passIguales();"></p>
 						<p><label for="email">Dirección de email</label></p>
 						<p><input type="email" name="email" id="email" placeholder="Introduce tu email" required></p>
 						<p><label for="hombre">Sexo</label></p>
