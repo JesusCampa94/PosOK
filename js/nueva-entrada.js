@@ -55,34 +55,20 @@ function insertarCarta()
 	let html = '', divGaleria = document.querySelector('.galeria'), botonInserta = document.getElementById('nueva-foto');
 	let article = document.createElement('article');
 
-	/* //para mostrar la foto una vez seleccionada
-	let fr = new FileReader();
-	let input = document.querySelector('.input-oculto');
-
-	fr.onload = function()
-	{
-		let ruta = fr.result;
-		let alTex = input.files[0].name;
-	};
-
-	fr.readAsDataURL(input.files[0]);
-<img src="' + ruta + '" alt="' + alTex + '" onclick="this.parentNode.querySelector(\'[type=file]\').click();">';
-	*/
-
 	html += ' 	<div class="no-grow">';
 	html += '		<figure>';
-	html += '			<img src="img/com/image.png" alt="" onclick="this.parentNode.querySelector(\'[type=file]\').click();">';
+	html += '			<img src="img/com/image.png" height="300" width="300" alt="" onclick="this.parentNode.querySelector(\'[type=file]\').click();">';
+	html += '         <input type="file" accept="image/*" onchange="mostrarFoto(this);">';
 	html += '		</figure>';
-	html += '	</div>';
-	html += '	<div>';
-	html += '		<textarea form="form-nueva-entrada" name="desc-img-3" id="desc-img-3" cols="30" rows="6" placeholder="Escriba una descripción..." required></textarea>';
 	html += '	</div>';
 	html += '	<a href="#" class="boton"><i class="material-icons">&#xE2C6;</i>Seleccionar fichero</a>';
 	html += '	<a href="#" class="boton peligro"><i class="material-icons">&#xE872;</i>Eliminar fichero</a>';
+	html += '	<div>';
+	html += '		<textarea form="form-nueva-entrada" name="desc-img-3" id="desc-img-3" cols="30" rows="6" placeholder="Escriba una descripción..." required></textarea>';
+	html += '	</div>';
 
 	article.innerHTML = html;
 	divGaleria.insertBefore(article, botonInserta);
-//class="input-oculto"
 }
 
 //muestra la foto a insertar
