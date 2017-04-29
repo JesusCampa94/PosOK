@@ -120,6 +120,7 @@ a
 .nueva-imagen
 {
 	display: block;
+	cursor: pointer;
 }
 
 	.nueva-imagen>p

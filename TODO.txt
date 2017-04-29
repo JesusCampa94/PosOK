@@ -73,5 +73,9 @@ TAREAS
 [X] En la navegación a una zona específica mediante id, el header tapa los píxeles superiores. Añadir scroll extra mediante JS.
 
 
+NUEVA ENTRADA
+- Segundo formulario, para fotos. Se añaden y quitan inputs tipo file y textareas. Cada tarjeta hará lo que hace el código del profesor.
+- Se agrupan en un formdata y se envian.
+
 PROBLEMAS
 - Los campos tipo date no son compatibles en todos los navegadores. No obstante, queremos que los que sí que lo admitan puedan aprovecharlos.

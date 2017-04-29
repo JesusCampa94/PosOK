@@ -197,6 +197,7 @@ form
 
 
 /* Nueva Entrada */
+.form-oculto,
 .input-oculto
 {
 	display: none;

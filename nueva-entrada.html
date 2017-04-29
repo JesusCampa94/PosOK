@@ -61,14 +61,18 @@
 						<input type="submit" value="OK">
 					</div>
 				</form>
+				<form onsubmit="return enviarFotos(this);"  id="form-fotos" class="form-oculto">
+					<!-- Inputs agregados por JS -->
+					<!-- El evento submit se lanza por JS -->
+				</form>
 			</section>
 			<section>
 				<h2>Imágenes de la entrada</h2>
 				<p>Fotos a incluir en la entrada. Seleccione los ficheros y añada una descripcion.</p>		
 				<hr>
 				<div class="galeria">
-					<article id="nueva-foto" onclick="insertarCarta()">
-						<a href="#" class="nueva-imagen">
+					<article id="nueva-foto" onclick="nuevaFoto()">
+						<a class="nueva-imagen">
 							<p><i class="material-icons">&#xE148;</i></p>
 							<p>Añadir imagen</p>
 						</a>
