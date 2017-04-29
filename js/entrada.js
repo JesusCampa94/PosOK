@@ -18,7 +18,7 @@
 		{
 			// console.log(xhr.responseText);
 			let obj = JSON.parse(xhr.responseText);
-			console.log(obj.FILAS);
+			// console.log(obj.FILAS);
 
 			if (obj.RESULTADO = 'ok')
 			{
@@ -102,7 +102,7 @@ function mostrarComentarios(idEntrada)
 	{
 		// console.log(xhr.responseText);
 		let obj = JSON.parse(xhr.responseText);
-		console.log(obj.FILAS);
+		// console.log(obj.FILAS);
 
 		if (obj.RESULTADO = 'ok')
 		{
@@ -112,7 +112,7 @@ function mostrarComentarios(idEntrada)
 			{
 				let comentario = obj.FILAS[i];
 
-				html += '<article class="comentario">';
+				html += '<article class="comentario" id="' + comentario.id + '">';
 				html += '	<h3>' + comentario.titulo + '</h3>';
 				html += '	<p><span class="resaltado">De: </span>' + comentario.login + '</p>';
 				html += '	<hr>';
@@ -120,11 +120,13 @@ function mostrarComentarios(idEntrada)
 				html += '	<hr>';
 				html += '	<footer>';
 				html += '		<p class="resaltado"><time datetime="' + comentario.fecha + '">' + formatearFecha(comentario.fecha, 3) + '</time></p>';
-				//Logueado
+
+				//Boton responder si se esta logueado
 				if (typeof sessionStorage['dU'] !== 'undefined')
 				{
-					html += '		<a href="#escribir-comentario" class="boton">Responder</a>';
+					html += '<a href="#escribir-comentario" class="boton" onclick="responder(this.parentNode.parentNode);">Responder</a>';
 				}
+
 				html += '	</footer>';
 				html += '</article>';
 			}
@@ -146,13 +148,12 @@ function mostrarComentarios(idEntrada)
 	//Logueado
 	if (typeof sessionStorage['dU'] !== 'undefined')
 	{
-
 		html += '<form onsubmit="return comentar(this);" id="escribir-comentario">';
 		html += '	<div>';
-		html += '		<p><label for="titulo-comentario">Título del comentario</label></p>';
-		html += '		<p><input type="text" name="titulo-comentario" id="titulo-comentario" placeholder="Escribe un título de máximo 50 carácteres" maxlength="50" required></p>';
-		html += '		<p><label for="texto-comentario">Comentario</label></p>';
-		html += '		<p><textarea rows="6" cols="50" name="texto-comentario" id="texto-comentario" placeholder="Escribe tu comentario..." required></textarea></p>';				
+		html += '		<p><label for="titulo">Título del comentario</label></p>';
+		html += '		<p><input type="text" name="titulo" id="titulo" placeholder="Escribe un título de máximo 50 carácteres" maxlength="50" required></p>';
+		html += '		<p><label for="texto">Comentario</label></p>';
+		html += '		<p><textarea rows="6" cols="50" name="texto" id="texto" placeholder="Escribe tu comentario..." required></textarea></p>';				
 		html += '		<p><input type="submit" value="OK"></p>';
 		html += '	</div>';
 		html += '</form>';
@@ -172,15 +173,18 @@ function mostrarComentarios(idEntrada)
 function comentar(form)
 {
 	let xhr = new XMLHttpRequest(),
-		url = 'http://localhost/PosOK/rest/entrada/',
+		url = 'http://localhost/PosOK/rest/comentario/',
 		fd = new FormData(form),
-		clave = '';
+		clave = '',
+		id = 0;
 
 	if (typeof sessionStorage['dU'] !== 'undefined')
 		{
 			let dU = JSON.parse(sessionStorage['dU']);
-			//obtiene el id en numérico desde la url
-			let id = parseInt(window.location.href.split("id=")[1]);
+
+			//Obtiene el id en numérico desde la url
+			id = parseInt(window.location.href.split("id=")[1]);
+
 			clave = dU.clave;
 			fd.append('login', dU.login);
 			fd.append('id_entrada', id);
@@ -188,8 +192,50 @@ function comentar(form)
 
 	xhr.open('POST', url, true);
 
+	xhr.onload = function()
+	{
+		// console.log(xhr.responseText);
+		let obj = JSON.parse(xhr.responseText);
+
+		if (obj.RESULTADO == 'ok')
+		{
+			// console.log(obj.id);
+
+			let titulo = document.querySelector('#escribir-comentario [type="text"]'),
+				texto = document.querySelector('#escribir-comentario textarea');
+
+			//Vaciamos campos del formulario y habilitamos el campo de texto, en caso de estar desabilitado
+			titulo.value = '';
+			texto.value = '';
+
+			//Recargamos comentarios, incluyendo el nuevo
+			mostrarComentarios(id);
+		}
+	};
+
 	xhr.setRequestHeader('Authorization', clave);
 	xhr.send(fd);
 
 	return false;
+}
+
+
+//Configura el titulo de una respuesta y llama a comentar.
+function responder(comentario)
+{
+	//Datos del comentario al cual respondemos
+	let idComentario = comentario.id,
+		tituloComentario = comentario.querySelector('h3').innerHTML;
+
+	//Respuesta
+	let titulo = document.querySelector('#escribir-comentario [type="text"]'),
+		texto = document.querySelector('#escribir-comentario textarea');
+
+	//Ponemos el titulo
+	titulo.value = 'Re: ' + tituloComentario;
+	
+	//Damos el foco al textarea
+	texto.focus();
+
+	//El resto lo hace la funcion comentar, que se invoca al pulsar en OK
 }

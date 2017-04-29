@@ -9,7 +9,7 @@ function iniciarSesion(form)
 
 	xhr.onload = function()
 	{
-		console.log(xhr.responseText);
+		// console.log(xhr.responseText);
 		let obj = JSON.parse(xhr.responseText);
 		
 		if (obj.RESULTADO == 'ok')

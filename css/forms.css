@@ -67,6 +67,17 @@ form
 				color: inherit;
 			}
 
+		form input:disabled,
+		form textarea:disabled
+		{
+			border-color: #607D8B;
+		}
+			form input:disabled:hover,
+			form textarea:disabled:hover
+			{
+				border-color: #90A4AE;
+			}
+
 		form .boton
 		{
 			margin-bottom: 10px;

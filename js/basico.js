@@ -75,6 +75,12 @@ function formatearFecha(cadena, tipo)
 
 	let formateada = '';
 
+	//Poner un cero delante si los minutos son 9 o menos
+	if (min < 10)
+	{
+		min = '0' + min;
+	}
+
 	switch (tipo)
 	{
 		// 1/1/2017
