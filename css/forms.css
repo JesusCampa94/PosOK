@@ -185,6 +185,12 @@ form
 	}
 
 
+/* Nueva Entrada */
+.input-oculto
+{
+	display: none;
+}
+
 /* Validacion */
 #disponibilidad,
 #coincidencia

@@ -120,7 +120,11 @@ function mostrarComentarios(idEntrada)
 				html += '	<hr>';
 				html += '	<footer>';
 				html += '		<p class="resaltado"><time datetime="' + comentario.fecha + '">' + formatearFecha(comentario.fecha, 3) + '</time></p>';
-				html += '		<a href="#escribir-comentario" class="boton">Responder</a>';
+				//Logueado
+				if (typeof sessionStorage['dU'] !== 'undefined')
+				{
+					html += '		<a href="#escribir-comentario" class="boton">Responder</a>';
+				}
 				html += '	</footer>';
 				html += '</article>';
 			}
@@ -167,7 +171,25 @@ function mostrarComentarios(idEntrada)
 //Publica un comentario
 function comentar(form)
 {
-	//TODO
+	let xhr = new XMLHttpRequest(),
+		url = 'http://localhost/PosOK/rest/entrada/',
+		fd = new FormData(form),
+		clave = '';
+
+	if (typeof sessionStorage['dU'] !== 'undefined')
+		{
+			let dU = JSON.parse(sessionStorage['dU']);
+			//obtiene el id en numérico desde la url
+			let id = parseInt(window.location.href.split("id=")[1]);
+			clave = dU.clave;
+			fd.append('login', dU.login);
+			fd.append('id_entrada', id);
+		}
+
+	xhr.open('POST', url, true);
+
+	xhr.setRequestHeader('Authorization', clave);
+	xhr.send(fd);
 
 	return false;
 }

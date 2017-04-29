@@ -52,12 +52,12 @@
 				<p>Rellene el formulario para publicar una nueva entrada.</p>
 				<p><strong>Todos los campos son obligatorios.</strong></p>				
 				<hr>
-				<form action="nueva-entrada.html" method="POST" id="form-nueva-entrada">
+				<form onsubmit="return crearEntrada(this);" id="form-nueva-entrada">
 					<div>
-						<p><label for="titulo-entrada">Nombre de Usuario</label></p>
-						<p><input type="text" name="titulo-entrada" id="titulo-entrada" placeholder="Escribe un título de máximo 200 carácteres" maxlength="200" required autofocus></p>
-						<p><label for="descripcion-entrada">Descripción</label></p>
-						<p><textarea rows="10" cols="50" name="descripcion-entrada" id="descripcion-entrada" placeholder="Escriba el contenido de su entrada..." required></textarea></p>
+						<p><label for="nombre">Título de la entrada</label></p>
+						<p><input type="text" name="nombre" id="nombre" placeholder="Escribe un título de máximo 200 carácteres" maxlength="200" required autofocus></p>
+						<p><label for="descripcion">Descripción</label></p>
+						<p><textarea rows="10" cols="50" name="descripcion" id="descripcion" placeholder="Escriba el contenido de su entrada..." required></textarea></p>
 						<input type="submit" value="OK">
 					</div>
 				</form>
@@ -67,48 +67,13 @@
 				<p>Fotos a incluir en la entrada. Seleccione los ficheros y añada una descripcion.</p>		
 				<hr>
 				<div class="galeria">
-					<article>
-						<div class="no-grow">
-							<figure>
-								<img src="img/entradas/02.jpg" height="768" width="1024" alt="">
-							</figure>
-						</div>
-						<div>
-							<textarea form="form-nueva-entrada" name="desc-img-1" id="desc-img-1" cols="30" rows="6" placeholder="Escriba una descripción..." required></textarea>
-						</div>
-						<a href="#" class="boton"><i class="material-icons">&#xE2C6;</i>Seleccionar fichero</a>
-						<a href="#" class="boton peligro"><i class="material-icons">&#xE872;</i>Eliminar fichero</a>
-					</article>
-					<article>
-						<div class="no-grow">
-							<figure>
-								<img src="img/entradas/06.jpg" height="1024" width="1280" alt="">
-							</figure>
-						</div>
-						<div>
-							<textarea form="form-nueva-entrada" name="desc-img-2" id="desc-img-2" cols="30" rows="6" placeholder="Escriba una descripción..." required></textarea>
-						</div>
-						<a href="#" class="boton"><i class="material-icons">&#xE2C6;</i>Seleccionar fichero</a>
-						<a href="#" class="boton peligro"><i class="material-icons">&#xE872;</i>Eliminar fichero</a>
-					</article>
-					<article>
-						<div class="no-grow">
-							<figure>
-								<img src="img/entradas/03.jpg" height="1080" width="1920" alt="">
-							</figure>
-						</div>
-						<div>
-							<textarea form="form-nueva-entrada" name="desc-img-3" id="desc-img-3" cols="30" rows="6" placeholder="Escriba una descripción..." required></textarea>
-						</div>
-						<a href="#" class="boton"><i class="material-icons">&#xE2C6;</i>Seleccionar fichero</a>
-						<a href="#" class="boton peligro"><i class="material-icons">&#xE872;</i>Eliminar fichero</a>
-					</article>
-					<article>
+					<article id="nueva-foto" onclick="insertarCarta()">
 						<a href="#" class="nueva-imagen">
 							<p><i class="material-icons">&#xE148;</i></p>
 							<p>Añadir imagen</p>
 						</a>
 					</article>
+					<input type="file" accept="image/*" onchange="mostarFoto(this);">
 				</div>
 			</section>
 		</main>
