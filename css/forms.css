@@ -203,6 +203,18 @@ form
 	display: none;
 }
 
+.foto-muy-grande
+{
+	border: 2px solid #D50000;
+	box-shadow: 0 1px 3px rgba(213,0,0,0.12), 0 1px 2px rgba(213,0,0,0.24);
+	transition: all .3s cubic-bezier(.25,.8,.25,1);
+}
+	.foto-muy-grande:hover,
+	.foto-muy-grande:focus
+	{
+		box-shadow: 0 14px 28px rgba(213,0,0,0.25), 0 10px 10px rgba(213,0,0,0.22);
+	}
+
 /* Validacion */
 #disponibilidad,
 #coincidencia

@@ -32,8 +32,8 @@ Index
 [X]		0.75				Paginación
 [X]		0.5				Mostrar los últimos 10 comentarios
 Nueva entrada
-[ ]		0.75				Mostrar las fotos en la zona en blanco cada vez que se añada una
-[ ]		0.5				Error de 500 KB
+[X]		0.75				Mostrar las fotos en la zona en blanco cada vez que se añada una
+[X]		0.5				Error de 500 KB
 [ ]		0.75				Validación previa antes de enviar datos de formulario.
 Entrada
 [X]		0.5				Cargar datos de entrada a partir de su id
@@ -79,3 +79,5 @@ NUEVA ENTRADA
 
 PROBLEMAS
 - Los campos tipo date no son compatibles en todos los navegadores. No obstante, queremos que los que sí que lo admitan puedan aprovecharlos.
+
+- El usuario puede quitar las clases "foto-muy-grande" para colar fotos. Pero también está comprobandose del lado del servidor.
