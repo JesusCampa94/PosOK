@@ -23,10 +23,11 @@ Hecho		Calificación	Tarea
 
 PRÁCTICA 2
 Hecho		Calificación	Tarea
+
 [ ]		0.5				Validación
 [X]		0.5				Cambiar header según esté el usuario logueado o no
 [X]		0.25				Control de acceso a las páginas que lo requieran
-[ ]		0.75				Alternativa al input de tipo fecha para Firefox
+[X]		0.75				Alternativa al input de tipo fecha para Firefox
 Index
 [X]		0.5				Mostrar 6 entradas en index y mostrar el detalle de entrada con el id en la URL
 [X]		0.75				Paginación
@@ -78,6 +79,6 @@ NUEVA ENTRADA
 - Se agrupan en un formdata y se envian.
 
 PROBLEMAS
-- Los campos tipo date no son compatibles en todos los navegadores. No obstante, queremos que los que sí que lo admitan puedan aprovecharlos.
+- Los campos tipo date no son compatibles en todos los navegadores. No obstante, queremos que los que sí que lo admitan puedan aprovecharlos. Para aquellos nabegadores que no disponen de compativilidad con dicho tipo, se ha implementado una solucion mediante javascript que muestra un calendario alternativo.
 
 - El usuario puede quitar las clases "foto-muy-grande" para colar fotos. Pero también está comprobandose del lado del servidor.

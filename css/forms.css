@@ -21,6 +21,7 @@ form
 		form input[type="password"],
 		form input[type="email"],
 		form input[type="date"],
+		form input[type=""],
 		textarea
 		{
 			display: inline-block;
@@ -35,11 +36,13 @@ form
 			form input[type="password"]:hover,
 			form input[type="email"]:hover,
 			form input[type="date"]:hover,
+			form input[type=""]:hover,
 			textarea:hover,
 			form input[type="text"]:focus,
 			form input[type="password"]:focus,
 			form input[type="email"]:focus,
 			form input[type="date"]:focus,
+			form input[type=""]:focus,
 			textarea:focus
 			{
 				border-bottom: 2px solid #FFB74D;

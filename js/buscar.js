@@ -5,6 +5,21 @@ var pagEnt = 1,	//Pagina actual
 	estructuraCreada = false,
 	url = 'http://localhost/PosOK/rest/entrada/'; //La url ira creciendo entre diferentes funciones
 
+! function comprobarTipoFecha()
+{
+	let fI = document.getElementById('fechaInicio'), 
+		fF = document.getElementById('fechaFin');
+
+	//si el navegador no reconoce el tipo date
+	if (fI.type!="date"){ 
+		fI.type = '';
+		fI.classList.add('datepicker');
+		fF.type = '';
+		fF.classList.add('datepicker');
+	}
+
+}();
+
 //Cuenta las entradas de los resultados, necesario para determinar cuantas paginas hacen falta al mostrarlas
 function contarEntradas(url)
 {
