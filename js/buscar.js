@@ -1,6 +1,6 @@
 //Variables globales
 var pagEnt = 1,	//Pagina actual
-	lPagEnt = 2,	//Longitud pagina
+	lPagEnt = 6,	//Longitud pagina
 	pagsEnt = 0,	//Paginas totales
 	estructuraCreada = false,
 	url = 'http://localhost/PosOK/rest/entrada/'; //La url ira creciendo entre diferentes funciones

@@ -1,6 +1,6 @@
 //Paginacion de entradas
 let pagEnt = 1,	//Pagina actual
-	lPagEnt = 2,	//Longitud pagina
+	lPagEnt = 6,	//Longitud pagina
 	pagsEnt = 0;	//Paginas totales
 
 //Cuenta las entradas totales, necesario para determinar cuantas paginas hacen falta al mostrarlas

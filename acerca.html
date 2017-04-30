@@ -30,7 +30,7 @@
 			</div>
 			<nav>
 				<ul>
-					<li><a href="index.html" class="actual"><i class="material-icons">&#xE88A;</i>Inicio</a></li>
+					<li><a href="index.html"><i class="material-icons">&#xE88A;</i>Inicio</a></li>
 					<li><a href="buscar.html"><i class="material-icons">&#xE8B6;</i>Buscar</a></li>					
 				</ul>
 			</nav>
@@ -41,7 +41,7 @@
 				<hr>
 				<article class="texto">
 					<h3>Descripción</h3>
-					<p>El website PosOK&copy; es la práctica 1 de la asginatura Programación Hipermedia II, la cual pertenece al tercer curso del Grado en Ingeniería Multimedia de la Universidad de Alicante.</p>
+					<p>El website PosOK&copy; es la práctica 2 de la asginatura Programación Hipermedia II, la cual pertenece al tercer curso del Grado en Ingeniería Multimedia de la Universidad de Alicante.</p>
 				</article>
 				<article class="texto">
 					<h3>Autores</h3>
@@ -70,15 +70,15 @@
 				<hr>
 				<article class="texto">
 					<h3>Puntos realizados</h3>
-					<p>Se han realizado todos los apartados especificados en el enunciado de la práctica.</p>
+					<p>Se han realizado casi todos los apartados especificados en el enunciado de la práctica, pero hay uno que no hemos podido completar. A la hora de registrarse en la página web aparece un mensaje cuando se ha registrado un usuario correctamente, pero dicho mensaje no aparece con una animacion de css.</p>
 				</article>
 				<article class="texto">
 					<h3>Problemas e incompatibilidades</h3>
 					<p>Hemos encontrado algunos problemas a la hora de realizar la práctica:</p>
 					<ul>
-						<li>Los campos tipo <code>date</code> no son compatibles con ciertos navegadores, como Firefox. En dichos casos, los campos aparecen como si se tratara de un <code>input</code> con <code>type="text"</code> para que el usuario escriba la fecha manualmente.</li>
-						<li>En Firefox existe un problema de dispocición en el <code>header</code> del sitio. El contenido de la cabecera aparece más abajo de lo normal, invadiendo incluso la zona delimitada por el padding inferior y no pudiendo visualizarse el borde inferior en la zona de navegación.</li>
-						<li>Los enlaces que apuntan a una zona espeficica de una página (mediante el uso de <code>id</code>) entran en conflicto con el <code>header</code>, que al tener <code>position: fixed;</code> flota encima del sitio y tapa los píxeles superiores de la sección a la que nos hemos dirigido.</li>
+						<li>Los campos tipo <code>date</code> no son compatibles con ciertos navegadores, como Firefox. Para aquellos que no disponen de compatibilidad con dicho tipo, se ha implementado una solucion mediante javascript que muestra un calendario alternativo.</li>
+						<li>El usuario podría colar fotos más grandes que el tamaño máximo permitido quitando las clases "foto-muy-grande" de los contenedores de la imagen. Sin embargo, también está comprobando del lado del servidor, por lo que la imagen no terminaría entrando en la Base de Datos.</li>
+						<li>A la hora de realizar la validación aparece un "warning" que nos avisa de que estamos usando "Áreas Privadas de Unicode". Se trata de los códigos de los iconos material desing usados en la página. Aunque Google ofrece una alternativa usando los nombres ingleses de los iconos, decidimos usar esta opción debido a su mayor compatibilidad con las versiones antiguas de Internet Explorer.</li>
 					</ul>
 				</article>
 			</section>
