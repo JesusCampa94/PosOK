@@ -108,9 +108,9 @@ function cargarFoto(input)
 
 	fr.onload = function()
 	{
-		//CAMBIAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		input.parentNode.querySelector('img').src = fr.result;
-		input.parentNode.querySelector('img').alt = input.files[0].name;
+		puntero = document.getElementById(input.id.replace('input-', 'foto-'));
+		puntero.querySelector('img').src = fr.result;
+		puntero.querySelector('img').alt = input.files[0].name;
 	};
 
 	fr.readAsDataURL(input.files[0]);
