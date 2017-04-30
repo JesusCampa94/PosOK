@@ -35,7 +35,7 @@ Index
 Nueva entrada
 [X]		0.75				Mostrar las fotos en la zona en blanco cada vez que se añada una
 [X]		0.5				Error de 500 KB
-[ ]		0.75				Validación previa antes de enviar datos de formulario.
+[X]		0.75				Validación previa antes de enviar datos de formulario.
 Entrada
 [X]		0.5				Cargar datos de entrada a partir de su id
 [X]		0.5				Carga condicional del formulario de comentario, según estes o no logueado

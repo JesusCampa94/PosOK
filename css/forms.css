@@ -201,7 +201,8 @@ form
 
 /* Nueva Entrada */
 .form-oculto,
-.input-oculto
+.input-oculto,
+.div-oculto
 {
 	display: none;
 }
@@ -235,4 +236,9 @@ form
 	{
 		color: #D50000;
 		font-weight: bold;
+	}
+
+	.input-incorrecto
+	{
+		border-color: #D50000;
 	}

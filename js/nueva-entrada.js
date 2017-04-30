@@ -18,7 +18,7 @@ function nuevaFoto()
 	//Punteros
 	let divGaleria = document.querySelector('.galeria'),
 		botonInsertar = document.getElementById('nueva-foto'),
-		formFotos = document.getElementById('form-fotos');
+		containerInputs = document.getElementById('container-inputs');
 	
 	//Aumentar contador fotos
 	fotos++;
@@ -27,17 +27,18 @@ function nuevaFoto()
 	let article = document.createElement('article'),
 		html = '',
 		codigoInput = '<input type="file" accept="image/*"  name="foto" id="input-' + fotos + '" onchange="cargarFoto(this);">',
-		queryDelSelector = '#form-fotos>input:nth-of-type(' + fotos + ')';
+		queryDelSelector = '#input-' + fotos;
 
 	// console.log('Fotos: ' + fotos + ' selector: document.querySelector(\'' + queryDelSelector + '\')');
 
-	formFotos.innerHTML += codigoInput;
+	containerInputs.innerHTML += codigoInput;
 
 	html += '<div class="no-grow">';
 	html += '	<figure>';
 	html += '		<img src="img/com/image.png" height="300" width="300" alt="" onclick="document.querySelector(\'' + queryDelSelector + '\').click();">';
 	html += '	</figure>';
-	html += '	<textarea form="form-fotos" name="texto" id="texto-' + fotos + '" cols="30" rows="6" placeholder="Escriba una descripción..." required></textarea>';
+	html += '<div class="div-oculto"><p class="incorrecto">Por favor, rellena este campo</p></div>';
+	html += '	<textarea name="texto" id="texto-' + fotos + '" cols="30" rows="6" placeholder="Escriba una descripción..." required oninput="validarDescripcion(this);"></textarea>';
 	html += '</div>';
 	html += '<div>';
 	html += '	<a onclick="document.querySelector(\'' + queryDelSelector + '\').click();" class="boton"><i class="material-icons">&#xE2C6;</i>Seleccionar fichero</a>';
@@ -58,6 +59,25 @@ function quitarFoto(article)
 	//Eliminamos el article y su input
 	article.remove();
 	document.getElementById(inputAEliminar).remove();
+}
+
+
+//Comprueba que la descripcion no esta vacia
+function validarDescripcion(textarea)
+{
+	if (textarea.value == '')
+	{
+		textarea.parentNode.querySelector('div').classList.remove('div-oculto');
+		textarea.classList.add('input-incorrecto');
+		textarea.setCustomValidity('Rellena este campo');
+	}
+
+	else
+	{
+		textarea.parentNode.querySelector('div').classList.add('div-oculto');
+		textarea.classList.remove('input-incorrecto');
+		textarea.setCustomValidity('');
+	}
 }
 
 
@@ -86,19 +106,23 @@ function cargarFoto(input)
 			p.appendChild(contP);
 			p.classList.add('incorrecto');
 
+			article.querySelector('div.no-grow>div').classList.add('div-oculto');
 			article.querySelector('textarea').classList.add('input-oculto');
 			article.querySelector('div:first-of-type').appendChild(p);
 		}
-		//La image es correcta
+
+		//La imagen es correcta
 		else
 		{
 			if(article.classList.contains('foto-muy-grande'))
 			{
 				input.setCustomValidity('');
+				article.querySelector('div.no-grow>p').remove();
 				article.classList.remove('foto-muy-grande');
-				article.querySelector('p').remove();
 				article.querySelector('textarea').classList.remove('input-oculto');
 			}
+
+			validarDescripcion(article.querySelector('textarea'));
 		}
 	};
 
@@ -128,7 +152,7 @@ function mostrarMensaje()
 
 
 //Recibe los datos necesarios y envia una foto
-function enviarFoto(foto, texto, form)
+function enviarFoto(form)
 {
 	let xhr = new XMLHttpRequest(),
 		url = 'http://localhost/PosOK/rest/foto/',
@@ -143,20 +167,18 @@ function enviarFoto(foto, texto, form)
 	}
 
 	//Agregamos los parametros al FormData para su envio
-	// fd.append('foto' , foto);
-	// fd.append('texto', texto);
 	fd.append('id_entrada', idEntrada);
 
 	xhr.open('POST', url, true);
 
 	xhr.onload = function()
 	{
-		console.log(xhr.responseText);
+		// console.log(xhr.responseText);
 		let obj = JSON.parse(xhr.responseText);
 		
 		if (obj.RESULTADO == 'ok')
 		{
-			mostrarMensaje();
+			//Enviadas
 		}
 	};
 
@@ -171,7 +193,7 @@ function enviarFoto(foto, texto, form)
 function guardarFotos(form)
 {
 	//Guardamos un array con los inputs tipo file y otro con los textarea, y el numero de fotos
-	let inputs =	form.querySelectorAll('input'),
+	let inputs =	document.getElementById('container-inputs').querySelectorAll('input'),
 		textareas = document.querySelector('.galeria').querySelectorAll('article textarea'),
 		numFotos = inputs.length;
 
@@ -179,7 +201,12 @@ function guardarFotos(form)
 
 	for (i = 0; i < numFotos; i++)
 	{
-		enviarFoto(inputs[i].value, textareas[i].value, form);
+		//Incluimos los campos en el formulario antes de enviarlo
+		form.innerHTML = '';
+		form.appendChild(inputs[i]);
+		form.appendChild(textareas[i].cloneNode());
+		
+		enviarFoto(form);
 	}
 
 	return false;
@@ -206,10 +233,31 @@ function comprobarImagenes()
 }
 
 
+//Comprueba que las descripciones no estan vacias
+function comprobarDescripciones()
+{
+	let divGaleria = document.querySelector('.galeria'),
+		textareas = divGaleria.querySelectorAll('article textarea'),
+		correcto = true,
+		i;
+
+	for (i = 0; i < textareas.length; i++)
+	{
+		if (textareas[i].classList.contains('input-incorrecto'))
+		{
+			correcto = false;
+			break;
+		}
+	}
+
+	return correcto;
+}
+
+
 //Crea una nueva entrada en la página
 function crearEntrada(form)
 {
-	if (comprobarImagenes())
+	if (comprobarImagenes() && comprobarDescripciones())
 	{
 		let xhr = new XMLHttpRequest(),
 			url = 'http://localhost/PosOK/rest/entrada/',
@@ -227,7 +275,7 @@ function crearEntrada(form)
 
 		xhr.onload = function()
 		{
-			console.log(xhr.responseText);
+			//console.log(xhr.responseText);
 			let obj = JSON.parse(xhr.responseText);
 			
 			if (obj.RESULTADO == 'ok')
@@ -235,8 +283,8 @@ function crearEntrada(form)
 				idEntrada = obj.id;
 
 				//Entrada creada, le toca a las fotos
-				// document.getElementById('form-fotos').submit();
 				guardarFotos(document.getElementById('form-fotos'));
+				mostrarMensaje();
 			}
 		};
 
