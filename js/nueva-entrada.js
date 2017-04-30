@@ -26,7 +26,7 @@ function nuevaFoto()
 	//Nuevos elementos
 	let article = document.createElement('article'),
 		html = '',
-		codigoInput = '<input type="file" accept="image/*"  name="input-' + fotos + '" id="input-' + fotos + '" onchange="cargarFoto(this);">',
+		codigoInput = '<input type="file" accept="image/*"  name="foto" id="input-' + fotos + '" onchange="cargarFoto(this);">',
 		queryDelSelector = '#form-fotos>input:nth-of-type(' + fotos + ')';
 
 	// console.log('Fotos: ' + fotos + ' selector: document.querySelector(\'' + queryDelSelector + '\')');
@@ -37,7 +37,7 @@ function nuevaFoto()
 	html += '	<figure>';
 	html += '		<img src="img/com/image.png" height="300" width="300" alt="" onclick="document.querySelector(\'' + queryDelSelector + '\').click();">';
 	html += '	</figure>';
-	html += '	<textarea form="form-fotos" name="texto-' + fotos + '" id="texto-' + fotos + '" cols="30" rows="6" placeholder="Escriba una descripción..." required></textarea>';
+	html += '	<textarea form="form-fotos" name="texto" id="texto-' + fotos + '" cols="30" rows="6" placeholder="Escriba una descripción..." required></textarea>';
 	html += '</div>';
 	html += '<div>';
 	html += '	<a onclick="document.querySelector(\'' + queryDelSelector + '\').click();" class="boton"><i class="material-icons">&#xE2C6;</i>Seleccionar fichero</a>';
@@ -143,11 +143,9 @@ function enviarFoto(foto, texto, form)
 	}
 
 	//Agregamos los parametros al FormData para su envio
-	fd.set('foto' , foto);
-	fd.set('texto', texto);
-	fd.set('id_entrada', idEntrada);
-
-	console.log(fd);
+	// fd.append('foto' , foto);
+	// fd.append('texto', texto);
+	fd.append('id_entrada', idEntrada);
 
 	xhr.open('POST', url, true);
 
