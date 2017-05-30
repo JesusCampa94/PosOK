@@ -6,9 +6,9 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700"><!-- Ubuntu Web Font -->	
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"><!-- Material Icons -->
 		<link rel="stylesheet" type="text/css" href="css/estilos.css">
-		<script src="js/basico.js" async defer></script>
+		<link rel="stylesheet" type="text/css" href="css/forms.css">
 		<script src="js/index.js" async defer></script>
-		<title>PosOK</title>
+		<title>Login - PosOK</title>
 	</head>
 	<body>
 		<input type="checkbox" id="burger-ckb">
@@ -16,7 +16,7 @@
 			<div>
 				<label for="burger-ckb"><i class="material-icons">&#xE5CF;</i></label>
 				<div id="logo-container">
-					<img src="img/com/logo.png" height="500" width="500" alt="Logo PosOK">
+					<img src="img/logo.png" height="500" width="500" alt="Logo PosOK">
 					<div>
 						<h1>PosOK</h1>
 						<p>Comenta y dale a OK.</p>
@@ -24,43 +24,59 @@
 				</div>
 			</div>
 			<div id="login-container">
-				<p>Cargando nombre de usuario...</p>
-				<div>
-					<p>Cargando enlaces...</p>
-				</div>
+				<p>A vs B</p>
 			</div>
-			<nav>
-				<ul>
-					<li><a href="index.html" class="actual"><i class="material-icons">&#xE88A;</i>Inicio</a></li>
-					<li><a href="buscar.html"><i class="material-icons">&#xE8B6;</i>Buscar</a></li>					
-				</ul>
-			</nav>
 		</header>
 		<main>
 			<section>
-				<h2>Últimas entradas</h2>
-				<p>Resumen de las últimas entradas publicadas por los usuarios</p>
-				<hr>
-				<div class="galeria">
-					<p>Cargando contenido...</p>
-					<!-- Contenido agregado por AJAX -->
+				<h2>Iniciar sesión</h2>
+				<p></p>
+				<hr />
+				<div class="equipos">
+					<div class="tarjeta">
+						<h3>Equipo local</h3>
+						<p>Introduzca los datos del equipo local</p>
+						<hr>
+						<form onsubmit="return iniciarSesion(this);">
+							<div>
+								<p><label for="equipo1">Nombre</label></p>
+								<p><input type="text" name="equipo1" id="equipo1" placeholder="Equipo local..." required autofocus></p>
+								<p>Color</p>
+								<svg xmlns="http://www.w3.org/2000/svg" width="188" height="122" id="A">
+									<circle fill="#FAC" stroke="#E91E63" stroke-width="6" cx="28" cy="28" r="25" id="A1" onclick="elegirFicha(this);" />
+									<circle fill="#2196F3" stroke="#0D41A1" stroke-width="6" cx="94" cy="28" r="25" id="A2" onclick="elegirFicha(this);" />
+									<circle fill="#FFC107" stroke="#FF6F00" stroke-width="6" cx="160" cy="28" r="25" id="A3" onclick="elegirFicha(this);" />
+									<circle fill="#8BC34A" stroke="#33691E" stroke-width="6" cx="28" cy="94" r="25" id="A4" onclick="elegirFicha(this);" />
+									<circle fill="#009688" stroke="#004D40" stroke-width="6" cx="94" cy="94" r="25" id="A5" onclick="elegirFicha(this);" />
+									<circle fill="#F44336" stroke="#B71C1C" stroke-width="6" cx="160" cy="94" r="25" id="A6" onclick="elegirFicha(this);" />
+								</svg>
+								<input type="submit" value="Listo">
+							</div>
+						</form>						
+					</div>
+					<div class="tarjeta">
+						<h3>Equipo local</h3>
+						<p>Introduzca los datos del equipo visitante</p>
+						<hr>
+						<form onsubmit="return iniciarSesion(this);">
+							<div>
+								<p><label for="equipo2">Nombre</label></p>
+								<p><input type="text" name="eqipo2" id="eqipo2" placeholder="Equipo visitante..." required></p>
+								<p>Color</p>
+								<svg xmlns="http://www.w3.org/2000/svg" width="188" height="122" id="B">
+									<circle fill="#FAC" stroke="#E91E63" stroke-width="6" cx="28" cy="28" r="25" id="B1" onclick="elegirFicha(this);" />
+									<circle fill="#2196F3" stroke="#0D41A1" stroke-width="6" cx="94" cy="28" r="25" id="B2" onclick="elegirFicha(this);" />
+									<circle fill="#FFC107" stroke="#FF6F00" stroke-width="6" cx="160" cy="28" r="25" id="B3" onclick="elegirFicha(this);" />
+									<circle fill="#8BC34A" stroke="#33691E" stroke-width="6" cx="28" cy="94" r="25" id="B4" onclick="elegirFicha(this);" />
+									<circle fill="#009688" stroke="#004D40" stroke-width="6" cx="94" cy="94" r="25" id="B5" onclick="elegirFicha(this);" />
+									<circle fill="#F44336" stroke="#B71C1C" stroke-width="6" cx="160" cy="94" r="25" id="B6" onclick="elegirFicha(this);" />
+								</svg>
+								<input type="submit" value="Listo">
+							</div>
+						</form>	
+					</div>
 				</div>
-				<hr>
-				<footer>
-					<p class="paginacion">
-						Cargando contenido...
-						<!-- Contenido agregado por AJAX -->
-					</p>
-				</footer>
-			</section>
-			<section class="medium-card">
-				<h2>Últimos comentarios</h2>
-				<p>Resumen de las últimos comentarios publicados por los usuarios</p>
-				<hr>
-				<div id="comentarios">
-					<p>Cargando contenido...</p>
-					<!-- Contenido agregado por AJAX -->
-				</div>
+				<p></p>
 			</section>
 		</main>
 		<footer>

@@ -51,6 +51,10 @@ Registro
 [/\]		0.25				Mensaje semitransparente con animación después de un registro correcto (falta animación)
 
 
+PRÁCTICA 3
+Hecho		Calificación	Tarea
+
+
 TAREAS
 [ ] Añadir selector de fuente (requiere javascript) (opcional)
 [X] Problema con ellipsis
@@ -82,3 +86,8 @@ PROBLEMAS
 - Los campos tipo date no son compatibles en todos los navegadores. No obstante, queremos que los que sí que lo admitan puedan aprovecharlos. Para aquellos nabegadores que no disponen de compativilidad con dicho tipo, se ha implementado una solucion mediante javascript que muestra un calendario alternativo.
 
 - El usuario puede quitar las clases "foto-muy-grande" para colar fotos. Pero también está comprobandose del lado del servidor.
+
+IDEAS
+- Selector de color de ficha (al pasar encima, se ve el nombre del color)
+- Que no aparezca un color en el otro select al elegir
+- Poner miniaturas en el select

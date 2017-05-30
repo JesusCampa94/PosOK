@@ -342,12 +342,31 @@ main
 				box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 			}
 
-		/*Galerias*/
-		main section>div.galeria
+			main .equipos
+			{
+				display: flex;
+				flex-flow: row wrap;
+				justify-content: space-around;
+			}
+
+				main .equipos .tarjeta
+				{
+					width: 45%;
+					min-width: 250px;
+					max-width: 500px;
+				}
+
+					main .equipos .tarjeta h3,
+					main .equipos .tarjeta>p
+					{
+						text-align: center;
+					}
+
+		/*SVG*/
+		main section svg
 		{
-			display: flex;
-			flex-flow: row wrap;
-			justify-content: center; 
+			margin: 10px auto;
+			display: block;
 		}
 
 

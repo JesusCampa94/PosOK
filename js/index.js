@@ -1,200 +1,51 @@
-//Paginacion de entradas
-let pagEnt = 1,	//Pagina actual
-	lPagEnt = 6,	//Longitud pagina
-	pagsEnt = 0;	//Paginas totales
-
-//Cuenta las entradas totales, necesario para determinar cuantas paginas hacen falta al mostrarlas
-! function contarEntradas()
+//Elige una ficha para un equipo e impide que el otro equipo la elija
+function elegirFicha(ficha)
 {
-	let xhr = new XMLHttpRequest(),
-		url = 'http://localhost/PosOK/rest/entrada/';
+	let equipo = ficha.parentNode.id,
+		equipoContrario = (equipo == 'A' ? 'B' : 'A'),
+		idContrario = ficha.id.replace(equipo, equipoContrario),
+		fichaContraria = document.getElementById(idContrario),
+		color = ficha.getAttribute('fill');
 
-	xhr.open('GET', url, true);
+	console.log(`Ficha: ${ficha} Equipo: ${equipo}, contrario: ${equipoContrario}, id contrario: ${idContrario} ficha contraria: ${fichaContraria}, color: ${color}`);
 
-	xhr.onload = function()
-	{
-		// console.log(xhr.responseText);
-		let obj = JSON.parse(xhr.responseText);
-		// console.log(obj.FILAS);
+	//Para no desactivar mas de una ficha a la vez
+	reiniciarFichas(document.getElementById(equipoContrario));
 
-		if (obj.RESULTADO = 'ok')
-		{
-			let numEnt = obj.FILAS.length;
-
-			if (numEnt == 0)
-			{
-				pagsEnt = 1;
-			}
-
-			else
-			{
-				pagsEnt = Math.ceil(numEnt/lPagEnt);
-			}
-				
-			mostrarEntradas();
-		}
-	};
-
-	xhr.send();
-}();
-
-//Muestra las 6 ultimas entradas paginadas. Es llamada justo despues de contar las entradas y en cada cambio de pagina
-function mostrarEntradas()
-{
-	let xhr = new XMLHttpRequest(),
-		url = 'http://localhost/PosOK/rest/entrada/?pag=' + (pagEnt-1) + '&lpag=' + lPagEnt,
-		divGaleria = document.querySelector('.galeria');
-
-	mostrarPaginacion();
-
-	xhr.open('GET', url, true);
-
-	xhr.onload = function()
-	{
-		// console.log(xhr.responseText);
-		let obj = JSON.parse(xhr.responseText);
-		// console.log(obj.FILAS);
-
-		if (obj.RESULTADO = 'ok')
-		{
-			let html = '';
-
-			for (let i = 0; i < obj.FILAS.length; i++)
-			{
-				let entrada = obj.FILAS[i],
-					ruta = 'fotos/' + entrada.fichero;
-
-				html += '<article>';
-				html += ' 	<div class="no-grow">';
-				html += '		<figure class="con-transparencia">';
-				html += '			<img src="' + ruta + '" alt="' + entrada.descripcion_foto + '">';
-				html += '			<figcaption>';
-				html += 					entrada.descripcion;					
-				html += '			</figcaption>';
-				html += '		</figure>';
-				html += '		<footer>';
-				html += '			<a href="entrada.html?id=' + entrada.id + '">Ver más...</a>';
-				html += '		</footer>';
-				html += '	</div>';
-				html += '	<div>';
-				html += '		<h3><a href="entrada.html?id=' + entrada.id + '">' + entrada.nombre + '</a></h3>';
-				html += '		<p>' + entrada.login + '</p>';
-				html += '	</div>';
-				html += '	<footer>';
-				html += '		<p><time datetime="' + entrada.fecha + '">' + formatearFecha(entrada.fecha, 1) + '</time></p>';
-				html += '		<p>' + entrada.nfotos + ' fotos</p>';
-				html += '		<p>' + entrada.ncomentarios + ' comentarios</p>';
-				html += '	</footer>';
-				html += '</article>';
-			}
-
-			if (obj.FILAS.length == 0)
-			{
-				html += '<p>No hay entradas que mostrar</p>';
-			}
-
-			divGaleria.innerHTML = html;			
-		}
-	};
-
-	xhr.send();
+	//Colorear en gris la del equipo opuesto y evitar que pueda hacerse clic
+	fichaContraria.setAttribute('fill','#455A64');
+	fichaContraria.setAttribute('stroke','#263238');
+	fichaContraria.removeAttribute('onclick');
 }
 
 
-//Muestra la botonera de paginacion
-function mostrarPaginacion()
+//Reinicia una lista de fichas
+function reiniciarFichas(svg)
 {
-	let p = document.querySelector('.paginacion'); 
-		html = '';
 
-	html += '<a onclick="primeraPagina();" title="Primera página"><i class="material-icons">&#xE045;</i></a>';
-	html += '<a onclick="paginaAnterior();" title="Página anterior"><i class="material-icons">&#xE020;</i></a>';
-	html += 'Página<span class="negrita">' + pagEnt +  '</span>de<span class="negrita">' + pagsEnt + '</span>';
-	html += '<a onclick="paginaSiguiente();" title="Página siguiente"><i class="material-icons">&#xE01F;</i></a>';
-	html += '<a onclick="ultimaPagina();" title="Última página"><i class="material-icons">&#xE044;</i></a>';
+	//Crear matriz con fills y strokes para no eliminar nodos, solo reiniciar valores
+	html = '';
 
-	p.innerHTML = html;
-}
-
-
-//Muestra la primera pagina de entradas
-function primeraPagina()
-{
-	pagEnt = 1;
-	mostrarEntradas();
-}
-
-//Muestra la pagina anterior de entradas
-function paginaAnterior()
-{
-	if (pagEnt > 1)
+	if (svg.id == 'A')
 	{
-		pagEnt--;
-		mostrarEntradas();
+		html += '<circle fill="#FAC" stroke="#E91E63" stroke-width="6" cx="28" cy="28" r="25" id="A1" onclick="elegirFicha(this);" />';
+		html += '<circle fill="#2196F3" stroke="#0D41A1" stroke-width="6" cx="94" cy="28" r="25" id="A2" onclick="elegirFicha(this);" />';
+		html += '<circle fill="#FFC107" stroke="#FF6F00" stroke-width="6" cx="160" cy="28" r="25" id="A3" onclick="elegirFicha(this);" />';
+		html += '<circle fill="#8BC34A" stroke="#33691E" stroke-width="6" cx="28" cy="94" r="25" id="A4" onclick="elegirFicha(this);" />';
+		html += '<circle fill="#009688" stroke="#004D40" stroke-width="6" cx="94" cy="94" r="25" id="A5" onclick="elegirFicha(this);" />';
+		html += '<circle fill="#F44336" stroke="#B71C1C" stroke-width="6" cx="160" cy="94" r="25" id="A6" onclick="elegirFicha(this);" />';
 	}
-}
 
-
-//Muestra la pagina siguiente de entradas
-function paginaSiguiente()
-{
-	if (pagEnt < pagsEnt)
+	else if (svg.id == 'B')
 	{
-		pagEnt++;
-		mostrarEntradas();
+		html += '<circle fill="#FAC" stroke="#E91E63" stroke-width="6" cx="28" cy="28" r="25" id="B1" onclick="elegirFicha(this);" />';
+		html += '<circle fill="#2196F3" stroke="#0D41A1" stroke-width="6" cx="94" cy="28" r="25" id="B2" onclick="elegirFicha(this);" />';
+		html += '<circle fill="#FFC107" stroke="#FF6F00" stroke-width="6" cx="160" cy="28" r="25" id="B3" onclick="elegirFicha(this);" />';
+		html += '<circle fill="#8BC34A" stroke="#33691E" stroke-width="6" cx="28" cy="94" r="25" id="B4" onclick="elegirFicha(this);" />';
+		html += '<circle fill="#009688" stroke="#004D40" stroke-width="6" cx="94" cy="94" r="25" id="B5" onclick="elegirFicha(this);" />';
+		html += '<circle fill="#F44336" stroke="#B71C1C" stroke-width="6" cx="160" cy="94" r="25" id="B6" onclick="elegirFicha(this);" />';
+
 	}
+
+	svg.innerHTML = html;
 }
-
-
-//Muestra la ultima pagina de entradas
-function ultimaPagina()
-{
-	pagEnt = pagsEnt;
-	mostrarEntradas();
-}
-
-
-//Muestra los 10 ultimos comentarios
-! function mostrarComentarios()
-{
-	let xhr = new XMLHttpRequest(),
-		url = 'http://localhost/PosOK/rest/comentario/?u=10',
-		divComentarios = document.getElementById('comentarios');
-
-	xhr.open('GET', url, true);
-
-	xhr.onload = function()
-	{
-		// console.log(xhr.responseText);
-		let obj = JSON.parse(xhr.responseText);
-		console.log(obj.FILAS);
-
-		if (obj.RESULTADO = 'ok')
-		{
-			let html = '';
-
-			for (let i = 0; i < obj.FILAS.length; i++)
-			{
-				let comentario = obj.FILAS[i];
-
-				html += '<a href="entrada.html?id=' + comentario.id_entrada + '#zona-comentarios">';
-				html += '	<article class="comentario">';
-				html += '		<h3>' + comentario.titulo + '</h3>';
-				html += '		<p><span class="resaltado">De: </span>' + comentario.login + '</p>';
-				html += '		<p><span class="resaltado">En: </span>' + comentario.nombre_entrada + '</p>';
-				html += '		<hr>';
-				html += '		<p>' + comentario.texto + '</p>';
-				html += '		<hr>';
-				html += '		<footer>';
-				html += '			<p class="resaltado"><time datetime="' + comentario.fecha + '">' + formatearFecha(comentario.fecha, 3) + '</time></p>';
-				html += '		</footer>';
-				html += '	</article>';
-				html += '</a>';
-			}
-
-			divComentarios.innerHTML = html;			
-		}
-	};
-
-	xhr.send();
-}();
