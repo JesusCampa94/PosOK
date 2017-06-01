@@ -2,7 +2,7 @@
 ! function obtenerNombres()
 {
 	let p = document.querySelector('#login-container>p');
-	let html = '<span class="usu">' +  sessionStorage['A'] + '</span> 0 - 0  <span class="usu">' +  sessionStorage['B'] + '</span>';
+	let html = '<span class="color-' + sessionStorage['fichaA'] + ' negrita">' +  sessionStorage['A'] + '</span> 0 - 0  <span class="color-' + sessionStorage['fichaB'] + ' negrita">' +  sessionStorage['B'] + '</span>';
 
 	p.innerHTML = html;
 }();

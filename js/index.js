@@ -20,15 +20,6 @@ listos['B'] = 'STANDBY';
 
 	if (typeof sessionStorage['fichaA'] !== 'undefined')
 	{
-		/*x = parseInt(sessionStorage['colorA']) % 3 * 66;
-		y = parseInt(sessionStorage['colorA']) / 3 * 66;
-
-		rect = document.getElementById('AS');
-		
-		rect.setAttribute('x', x);
-		rect.setAttribute('y', y);
-		rect.setAttribute('fill', '#BBDEFB');*/
-
 		ficha = document.getElementById('A' + sessionStorage['fichaA']);
 		elegirFicha(ficha);
 	}
@@ -41,15 +32,6 @@ listos['B'] = 'STANDBY';
 
 	if (typeof sessionStorage['fichaB'] !== 'undefined')
 	{
-		/*x = parseInt(sessionStorage['colorB']) % 3 * 66;
-		y = parseInt(sessionStorage['colorB']) / 3 * 66;
-
-		rect = document.getElementById('BS');
-		
-		rect.setAttribute('x', x);
-		rect.setAttribute('y', y);
-		rect.setAttribute('fill', '#BBDEFB');*/
-
 		ficha = document.getElementById('B' + sessionStorage['fichaB']);
 		elegirFicha(ficha);
 	}
@@ -163,7 +145,7 @@ function mostrarMensaje()
 		fondo.appendChild(contenedor);
 
 		mensaje += '<h3>Listo para jugar</h3>';
-		mensaje += '<p><span class="usu">' + sessionStorage['A'] + '</span> vs. <span class="usu">' + sessionStorage['B'] + '</span></p>';
+		mensaje += '<p><span class="color-' + sessionStorage['fichaA'] + ' negrita">' + sessionStorage['A'] + '</span> vs. <span class="color-' + sessionStorage['fichaB'] + ' negrita">' + sessionStorage['B'] + '</span></p>';
 		mensaje += '<p>Buena suerte a ambos.</p>';
 		mensaje += '<a href="juego.html" onclick="this.parentNode.parentNode.remove();" class="boton">Jugar</a>';
 		
