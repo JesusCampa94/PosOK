@@ -24,7 +24,7 @@
 				</div>
 			</div>
 			<div id="login-container">
-				<p>A vs B</p>
+				<p>Esperando equipos...</p>
 			</div>
 		</header>
 		<main>
@@ -37,40 +37,44 @@
 						<h3>Equipo local</h3>
 						<p>Introduzca los datos del equipo local</p>
 						<hr>
-						<form onsubmit="return iniciarSesion(this);">
+						<form onsubmit="return listo(this);">
 							<div>
-								<p><label for="equipo1">Nombre</label></p>
-								<p><input type="text" name="equipo1" id="equipo1" placeholder="Equipo local..." required autofocus></p>
+								<p><label for="equipoA">Nombre</label></p>
+								<p><input type="text" name="equipoA" id="equipoA" placeholder="Equipo local..." required autofocus></p>
 								<p>Color</p>
 								<svg xmlns="http://www.w3.org/2000/svg" width="188" height="122" id="A">
-									<circle fill="#FAC" stroke="#E91E63" stroke-width="6" cx="28" cy="28" r="25" id="A1" onclick="elegirFicha(this);" />
-									<circle fill="#2196F3" stroke="#0D41A1" stroke-width="6" cx="94" cy="28" r="25" id="A2" onclick="elegirFicha(this);" />
-									<circle fill="#FFC107" stroke="#FF6F00" stroke-width="6" cx="160" cy="28" r="25" id="A3" onclick="elegirFicha(this);" />
-									<circle fill="#8BC34A" stroke="#33691E" stroke-width="6" cx="28" cy="94" r="25" id="A4" onclick="elegirFicha(this);" />
-									<circle fill="#009688" stroke="#004D40" stroke-width="6" cx="94" cy="94" r="25" id="A5" onclick="elegirFicha(this);" />
-									<circle fill="#F44336" stroke="#B71C1C" stroke-width="6" cx="160" cy="94" r="25" id="A6" onclick="elegirFicha(this);" />
+									<rect fill="#FAFAFA" width="56" height="56" x="0" y="0" id="AS"/>
+									<circle fill="#FAC" stroke="#E91E63" stroke-width="6" cx="28" cy="28" r="25" id="A0" onclick="elegirFicha(this);" />
+									<circle fill="#2196F3" stroke="#0D41A1" stroke-width="6" cx="94" cy="28" r="25" id="A1" onclick="elegirFicha(this);" />
+									<circle fill="#FFC107" stroke="#FF6F00" stroke-width="6" cx="160" cy="28" r="25" id="A2" onclick="elegirFicha(this);" />
+									<circle fill="#8BC34A" stroke="#33691E" stroke-width="6" cx="28" cy="94" r="25" id="A3" onclick="elegirFicha(this);" />
+									<circle fill="#009688" stroke="#004D40" stroke-width="6" cx="94" cy="94" r="25" id="A4" onclick="elegirFicha(this);" />
+									<circle fill="#F44336" stroke="#B71C1C" stroke-width="6" cx="160" cy="94" r="25" id="A5" onclick="elegirFicha(this);" />
 								</svg>
+								<p class="oculto incorrecto">Por favor, elija un color</p>
 								<input type="submit" value="Listo">
 							</div>
 						</form>						
 					</div>
 					<div class="tarjeta">
-						<h3>Equipo local</h3>
+						<h3>Equipo visitante</h3>
 						<p>Introduzca los datos del equipo visitante</p>
 						<hr>
-						<form onsubmit="return iniciarSesion(this);">
+						<form onsubmit="return listo(this);">
 							<div>
-								<p><label for="equipo2">Nombre</label></p>
-								<p><input type="text" name="eqipo2" id="eqipo2" placeholder="Equipo visitante..." required></p>
+								<p><label for="equipoB">Nombre</label></p>
+								<p><input type="text" name="equipoB" id="equipoB" placeholder="Equipo visitante..." required></p>
 								<p>Color</p>
 								<svg xmlns="http://www.w3.org/2000/svg" width="188" height="122" id="B">
-									<circle fill="#FAC" stroke="#E91E63" stroke-width="6" cx="28" cy="28" r="25" id="B1" onclick="elegirFicha(this);" />
-									<circle fill="#2196F3" stroke="#0D41A1" stroke-width="6" cx="94" cy="28" r="25" id="B2" onclick="elegirFicha(this);" />
-									<circle fill="#FFC107" stroke="#FF6F00" stroke-width="6" cx="160" cy="28" r="25" id="B3" onclick="elegirFicha(this);" />
-									<circle fill="#8BC34A" stroke="#33691E" stroke-width="6" cx="28" cy="94" r="25" id="B4" onclick="elegirFicha(this);" />
-									<circle fill="#009688" stroke="#004D40" stroke-width="6" cx="94" cy="94" r="25" id="B5" onclick="elegirFicha(this);" />
-									<circle fill="#F44336" stroke="#B71C1C" stroke-width="6" cx="160" cy="94" r="25" id="B6" onclick="elegirFicha(this);" />
+									<rect fill="#FAFAFA" width="56" height="56" x="0" y="0" id="BS"/>
+									<circle fill="#FAC" stroke="#E91E63" stroke-width="6" cx="28" cy="28" r="25" id="B0" onclick="elegirFicha(this);" />
+									<circle fill="#2196F3" stroke="#0D41A1" stroke-width="6" cx="94" cy="28" r="25" id="B1" onclick="elegirFicha(this);" />
+									<circle fill="#FFC107" stroke="#FF6F00" stroke-width="6" cx="160" cy="28" r="25" id="B2" onclick="elegirFicha(this);" />
+									<circle fill="#8BC34A" stroke="#33691E" stroke-width="6" cx="28" cy="94" r="25" id="B3" onclick="elegirFicha(this);" />
+									<circle fill="#009688" stroke="#004D40" stroke-width="6" cx="94" cy="94" r="25" id="B4" onclick="elegirFicha(this);" />
+									<circle fill="#F44336" stroke="#B71C1C" stroke-width="6" cx="160" cy="94" r="25" id="B5" onclick="elegirFicha(this);" />
 								</svg>
+								<p class="oculto incorrecto">Por favor, elija un color</p>
 								<input type="submit" value="Listo">
 							</div>
 						</form>	
