@@ -88,6 +88,4 @@ PROBLEMAS
 - El usuario puede quitar las clases "foto-muy-grande" para colar fotos. Pero también está comprobandose del lado del servidor.
 
 IDEAS
-- Selector de color de ficha (al pasar encima, se ve el nombre del color)
-- Que no aparezca un color en el otro select al elegir
-- Poner miniaturas en el select
+- Usar archivos SVG tambien en el index

@@ -27,6 +27,7 @@ img
 {
 	max-width: 100%;
 	max-height: 100%;
+	display: inline-block;
 }
 
 h1, h2, h3, h4, h5, h6, p
@@ -135,6 +136,11 @@ display: none;
 {
 	color: #2196F3;
 	font-weight: bold;
+}
+
+.texto-grande
+{
+	font-size: 2em;
 }
 
 .color-0
@@ -281,6 +287,7 @@ header
 			margin-right: 10px;
 			width: 64px;
 			height: 64px;
+			cursor: pointer;
 		}
 
 		#logo-container>div
@@ -382,6 +389,42 @@ main
 			margin: 10px auto;
 			display: block;
 		}
+
+		/*JUEGO*/
+		#zona-marcador,
+		#zona-campo
+		{
+			display: flex;
+			justify-content: center;
+		}
+
+		#zona-campo
+		{
+			margin: 10px 0;
+		}
+
+		#zona-fichas
+		{
+			display: flex;
+			flex-flow: row wrap;
+			justify-content: space-around;
+		}
+
+			#zona-fichas>div
+			{
+				width: 45%;
+				min-width: 194px;
+				max-width: 268px;
+
+				flex-direction: row;
+				justify-content: center;
+			}
+
+				#zona-fichas>div>img:not(:last-of-type)
+				{
+					margin-right: 6px;
+				}
+
 		
 		/*Article solo con texto */
 		main .texto
