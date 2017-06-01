@@ -57,30 +57,7 @@ Hecho		Calificación	Tarea
 
 TAREAS
 [ ] Añadir selector de fuente (requiere javascript) (opcional)
-[X] Problema con ellipsis
-[X] Arreglar borde header
-[X] Quitar efecto de imagen transparente fuera del index
 
-[/] Time y datetime en fechas
-[X] Min-width en el body
-[X] Max-width y max-height al 100% en img
-[X] Cambiar "Nombre de Usuario" por "Título de Comentario"
-[X] Revisar el warning del Unicode Privado para el icono de burguer menu
-[X] Cambiar cursor en el menú hamburguesa
-[X] Resaltar TODOS los elementos del menú en el diseño móvil
-[X] Arreglar problema del enlace "Ver Más".
-[X] En entrada, eliminar niveles, dejar sólo el article. Quitar el título y el orden, sólo imagen y descripción.
-[X] Aprovechar mejor espacio al reducir anchura. Cuando sólo hay dos imágenes, no mostrarlas al 30%.
-[X] Los comentarios se salen de sitio. Tip: quitar el width: 50%; al section.
-[/] Las animaciones no se aprecian si pasamos muy rápido el cursor
-[X] En acerca de, strong se usa para la información importante, no para negrita. Usar spans.
-[X] Los article DEBEN tener un ÚNICO título de mayor nivel.
-[X] En la navegación a una zona específica mediante id, el header tapa los píxeles superiores. Añadir scroll extra mediante JS.
-
-
-NUEVA ENTRADA
-- Segundo formulario, para fotos. Se añaden y quitan inputs tipo file y textareas. Cada tarjeta hará lo que hace el código del profesor.
-- Se agrupan en un formdata y se envian.
 
 PROBLEMAS
 - Los campos tipo date no son compatibles en todos los navegadores. No obstante, queremos que los que sí que lo admitan puedan aprovecharlos. Para aquellos nabegadores que no disponen de compativilidad con dicho tipo, se ha implementado una solucion mediante javascript que muestra un calendario alternativo.
@@ -89,3 +66,10 @@ PROBLEMAS
 
 IDEAS
 - Usar archivos SVG tambien en el index
+- Poner posiciones de las fichas ondrop
+- El evento ondrop sólo salta al soltar algo de fuera del canvas, dentro se usan eventos de mouse
+- En dibujarFichas, sólo dibujar las que no tienen -1 en fila y columna
+- En dibujarCanvas, sustituir el drawImage por llamada al método dibujarFichas
+- comprobarCaminos: Buscar en todas las direcciones, el número de casillas que diga el dado,
+	y no poder sobrepasar un borde u otra ficha.
+- Controlar donde puede hacerse drop
