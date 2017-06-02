@@ -83,30 +83,6 @@ form
 	font-weight: bold;
 }
 
-.equipo-listo
-{
-	border: 2px solid #4CAF50;
-	box-shadow: 0 1px 3px rgba(76,175,80,0.12), 0 1px 2px rgba(213,0,0,0.24);
-	transition: all .3s cubic-bezier(.25,.8,.25,1);
-}
-	.equipo-listo:hover,
-	.equipo-listo:focus
-	{
-		box-shadow: 0 14px 28px rgba(76,175,80,0.25), 0 10px 10px rgba(76,175,80,0.22);
-	}
-
-.equipo-incorrecto
-{
-	border: 2px solid #D50000;
-	box-shadow: 0 1px 3px rgba(213,0,0,0.12), 0 1px 2px rgba(213,0,0,0.24);
-	transition: all .3s cubic-bezier(.25,.8,.25,1);
-}
-	.equipo-incorrecto:hover,
-	.equipo-incorrecto:focus
-	{
-		box-shadow: 0 14px 28px rgba(213,0,0,0.25), 0 10px 10px rgba(213,0,0,0.22);
-	}
-
 .input-incorrecto
 {
 	border-color: #D50000;

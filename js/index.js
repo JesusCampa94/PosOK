@@ -142,18 +142,18 @@ function mostrarMensaje()
 		contenedor = document.createElement('article'),
 		mensaje = '';
 
-		fondo.appendChild(contenedor);
+	fondo.appendChild(contenedor);
 
-		mensaje += '<h3>Listo para jugar</h3>';
-		mensaje += '<p><span class="color-' + sessionStorage['fichaA'] + ' negrita">' + sessionStorage['A'] + '</span> vs. <span class="color-' + sessionStorage['fichaB'] + ' negrita">' + sessionStorage['B'] + '</span></p>';
-		mensaje += '<p>Buena suerte a ambos.</p>';
-		mensaje += '<a href="juego.html" onclick="this.parentNode.parentNode.remove();" class="boton">Jugar</a>';
-		
-		contenedor.innerHTML = mensaje;
-		fondo.classList.add('fondo-mensaje');
-		contenedor.classList.add('contenedor-mensaje');
+	mensaje += '<h3>Listo para jugar</h3>';
+	mensaje += '<p><span class="color-' + sessionStorage['fichaA'] + ' negrita">' + sessionStorage['A'] + '</span> vs. <span class="color-' + sessionStorage['fichaB'] + ' negrita">' + sessionStorage['B'] + '</span></p>';
+	mensaje += '<p>Buena suerte a ambos.</p>';
+	mensaje += '<a href="juego.html" onclick="this.parentNode.parentNode.remove();" class="boton">Jugar</a>';
+	
+	contenedor.innerHTML = mensaje;
+	fondo.classList.add('fondo-mensaje');
+	contenedor.classList.add('contenedor-mensaje');
 
-		document.body.appendChild(fondo);
+	document.body.appendChild(fondo);
 }
 
 

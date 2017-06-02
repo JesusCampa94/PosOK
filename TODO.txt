@@ -53,7 +53,23 @@ Registro
 
 PRÁCTICA 3
 Hecho		Calificación	Tarea
-
+[ ]		0.25				Validación
+[ ]		0.25				Mobile First
+[X]		0.25				No usar alert() para mensajes
+[X]		0.25				Campos de texto para nombres
+[X]		0.5				Guardar nombres en sessionStorage y autorrellenar campos
+[X]		0.25				Botón iniciar juego
+[ ]		0.25				Control de acceso si no tenemos los nombres
+[X]		1					Dibujar campo
+[X]		0.5				Mostrar fichas de jugadores
+[X]		0.5				Cargar fichas con svg externo
+[/]		0.5				Zona de marcador
+[ ]		0.75				Colocar fichas mediante clic
+[ ]		1.25				Colorcar fichas mediante Drag & Drop
+[ ]		0.5				Botón para colocar fichas aleatoriamente
+[/]		0.5				Botón Listo. Sólo debe aparecer cuando todas las fichas están colocadas.
+[ ]		2					Mover fichas en el campo (incluye mensajes emergentes y lógica del juego)
+[ ]		0.5				Recordar estado del juego
 
 TAREAS
 [ ] Añadir selector de fuente (requiere javascript) (opcional)

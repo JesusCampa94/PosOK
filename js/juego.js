@@ -1,11 +1,32 @@
-//Clase ficha
-class Ficha
+/* ----------------------------------------------- CLASES ----------------------------------------------- */
+class Posicion
 {
 	constructor()
 	{
-		this.fila = -1;
-		this.columna = -1;
+		this.x = -1;
+		this.y = -1;
+	}
+}
+
+class Ficha
+{
+	constructor(img)
+	{
+		this.posicion = new Posicion();
+		this.equipo = '-';
 		this.seleccionada = false;
+
+		this.consultarEquipo(img);
+	}
+
+	consultarEquipo(img)
+	{
+		this.equipo = img.parentNode.id.replace('fichas-', '');
+	}
+
+	enPorteria()
+	{
+		return true;
 	}
 }
 
@@ -13,32 +34,91 @@ class Marcador
 {
 	constructor()
 	{
-		this.puntosA = 0;
-		this.puntosB = 0;
+		this.goles = new Array();
+		this.goles['A'] = 0;
+		this.goles['B'] = 0;
 	}
 
 	refrescar()
 	{
+		let puntosA = document.getElementById('puntos-A'),
+			golesA = document.getElementById('goles-A'),
+			puntosB = document.getElementById('puntos-B'),
+			golesB = document.getElementById('goles-B');
 
+		puntosA.innerHTML = golesA.innerHTML = this.goles['A'];
+		puntosB.innerHTML = golesB.innerHTML = this.goles['B'];
 	}
 
-	golA()
+	mensajeGanador()
 	{
-		this.puntosA++;
+		let fondo = document.createElement('div'),
+			contenedor = document.createElement('article'),
+			mensaje = '';
 
+		fondo.appendChild(contenedor);
+
+		mensaje += '<h3>Fin del partido</h3>';
+		mensaje += '<p><span class="color-' + sessionStorage['fichaA'] + ' negrita">' + sessionStorage['A'] + '</span> ha ganado</p>';
+		mensaje += '<p>¡Enhorabuena!</p>';
+		mensaje += '<a href="index.html" onclick="this.parentNode.parentNode.remove();" class="boton">Jugar de nuevo</a>';
+		
+		contenedor.innerHTML = mensaje;
+		fondo.classList.add('fondo-mensaje');
+		contenedor.classList.add('contenedor-mensaje');
+
+		document.body.appendChild(fondo);
+	}
+
+	heGanado(equipo)
+	{
+		if (this.goles[equipo] >= 5)
+		{
+			let equipoContrario =  (equipo == 'A' ? 'B' : 'A');
+
+			if (this.goles[equipo] - this.goles[equipoContrario] >= 2)
+			{
+				console.log("Ha ganado el equipo " + equipo);
+				this.mensajeGanador();
+			}
+		}
+	}
+
+	gol(equipo)
+	{
+		this.goles[equipo]++;
+		this.refrescar();
+		this.heGanado(equipo);
 	}
 }
 
 //Variables globales
 var fichasA = new Array();
 var fichasB = new Array();
+var estadoEquipos = new Array();
+	estadoEquipos['A'] = 'COLOCANDO';
+	estadoEquipos['B'] = 'COLOCANDO';
 
-fichasA = [new Ficha(), new Ficha(), new Ficha(), new Ficha(), new Ficha()];
-fichasB = [new Ficha(), new Ficha(), new Ficha(), new Ficha(), new Ficha()];
 
+
+
+
+
+
+
+
+
+/* ----------------------------------------------- PREPARAR ----------------------------------------------- */
+//Llama a las funciones necesarias para inicializar todo
+! function inicializar()
+{
+	obtenerDatos();
+	dibujarCanvas();
+	iniciarDragNDrop();
+}();
 
 //Escribe los nombres de los equipos y carga los colores de las fichas
-! function obtenerDatos()
+function obtenerDatos()
 {
 	let p = document.querySelector('#login-container>p');
 	let html = '<span class="color-' + sessionStorage['fichaA'] + ' negrita">' +  sessionStorage['A'] + '</span> <span id="puntos-A">0</span> - <span id="puntos-B">0</span> <span class="color-' + sessionStorage['fichaB'] + ' negrita">' +  sessionStorage['B'] + '</span>';
@@ -51,10 +131,10 @@ fichasB = [new Ficha(), new Ficha(), new Ficha(), new Ficha(), new Ficha()];
 	p.innerHTML = html;
 	p.classList.add('texto-grande');
 
-	//Cargamos 5 fichas para cada equipo
 	cargarFichas();
-}();
+}
 
+//Cargamos 5 fichas para cada equipo
 function cargarFichas()
 {
 	let nombresColores = ['rosa', 'azul', 'amarilla', 'verde', 'verde azulada', 'roja'],
@@ -70,6 +150,29 @@ function cargarFichas()
 	}	
 }
 
+//Marca un equipo como listo
+function listo(button)
+{
+	let div = button.parentNode.parentNode;
+	div.classList.add('equipo-listo');
+
+	let equipo = div.querySelector('div').id.replace('fichas-','');
+	estadoEquipos[equipo] = 'LISTO';
+
+	//Si acabo de poner uno a LISTO, esto se cumple cuando ambos lo estan
+	if (estadoEquipos['A'] == estadoEquipos['B'])
+	{
+		estadoEquipos['A'] = 'JUGANDO';
+		estadoEquipos['B'] = 'JUGANDO';
+
+		let zonaMarcador = document.getElementById('zona-marcador'),
+			zonaFichas = div.parentNode;
+
+		zonaMarcador.classList.remove('oculto');
+		zonaFichas.classList.add('oculto');
+	}
+}
+
 
 
 
@@ -80,13 +183,6 @@ function cargarFichas()
 
 
 /* ----------------------------------------------- CANVAS ----------------------------------------------- */
-//lo unico que hace es llamar a otra funcion
-!function inicializar()
-{
-	dibujarCanvas();
-	iniciarDragNDrop();
-}();
-
 function dibujarCuadricula()
 {
 	let cv = document.getElementById('campo'),
@@ -438,6 +534,11 @@ function iniciarDragNDrop()
 			// dibujarCuadricula();
 		};
 
-		img.src = document.getElementById(id).src;
+		let fichaArrastrada = document.getElementById(id);
+
+		img.src = fichaArrastrada.src;
+
+		//Para "quitarla" de su contenedor
+		fichaArrastrada.classList.add('oculto');
 	};
 }
