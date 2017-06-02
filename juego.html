@@ -7,6 +7,15 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"><!-- Material Icons -->
 		<link rel="stylesheet" type="text/css" href="css/estilos.css">
 		<link rel="stylesheet" type="text/css" href="css/forms.css">
+
+		<!-- Control de Acceso -->
+		<script type="text/javascript">
+			if (typeof sessionStorage['A'] == 'undefined' || typeof sessionStorage['B'] == 'undefined' || typeof sessionStorage['fichaA'] == 'undefined' || typeof sessionStorage['fichaB'] == 'undefined')
+			{
+				window.location.href = 'index.html';
+			}
+		</script>
+
 		<script src="js/juego.js" async defer></script>
 		<title>Juego - OKBall</title>
 	</head>
@@ -35,6 +44,14 @@
 				<div id="zona-marcador"  class="oculto">
 					<div class="tarjeta">
 						<p></p>
+						<div>
+							<p>Dado: <span id="dado" class="negrita">-</span></p>
+							<p>Turno: <span id="turno" class="negrita">Obteniendo nombre...</span></p>
+						</div>
+						<div>
+							<button class="boton" onclick="marcador.tirarDado();">Tirar dado</button>
+							<button class="boton peligro" onclick="marcador.abandonarPartido();">Abandonar partido</button>
+						</div>
 					</div>
 				</div>
 				<div id="zona-campo">
@@ -44,6 +61,7 @@
 				</div>
 				<div id="zona-fichas">
 					<div class="tarjeta">
+						<h3>Obteniendo nombre...</h3>
 						<div id="fichas-A">
 							<button class="boton oculto" onclick="listo(this);">Listo</button>
 						</div>
@@ -52,6 +70,7 @@
 						</div>
 					</div>
 					<div class="tarjeta">
+						<h3>Obteniendo nombre...</h3>
 						<div id="fichas-B">
 							<button class="boton oculto" onclick="listo(this);">Listo</button>					
 						</div>

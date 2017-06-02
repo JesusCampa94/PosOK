@@ -37,6 +37,8 @@ class Marcador
 		this.goles = new Array();
 		this.goles['A'] = 0;
 		this.goles['B'] = 0;
+		this.dado = 0;
+		this.turno = 'A';
 	}
 
 	refrescar()
@@ -90,14 +92,37 @@ class Marcador
 		this.refrescar();
 		this.heGanado(equipo);
 	}
+
+	tirarDado()
+	{
+		let spanDado = document.getElementById('dado'),
+			spanTurno = document.getElementById('turno');
+
+		this.dado = Math.floor(Math.random() * (7 - 1) + 1);
+		spanDado.innerHTML = this.dado;
+
+		//Quitamos la clase del turno anterior y ponemos la del nuevo
+		spanTurno.classList.remove('color-' + sessionStorage['ficha' + this.turno]);
+		this.turno = (this.turno == 'A' ? 'B' : 'A');
+		spanTurno.innerHTML = sessionStorage[this.turno];
+		spanTurno.classList.add('color-' + sessionStorage['ficha' + this.turno]);
+	}
+
+	abandonarPartido()
+	{
+		sessionStorage.clear();
+		window.location.href = 'index.html';
+	}
 }
 
 //Variables globales
+var marcador = new Marcador();
 var fichasA = new Array();
 var fichasB = new Array();
 var estadoEquipos = new Array();
 	estadoEquipos['A'] = 'COLOCANDO';
 	estadoEquipos['B'] = 'COLOCANDO';
+var num = 0;
 
 
 
@@ -120,16 +145,32 @@ var estadoEquipos = new Array();
 //Escribe los nombres de los equipos y carga los colores de las fichas
 function obtenerDatos()
 {
+	//En el login
 	let p = document.querySelector('#login-container>p');
 	let html = '<span class="color-' + sessionStorage['fichaA'] + ' negrita">' +  sessionStorage['A'] + '</span> <span id="puntos-A">0</span> - <span id="puntos-B">0</span> <span class="color-' + sessionStorage['fichaB'] + ' negrita">' +  sessionStorage['B'] + '</span>';
 
 	p.innerHTML = html;
 
+	//En el marcador
 	p = document.querySelector('#zona-marcador>div>p');
 	html = '<span class="color-' + sessionStorage['fichaA'] + ' negrita">' +  sessionStorage['A'] + '</span> <span id="goles-A">0</span> - <span id="goles-B">0</span> <span class="color-' + sessionStorage['fichaB'] + ' negrita">' +  sessionStorage['B'] + '</span>'
 
 	p.innerHTML = html;
 	p.classList.add('texto-grande');
+
+	//Turno inicial
+	let spanTurno = document.getElementById('turno');
+	spanTurno.innerHTML = sessionStorage['A'];
+	spanTurno.classList.add('color-' + sessionStorage['fichaA']);
+
+	//En la zona de fichas
+	let h3 = document.querySelectorAll('#zona-fichas h3');
+
+	html = '<span class="color-' + sessionStorage['fichaA'] + ' negrita">' +  sessionStorage['A'] + '</span>';
+	h3[0].innerHTML = html;
+
+	html = '<span class="color-' + sessionStorage['fichaB'] + ' negrita">' +  sessionStorage['B'] + '</span>';
+	h3[1].innerHTML = html;
 
 	cargarFichas();
 }
@@ -148,6 +189,28 @@ function cargarFichas()
 		divA.innerHTML += htmlA;
 		divB.innerHTML += htmlB;
 	}	
+}
+
+//Muestra el boton "Listo" cuando no le quedan fichas a un equipo
+function mostrarListo(div)
+{
+	let button = div.querySelector('button'),
+	imgs = div.querySelectorAll('img'),
+	noHayImagenes = true;
+
+	for (let i = 0; i < imgs.length; i++)
+	{
+		if (!imgs[i].classList.contains('oculto'))
+		{
+			noHayImagenes = false;
+			break;
+		}
+	}
+
+	if (noHayImagenes)
+	{
+		button.classList.remove('oculto');
+	}
 }
 
 //Marca un equipo como listo
@@ -326,14 +389,6 @@ function comprobarLimites(e, dim)
 			return false;
 	}
 	return true;
-}
-
-//obtene un numero aleatorio de 1 a 6 incluidos
-function tirarDado()
-{
-	var num = Math.floor(Math.random() * (7 - 1) + 1);
-	console.log(`numero: ${num}`);
-	return num;
 }
 
 //marca en el campo las casillas a las que puede ir la ficha seleccionada
@@ -540,5 +595,6 @@ function iniciarDragNDrop()
 
 		//Para "quitarla" de su contenedor
 		fichaArrastrada.classList.add('oculto');
+		mostrarListo(fichaArrastrada.parentNode);
 	};
 }

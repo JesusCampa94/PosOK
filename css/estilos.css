@@ -13,7 +13,7 @@
 body
 {
 	margin: 0;
-	min-width: 340px;
+	min-width: 640px;
 	min-height: 100vh;
 	font-family: "Ubuntu", Arial, Helvetica, sans-serif;
 	font-size: 10pt;
@@ -401,10 +401,24 @@ main
 			justify-content: center;
 		}
 
+			#zona-marcador>div>div
+			{
+				margin-top: 10px 0;
+
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				align-items: center;
+			}
+
 		#zona-campo
 		{
-			margin: 10px 0;
+			margin: 10px;
 		}
+			#campo
+			{
+				min-width: 600px;
+			}
 
 		#zona-fichas
 		{
@@ -422,6 +436,11 @@ main
 				flex-direction: column;
 				justify-content: center;
 			}
+
+				#zona-fichas>div>h3
+				{
+					text-align: center;
+				}
 
 				#zona-fichas>div>div
 				{
