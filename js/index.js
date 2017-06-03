@@ -5,38 +5,47 @@ var fichasEquipos = new Array(),
 listos['A'] = 'STANDBY';
 listos['B'] = 'STANDBY';
 
+//Autoinvocada que llama a las funciones necesarias para preparar la página
+! function inicializar()
+{
+	obtenerDatosSesion();
+}();
 
 //Rellena los formularios si encuentra datos en sessionStorage
-! function obtenerDatosSesion()
+function obtenerDatosSesion()
 {
 	let input, ficha;
-	// let rect, x, y;
 
-	if (typeof sessionStorage['A'] !== 'undefined')
+	if (existeEquipo('A'))
 	{
-		input = document.getElementById('equipoA');
-		input.value = sessionStorage['A'];
+		if (existePropiedad('A', 'nombre'))
+		{	
+			input = document.getElementById('equipoA');
+			input.value = getPropiedad('A', 'nombre');
+		}
+
+		if (existePropiedad('A', 'color'))
+		{
+			ficha = document.getElementById('A' + getPropiedad('A', 'color'));
+			elegirFicha(ficha);
+		}
 	}
 
-	if (typeof sessionStorage['fichaA'] !== 'undefined')
+	if (existeEquipo('B'))
 	{
-		ficha = document.getElementById('A' + sessionStorage['fichaA']);
-		elegirFicha(ficha);
-	}
+		if (existePropiedad('B', 'nombre'))
+		{	
+			input = document.getElementById('equipoB');
+			input.value = getPropiedad('B', 'nombre');
+		}
 
-	if (typeof sessionStorage['B'] !== 'undefined')
-	{
-		input = document.getElementById('equipoB');
-		input.value = sessionStorage['B'];
+		if (existePropiedad('B', 'color'))
+		{
+			ficha = document.getElementById('B' + getPropiedad('B', 'color'));
+			elegirFicha(ficha);
+		}
 	}
-
-	if (typeof sessionStorage['fichaB'] !== 'undefined')
-	{
-		ficha = document.getElementById('B' + sessionStorage['fichaB']);
-		elegirFicha(ficha);
-	}
-
-}();
+}
 
 //Elige una ficha para un equipo e impide que el otro equipo la elija
 function elegirFicha(ficha)
@@ -145,7 +154,7 @@ function mostrarMensaje()
 	fondo.appendChild(contenedor);
 
 	mensaje += '<h3>Listo para jugar</h3>';
-	mensaje += '<p><span class="color-' + sessionStorage['fichaA'] + ' negrita">' + sessionStorage['A'] + '</span> vs. <span class="color-' + sessionStorage['fichaB'] + ' negrita">' + sessionStorage['B'] + '</span></p>';
+	mensaje += '<p><span class="color-' + getPropiedad('A', 'color') + ' negrita">' + getPropiedad('A', 'nombre') + '</span> vs. <span class="color-' + getPropiedad('B', 'color') + ' negrita">' + getPropiedad('B', 'nombre') + '</span></p>';
 	mensaje += '<p>Buena suerte a ambos.</p>';
 	mensaje += '<a href="juego.html" onclick="this.parentNode.parentNode.remove();" class="boton">Jugar</a>';
 	
@@ -165,8 +174,8 @@ function listo(form)
 
 	if (validarEquipo(equipo))
 	{
-		sessionStorage[equipo] = input.value;
-		sessionStorage['ficha' + equipo] = fichasEquipos[equipo];
+		setPropiedad(equipo, 'nombre', input.value);
+		setPropiedad(equipo, 'color', fichasEquipos[equipo]);
 
 		listos[equipo] = 'OK';
 

@@ -401,15 +401,28 @@ main
 			justify-content: center;
 		}
 
-			#zona-marcador>div>div
+			#zona-marcador>div
 			{
-				margin-top: 10px 0;
-
-				display: flex;
-				flex-direction: row;
-				justify-content: space-between;
-				align-items: center;
+				min-width: 300px;
 			}
+
+				#zona-marcador>div>p
+				{
+					text-align: center;
+				}
+
+				#zona-marcador>div>div
+				{
+					display: flex;
+					flex-direction: row;
+					justify-content: space-between;
+					align-items: center;
+				}
+
+				#zona-marcador>div>div:first-of-type
+				{
+					margin: 10px 0;
+				}
 
 		#zona-campo
 		{

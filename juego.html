@@ -7,10 +7,16 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"><!-- Material Icons -->
 		<link rel="stylesheet" type="text/css" href="css/estilos.css">
 		<link rel="stylesheet" type="text/css" href="css/forms.css">
+		<script src="js/storage.js"></script>
 
 		<!-- Control de Acceso -->
 		<script type="text/javascript">
-			if (typeof sessionStorage['A'] == 'undefined' || typeof sessionStorage['B'] == 'undefined' || typeof sessionStorage['fichaA'] == 'undefined' || typeof sessionStorage['fichaB'] == 'undefined')
+			if (!(existeEquipo('A') && existeEquipo('B')))
+			{
+				window.location.href = 'index.html';
+			}
+
+			else if (!(existePropiedad('A', 'nombre') && existePropiedad('A', 'color') && existePropiedad('B', 'nombre') && existePropiedad('B', 'color')))
 			{
 				window.location.href = 'index.html';
 			}
@@ -41,7 +47,7 @@
 				<h2>Juego</h2>
 				<p>Gana el primer equipo en alcanzar un mínimo de 5 goles y 2 de ventaja</p>
 				<hr />
-				<div id="zona-marcador"  class="oculto">
+				<div id="zona-marcador"  class="">
 					<div class="tarjeta">
 						<p></p>
 						<div>

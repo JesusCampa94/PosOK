@@ -1,10 +1,10 @@
 /* ----------------------------------------------- CLASES ----------------------------------------------- */
 class Posicion
 {
-	constructor()
+	constructor(x = -1, y = -1)
 	{
-		this.x = -1;
-		this.y = -1;
+		this.x = x;
+		this.y = y;
 	}
 }
 
@@ -52,7 +52,7 @@ class Marcador
 		puntosB.innerHTML = golesB.innerHTML = this.goles['B'];
 	}
 
-	mensajeGanador()
+	mensajeGanador(ganador)
 	{
 		let fondo = document.createElement('div'),
 			contenedor = document.createElement('article'),
@@ -61,8 +61,8 @@ class Marcador
 		fondo.appendChild(contenedor);
 
 		mensaje += '<h3>Fin del partido</h3>';
-		mensaje += '<p><span class="color-' + sessionStorage['fichaA'] + ' negrita">' + sessionStorage['A'] + '</span> ha ganado</p>';
-		mensaje += '<p>¡Enhorabuena!</p>';
+		mensaje += '<p><span class="color-' + getPropiedad(ganador, 'color') + ' negrita">' + getPropiedad(ganador, 'nombre') + '</span> ha ganado</p>';
+		mensaje += '<p>Resultado: ' + this.goles['A'] + ' - ' + this.goles['B'] + '</p>';
 		mensaje += '<a href="index.html" onclick="this.parentNode.parentNode.remove();" class="boton">Jugar de nuevo</a>';
 		
 		contenedor.innerHTML = mensaje;
@@ -81,7 +81,7 @@ class Marcador
 			if (this.goles[equipo] - this.goles[equipoContrario] >= 2)
 			{
 				console.log("Ha ganado el equipo " + equipo);
-				this.mensajeGanador();
+				this.mensajeGanador(equipo);
 			}
 		}
 	}
@@ -90,6 +90,7 @@ class Marcador
 	{
 		this.goles[equipo]++;
 		this.refrescar();
+		setPropiedad(equipo, 'goles', this.goles[equipo]);
 		this.heGanado(equipo);
 	}
 
@@ -102,10 +103,10 @@ class Marcador
 		spanDado.innerHTML = this.dado;
 
 		//Quitamos la clase del turno anterior y ponemos la del nuevo
-		spanTurno.classList.remove('color-' + sessionStorage['ficha' + this.turno]);
+		spanTurno.classList.remove('color-' + getPropiedad(this.turno, 'color'));
 		this.turno = (this.turno == 'A' ? 'B' : 'A');
-		spanTurno.innerHTML = sessionStorage[this.turno];
-		spanTurno.classList.add('color-' + sessionStorage['ficha' + this.turno]);
+		spanTurno.innerHTML = getPropiedad(this.turno, 'nombre');
+		spanTurno.classList.add('color-' + getPropiedad(this.turno, 'color'));
 	}
 
 	abandonarPartido()
@@ -147,29 +148,29 @@ function obtenerDatos()
 {
 	//En el login
 	let p = document.querySelector('#login-container>p');
-	let html = '<span class="color-' + sessionStorage['fichaA'] + ' negrita">' +  sessionStorage['A'] + '</span> <span id="puntos-A">0</span> - <span id="puntos-B">0</span> <span class="color-' + sessionStorage['fichaB'] + ' negrita">' +  sessionStorage['B'] + '</span>';
+	let html = '<span class="color-' + getPropiedad('A', 'color') + ' negrita">' +  getPropiedad('A', 'nombre') + '</span> <span id="puntos-A">0</span> - <span id="puntos-B">0</span> <span class="color-' + getPropiedad('B', 'color') + ' negrita">' +  getPropiedad('B', 'nombre') + '</span>';
 
 	p.innerHTML = html;
 
 	//En el marcador
 	p = document.querySelector('#zona-marcador>div>p');
-	html = '<span class="color-' + sessionStorage['fichaA'] + ' negrita">' +  sessionStorage['A'] + '</span> <span id="goles-A">0</span> - <span id="goles-B">0</span> <span class="color-' + sessionStorage['fichaB'] + ' negrita">' +  sessionStorage['B'] + '</span>'
+	html = '<span class="color-' + getPropiedad('A', 'color') + ' negrita">' +  getPropiedad('A', 'nombre') + '</span> <span id="goles-A">0</span> - <span id="goles-B">0</span> <span class="color-' + getPropiedad('B', 'color') + ' negrita">' +  getPropiedad('B', 'nombre') + '</span>'
 
 	p.innerHTML = html;
 	p.classList.add('texto-grande');
 
 	//Turno inicial
 	let spanTurno = document.getElementById('turno');
-	spanTurno.innerHTML = sessionStorage['A'];
-	spanTurno.classList.add('color-' + sessionStorage['fichaA']);
+	spanTurno.innerHTML = getPropiedad('A', 'nombre');
+	spanTurno.classList.add('color-' + getPropiedad('A', 'color'));
 
 	//En la zona de fichas
 	let h3 = document.querySelectorAll('#zona-fichas h3');
 
-	html = '<span class="color-' + sessionStorage['fichaA'] + ' negrita">' +  sessionStorage['A'] + '</span>';
+	html = '<span class="color-' + getPropiedad('A', 'color') + ' negrita">' +  getPropiedad('A', 'nombre') + '</span>';
 	h3[0].innerHTML = html;
 
-	html = '<span class="color-' + sessionStorage['fichaB'] + ' negrita">' +  sessionStorage['B'] + '</span>';
+	html = '<span class="color-' + getPropiedad('B', 'color') + ' negrita">' +  getPropiedad('B', 'nombre') + '</span>';
 	h3[1].innerHTML = html;
 
 	cargarFichas();
@@ -181,8 +182,8 @@ function cargarFichas()
 	let nombresColores = ['rosa', 'azul', 'amarilla', 'verde', 'verde azulada', 'roja'],
 		divA = document.getElementById('fichas-A'),
 		divB = document.getElementById('fichas-B'),
-		htmlA = '<img src="img/ficha-' + sessionStorage['fichaA'] + '.svg" alt="Ficha ' + nombresColores[sessionStorage['fichaA']] + '">',
-		htmlB = '<img src="img/ficha-' + sessionStorage['fichaB'] + '.svg" alt="Ficha ' +  nombresColores[sessionStorage['fichaB']] + '">';
+		htmlA = '<img src="img/ficha-' + getPropiedad('A', 'color') + '.svg" alt="Ficha ' + nombresColores[getPropiedad('A', 'color')] + '">',
+		htmlB = '<img src="img/ficha-' + getPropiedad('B', 'color') + '.svg" alt="Ficha ' +  nombresColores[getPropiedad('B', 'color')] + '">';
 
 	for(let i = 0; i < 5; i++)
 	{
