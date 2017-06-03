@@ -10,6 +10,19 @@ function existePropiedad(equipo, propiedad)
 	return JSON.parse(sessionStorage[equipo])[propiedad] !== undefined;
 }
 
+//Crea un equipo
+function crearEquipo(equipo)
+{
+	let objeto = new Object();
+	objeto.nombre = '';
+	objeto.color = -1;
+	objeto.turno = (equipo == 'A' ? true : false);
+	objeto.goles = 0;
+	objeto.posiciones = new Array();
+
+	sessionStorage[equipo] = JSON.stringify(objeto);
+}
+
 //Devuelve un equipo en forma de objeto
 function getEquipo(equipo)
 {

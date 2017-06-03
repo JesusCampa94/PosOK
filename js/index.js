@@ -174,6 +174,7 @@ function listo(form)
 
 	if (validarEquipo(equipo))
 	{
+		crearEquipo(equipo);
 		setPropiedad(equipo, 'nombre', input.value);
 		setPropiedad(equipo, 'color', fichasEquipos[equipo]);
 

@@ -151,6 +151,7 @@ class Marcador
 		this.goles['B'] = 0;
 		this.dado = 0;
 		this.turno = 'A';
+		this.puedoTirar = true;
 	}
 
 	refrescar()
@@ -206,19 +207,30 @@ class Marcador
 		this.heGanado(equipo);
 	}
 
+	cambiarTurno()
+	{
+		let spanTurno = document.getElementById('turno');
+		
+		//Quitamos la clase del turno anterior y ponemos la del nuevo
+		spanTurno.classList.remove('color-' + getPropiedad(this.turno, 'color'));
+		setPropiedad(this.turno, 'turno', false);
+		this.turno = (this.turno == 'A' ? 'B' : 'A');
+		setPropiedad(this.turno, 'turno', true);
+		spanTurno.innerHTML = getPropiedad(this.turno, 'nombre');
+		spanTurno.classList.add('color-' + getPropiedad(this.turno, 'color'));
+		this.puedoTirar = true;
+	}
+
 	tirarDado()
 	{
-		let spanDado = document.getElementById('dado'),
-			spanTurno = document.getElementById('turno');
+		if (!this.puedoTirar)
+			return;
+
+		let spanDado = document.getElementById('dado');			
 
 		this.dado = Math.floor(Math.random() * (7 - 1) + 1);
 		spanDado.innerHTML = this.dado;
-
-		//Quitamos la clase del turno anterior y ponemos la del nuevo
-		spanTurno.classList.remove('color-' + getPropiedad(this.turno, 'color'));
-		this.turno = (this.turno == 'A' ? 'B' : 'A');
-		spanTurno.innerHTML = getPropiedad(this.turno, 'nombre');
-		spanTurno.classList.add('color-' + getPropiedad(this.turno, 'color'));
+		this.puedoTirar = false;
 	}
 
 	abandonarPartido()
@@ -235,7 +247,6 @@ var fichasB = new Array();
 var estadoEquipos = new Array();
 	estadoEquipos['A'] = 'COLOCANDO';
 	estadoEquipos['B'] = 'COLOCANDO';
-var num = 0;
 
 
 
@@ -260,16 +271,18 @@ function obtenerDatos()
 {
 	//En el login
 	let p = document.querySelector('#login-container>p');
-	let html = '<span class="color-' + getPropiedad('A', 'color') + ' negrita">' +  getPropiedad('A', 'nombre') + '</span> <span id="puntos-A">0</span> - <span id="puntos-B">0</span> <span class="color-' + getPropiedad('B', 'color') + ' negrita">' +  getPropiedad('B', 'nombre') + '</span>';
+	let html = '<span class="color-' + getPropiedad('A', 'color') + ' negrita">' +  getPropiedad('A', 'nombre') + '</span> <span id="puntos-A">' + getPropiedad('A', 'goles') + '</span> - <span id="puntos-B">' + getPropiedad('B', 'goles') + '</span> <span class="color-' + getPropiedad('B', 'color') + ' negrita">' +  getPropiedad('B', 'nombre') + '</span>';
 
 	p.innerHTML = html;
 
 	//En el marcador
 	p = document.querySelector('#zona-marcador>div>p');
-	html = '<span class="color-' + getPropiedad('A', 'color') + ' negrita">' +  getPropiedad('A', 'nombre') + '</span> <span id="goles-A">0</span> - <span id="goles-B">0</span> <span class="color-' + getPropiedad('B', 'color') + ' negrita">' +  getPropiedad('B', 'nombre') + '</span>'
-
+	html = '<span class="color-' + getPropiedad('A', 'color') + ' negrita">' +  getPropiedad('A', 'nombre') + '</span> <span id="goles-A">' + getPropiedad('A', 'goles') + '</span> - <span id="goles-B">' + getPropiedad('B', 'goles') + '</span> <span class="color-' + getPropiedad('B', 'color') + ' negrita">' +  getPropiedad('B', 'nombre') + '</span>';
 	p.innerHTML = html;
 	p.classList.add('texto-grande');
+
+	marcador.goles.A = getPropiedad('A', 'goles');
+	marcador.goles.B = getPropiedad('B', 'goles');
 
 	//Turno inicial
 	let spanTurno = document.getElementById('turno');
@@ -294,7 +307,7 @@ function cargarFichas()
 	let nombresColores = ['rosa', 'azul', 'amarilla', 'verde', 'verde azulada', 'roja'],
 		divA = document.getElementById('fichas-A'),
 		divB = document.getElementById('fichas-B'),
-		
+
 		htmlA = '<img src="img/ficha-' + getPropiedad('A', 'color') + '.svg" alt="Ficha ' + nombresColores[getPropiedad('A', 'color')] + '">',
 		htmlB = '<img src="img/ficha-' + getPropiedad('B', 'color') + '.svg" alt="Ficha ' +  nombresColores[getPropiedad('B', 'color')] + '">';
 
@@ -303,6 +316,18 @@ function cargarFichas()
 		divA.innerHTML += htmlA;
 		divB.innerHTML += htmlB;
 	}	
+}
+
+//resalta la ficha seleccionada y la prepara para colocarla en el canvas
+function seleccionarFicha(ficha)
+{
+	let fichas = ficha.parentNode.querySelectorAll('img');
+
+	for(let i=0; i < fichas.length; i++)
+	{
+		fichas[i].classList.remove('ficha-resaltada');
+	}
+	ficha.classList.add('ficha-resaltada');
 }
 
 //Muestra el boton "Listo" cuando no le quedan fichas a un equipo
@@ -350,17 +375,81 @@ function listo(button)
 	}
 }
 
-//resalta la ficha seleccionada y la prepara para colocarla en el canvas
-function seleccionarFicha(ficha)
-{
-	let fichas = ficha.parentNode.querySelectorAll('img');
 
-	for(let i=0; i < fichas.length; i++)
+//Coloca las fichas de un equipo aleatoriamente
+function aleatorio(button)
+{
+	return;
+
+	let equipo = button.parentNode.parentNode.querySelector('div').id.replace('fichas-',''),
+		cv = document.getElementById('campo'),
+		i = 0, j, ocupada = false, randomF, randomC;
+
+	if (equipo == 'A')
 	{
-		fichas[i].classList.remove('ficha-resaltada');
+		let imgA = document.querySelector('#fichas-A>img');
+
+		while(i < 5)
+		{
+			randomF = Math.floor(Math.random() * (9 - 0) + 0);
+			randomC = Math.floor(Math.random() * (10 - 1) + 1);
+
+			//Comprobamos si la casilla esta ocupada
+			for (j = 0; j < fichasA.length; j++)
+			{
+				if (randomF == fichasA[j].posicion.y && randomC == fichasA[j].posicion.x)
+				{
+					ocupada = true;
+					break;
+				}
+			}
+
+			//Solo agregamos la ficha nueva al array cuando no este ocupada, si no, se intenta con otra
+			if (!ocupada)
+			{
+				fichasA[i] = new Ficha(imgA);
+				fichasA[i].posicion.x = randomC;
+				fichasA[i].posicion.y = randomF;
+				i++;	
+			}		
+		}
 	}
-	ficha.classList.add('ficha-resaltada');
+
+	else
+	{		
+		let imgB = document.querySelector('#fichas-B>img');
+
+		while(i < 5)
+		{
+			randomF = Math.floor(Math.random() * (9 - 0) + 0);
+			randomC = Math.floor(Math.random() * (19 - 10) + 10);
+			
+			//Comprobamos si la casilla esta ocupada
+			for (j = 0; j < fichasB.length; j++)
+			{
+				if (randomF == fichasB[j].posicion.y && randomC == fichasB[j].posicion.x)
+				{
+					ocupada = true;
+					break;
+				}
+			}
+
+			//Solo agregamos la ficha nueva al array cuando no este ocupada, si no, se intenta con otra
+			if (!ocupada)
+			{
+				fichasB[i] = new Ficha(imgB);
+				fichasB[i].posicion.x = randomC;
+				fichasB[i].posicion.y = randomF;
+				i++;	
+			}
+		}
+	}
+
+	dibujarFichas(cv);
+	estadoEquipos[equipo] = 'JUGANDO';
 }
+
+
 
 
 
@@ -467,17 +556,10 @@ function dibujarCanvas()
 {
 	let cv = document.getElementById('campo'),
 		 ctx = cv.getContext('2d'),
-		 dim = cv.width/20,
-		 img = new Image();
+		 dim = cv.width/20;
 
 	cv.width = cv.width;
 	dibujarCuadricula();
-	img.onload = function()
-	{
-		ctx.drawImage(img, ficha.columna*dim, ficha.fila*dim, dim, dim);
-	};
-	img.src = 'circulo.svg';
-	//dibujarFichas(ctx);
 }
 
 //Dibuja las fichas
@@ -680,9 +762,10 @@ function mouse_up(e)
 
 /* ----------------------------------------------- DRAG & DROP ----------------------------------------------- */
 //comprueba que la ficha se pueda colocar en la posicion que le corresponde
-function posCorrecta(x, y, cv, dim, ficha)
+function posCorrecta(x, y, cv, ficha)
 {
 	let equipo = ficha.parentNode.id.replace('fichas-', ''),
+		dim = cv.width/20,
 		filF = Math.floor(y / dim),
 		colF = Math.floor(x / dim);
 
@@ -784,16 +867,22 @@ function iniciarDragNDrop()
 
 		let fichaArrastrada = document.getElementById(id);
 
-		if(posCorrecta(x, y, cv, dim, fichaArrastrada))
+		if(posCorrecta(x, y, cv, fichaArrastrada))
 		{
 			//creamos la ficha y la metemos al array del equipo que le corresponda
-			ficha = new Ficha(fichaArrastrada);
-			ficha.posicion.x = Math.floor(y / dim);
-			ficha.posicion.y = Math.floor(x / dim);
+			let ficha = new Ficha(fichaArrastrada),
+				pos = new Posicion(Math.floor(y / dim), Math.floor(x / dim));
+
+			ficha.posicion = pos;
 			if(ficha.equipo == 'A')
 				fichasA.push(ficha);
+
 			else
 				fichasB.push(ficha);
+
+			let posiciones = getPropiedad(ficha.equipo, 'posiciones');
+			posiciones.push(pos);
+			setPropiedad(ficha.equipo, 'posiciones', posiciones);
 
 			dibujarFichas(cv);
 
