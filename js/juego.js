@@ -299,6 +299,7 @@ function obtenerDatos()
 	h3[1].innerHTML = html;
 
 	cargarFichas();
+	posicionarFichas();
 }
 
 //Cargamos 5 fichas para cada equipo
@@ -316,6 +317,32 @@ function cargarFichas()
 		divA.innerHTML += htmlA;
 		divB.innerHTML += htmlB;
 	}	
+}
+
+//Posicionar fichas
+function posicionarFichas()
+{
+	let posicionesA = getPropiedad('A', 'posiciones'),
+		posicionesB = getPropiedad('B', 'posiciones');
+
+	//TODO: Si CUALQUIER array esta vacio, fuera
+
+	let imgA = document.querySelector('#fichas-A>img'),
+		imgB = document.querySelector('#fichas-B>img');
+		
+
+	fichasA = new Array();
+	fichasB = new Array();
+
+	for(let i = 0; i < 5; i++)
+	{
+		fichasA[i] = new Ficha(imgA);
+		fichasA[i].posicion = posicionesA[i];
+		fichasB[i] = new Ficha(imgB);
+		fichasB[i].posicion = posicionesB[i];
+	}
+
+	dibujarFichas(document.getElementById('campo'));
 }
 
 //resalta la ficha seleccionada y la prepara para colocarla en el canvas
