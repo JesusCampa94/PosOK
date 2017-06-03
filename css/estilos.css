@@ -417,6 +417,7 @@ main
 		}
 			#campo
 			{
+				border: none;
 				min-width: 600px;
 			}
 
@@ -452,6 +453,11 @@ main
 					#zona-fichas>div>div>img:not(:last-of-type)
 					{
 						margin-right: 6px;
+					}
+
+					#zona-fichas>div>div>img.ficha-resaltada
+					{
+						background-color: #BBDEFB;
 					}
 
 					#zona-fichas>div>div>button
