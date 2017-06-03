@@ -406,7 +406,6 @@ function listo(button)
 //Coloca las fichas de un equipo aleatoriamente
 function aleatorio(button)
 {
-	return;
 
 	let equipo = button.parentNode.parentNode.querySelector('div').id.replace('fichas-',''),
 		cv = document.getElementById('campo'),
@@ -414,10 +413,13 @@ function aleatorio(button)
 
 	if (equipo == 'A')
 	{
+		fichasA = new Array();
+		dibujarCuadricula();
 		let imgA = document.querySelector('#fichas-A>img');
 
 		while(i < 5)
 		{
+			ocupada = false;
 			randomF = Math.floor(Math.random() * (9 - 0) + 0);
 			randomC = Math.floor(Math.random() * (10 - 1) + 1);
 
@@ -444,10 +446,13 @@ function aleatorio(button)
 
 	else
 	{		
+		fichasB = new Array();
+		dibujarCuadricula();
 		let imgB = document.querySelector('#fichas-B>img');
 
 		while(i < 5)
 		{
+			ocupada = false;
 			randomF = Math.floor(Math.random() * (9 - 0) + 0);
 			randomC = Math.floor(Math.random() * (19 - 10) + 10);
 			
@@ -473,7 +478,16 @@ function aleatorio(button)
 	}
 
 	dibujarFichas(cv);
-	estadoEquipos[equipo] = 'JUGANDO';
+	//limpiamos las fichas disponibles de colocar
+	let imgs = document.querySelectorAll('#fichas-' + equipo + '>img');
+	for(let i=0; i < imgs.length; i++)
+	{
+		imgs[i].classList.add('oculto');
+	}
+
+	//ahora mostramos el boton de listo
+	let boton = document.querySelector('#fichas-' + equipo + '>button');
+	boton.classList.remove('oculto');
 }
 
 
@@ -600,16 +614,16 @@ function dibujarFichas(cv)
 	//dibujamos las fichas del equipo A
 	for(let i=0; i < fichasA.length; i++)
 	{
-		fil = fichasA[i].posicion.x;
-		col = fichasA[i].posicion.y;
+		fil = fichasA[i].posicion.y;
+		col = fichasA[i].posicion.x;
 		ctx.drawImage(imagenA, col * dim, fil * dim, dim, dim);
 	}
 
 	//dibujamos las fichas del equipo B
 	for(let j=0; j < fichasB.length; j++)
 	{
-		fil = fichasB[j].posicion.x;
-		col = fichasB[j].posicion.y;
+		fil = fichasB[j].posicion.y;
+		col = fichasB[j].posicion.x;
 		ctx.drawImage(imagenB, col * dim, fil * dim, dim, dim);
 	}
 }
@@ -898,7 +912,7 @@ function iniciarDragNDrop()
 		{
 			//creamos la ficha y la metemos al array del equipo que le corresponda
 			let ficha = new Ficha(fichaArrastrada),
-				pos = new Posicion(Math.floor(y / dim), Math.floor(x / dim));
+				pos = new Posicion(Math.floor(x / dim), Math.floor(y / dim));
 
 			ficha.posicion = pos;
 			if(ficha.equipo == 'A')
