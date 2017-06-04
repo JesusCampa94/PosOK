@@ -15,6 +15,7 @@ class Ficha
 		this.posicion = new Posicion();
 		this.equipo = '-';
 		this.seleccionada = false;
+		this.destinos = new Array();
 
 		this.consultarEquipo(img);
 	}
@@ -24,9 +25,19 @@ class Ficha
 		this.equipo = img.parentNode.id.replace('fichas-', '');
 	}
 
+	//comprueba que la ficha haya entrado a una porteria y llama a la funcion gol
 	enPorteria()
 	{
-		return true;
+		//si esta en las filas de las porterias
+		if(this.posicion.y >= 3 && this.posicion.y <= 5)
+		{
+			//si esta en la columna 0, es la porteria del equipo A
+			if(this.posicion.x == 0)
+				marcador.gol('B');
+			//si esta en la columna 19, es la porteria del equipo B
+			else if(this.posicion.x == 19)
+				marcador.gol('A');
+		}
 	}
 
 	//actualiza el array de posiciones a las que puede ir la ficha seleccionada
@@ -34,10 +45,11 @@ class Ficha
 	{
 		let cv      = e.target,
 			 dim     = cv.width / 20,
-			 y = fichaClick.posicion.x,
-			 x = fichaClick.posicion.y,
-			 ctx = cv.getContext('2d'),
-			 fichaClick = this;
+			 fichaClick = this,
+			 x = fichaClick.posicion.x,
+			 y = fichaClick.posicion.y,
+			 num = marcador.dado,
+			 ctx = cv.getContext('2d');
 
 		//comprobamos que las posiciones validas a las que puede ir la ficha
 		//casilla a la derecha
@@ -112,6 +124,21 @@ class Ficha
 		{
 			fichaClick.destinos[7] = new Posicion(-1, -1);
 		}
+	}
+
+	//comprueba que las coordenadas pasadas estan dentro de los posibles destinos de la ficha
+	enDestino(fil, col)
+	{
+		let fichaClick = this;
+
+		for(let i=0; i < 8; i++)
+		{
+			//si es un destino
+			if(fichaClick.destinos[i].x == col && fichaClick.destinos[i].y == fil)
+				return true;
+		}
+		//si no lo ha encontrado dentro de sus destinos
+		return false;
 	}
 
 	//marca en el campo las casillas a las que puede ir la ficha seleccionada
@@ -266,6 +293,7 @@ var estadoEquipos = new Array();
 	obtenerDatos();
 	// console.log(fichasA);
 	// console.log(fichasB);
+	dibujarCuadricula();
 	iniciarDragNDrop();
 	// console.log(fichasA);
 	// console.log(fichasB);
@@ -598,7 +626,6 @@ function dibujarCuadricula()
 			ctx.moveTo(1 * dim, i * dim);
 			ctx.lineTo(cv.width - 1* dim, i * dim);
 		}
-
 	}
 
 	for (let j = 1; j <= 19; j++)
@@ -639,7 +666,6 @@ function dibujarCuadricula()
 	ctx.arc(10 * dim, 4 * dim + dim/2, dim, -Math.PI/2, 2*Math.PI, false);
 
 	ctx.stroke();
-
 }
 
 //Dibuja las fichas
@@ -725,9 +751,12 @@ function mouse_click(e)
 
 	// Limpiar canvas
 	dibujarCuadricula();
+	dibujarFichas(cv);
 
 	let ctx = cv.getContext('2d'),
-		 img = new Image();
+		 img = new Image(),
+		 ficha,
+		 seleccionada = false;
 
 	//Agregando fichas de fuera
 	if (estadoEquipos['A'] == 'INCLUYENDO' || estadoEquipos['B'] == 'INCLUYENDO')
@@ -767,35 +796,122 @@ function mouse_click(e)
 		}
 	}
 
-
-
-	//si al hacer click pinchamos en la ficha
-	if(fila == ficha.fila && columna == ficha.columna)
+	//Jugando
+	else if(marcador.dado != 0)
 	{
-		ficha.seleccionada = !ficha.seleccionada;
-	}
+		if(marcador.turno == 'A')
+		{
+			//recorremos el array de fichas para ver si hemos pinchado en alguna y la seleccionamos
+			for(let i = 0; i < fichasA.length; i++)
+			{
+				//si hemos pinchado en una ficha
+				if(fila == fichasA[i].posicion.y && columna == fichasA[i].posicion.x)
+				{
+					//le quitamos la seleccion al resto de fichas
+					for(let j=0; j < fichasA.length; j++)
+					{
+						if(j != i)
+						{
+							fichasA[j].seleccionada = false;
+						}
+					}
 
-	img.onload = function()
-	{
-		if(ficha.seleccionada)
+					//Si esta seleccionada, la deseleccionamos, y viceversa
+					fichasA[i].seleccionada = !fichasA[i].seleccionada;
+					break;
+				}
+			}
+			//recorremos el array y cogemos la ficha seleccionada
+			for(let i = 0; i < fichasA.length; i++)
+			{
+				if(fichasA[i].seleccionada)
+				{
+					seleccionada = true;
+					ficha = fichasA[i];
+				}
+			}
+		}
+		else
+		{
+			//recorremos el array de fichas para ver si hemos pinchado en alguna y la seleccionamos
+			for(let i = 0; i < fichasB.length; i++)
+			{
+				//si hemos pinchado en una ficha
+				if(fila == fichasB[i].posicion.y && columna == fichasB[i].posicion.x)
+				{
+					//le quitamos la seleccion al resto de fichas
+					for(let j=0; j < fichasB.length; j++)
+					{
+						if(j != i)
+						{
+							fichasB[j].seleccionada = false;
+						}
+					}
+
+					//si no esta seleccionada, la seleccionamos
+					if(!fichasB[i].seleccionada)
+						fichasB[i].seleccionada = true;
+
+					//si la ficha ya estaba seleccionada, la quitamos
+					else
+						fichasB[i].seleccionada = false;
+
+					break;
+				}
+			}
+			//recorremos el array y cogemos la ficha seleccionada
+			for(let i = 0; i < fichasB.length; i++)
+			{
+				if(fichasB[i].seleccionada)
+				{
+					seleccionada = true;
+					ficha = fichasB[i];
+				}
+			}
+		}
+		console.log(seleccionada);
+		if(seleccionada)
 		{
 			//destacar casilla de la ficha
 			ctx.fillStyle = '#C8E6C9';
 			ctx.lineWidth = 3;
-			ficha.fila = fila;
-			ficha.columna = columna;
-			ctx.fillRect(ficha.columna*dim, ficha.fila*dim, dim, dim);
-		}
-		ctx.drawImage(img, ficha.columna*dim, ficha.fila*dim, dim, dim);
-	};
-	img.src = 'circulo.svg';
+			ctx.fillRect(ficha.posicion.x*dim, ficha.posicion.y*dim, dim, dim);
+			ctx.strokeRect(ficha.posicion.x*dim, ficha.posicion.y*dim, dim, dim);
+			dibujarFichas(cv);
 
-	console.log(`Ficha=>fila: ${ficha.fila} - columna: ${ficha.columna} - seleccion: ${ficha.seleccionada}`);
-	
-	// Destacar casilla con click
-	ctx.fillStyle = '#C8E6C9';
-	ctx.lineWidth = 3;
-	ctx.fillRect(columna*dim, fila*dim, dim, dim);
+			ficha.actualizarDestinos(e);
+			if(typeof ficha.destinos[0] !== 'undefined')
+			{
+				console.log(`fila: ${fila} - columna: ${columna}`);
+				console.log(ficha.enDestino(fila, columna));
+				if(ficha.enDestino(fila, columna))
+				{
+					ficha.posicion.x = fila;
+					ficha.posicion.y = columna;
+					ficha.actualizarDestinos(e);
+					ficha.seleccionada = false;
+					dibujarCuadricula();
+				}
+				if(ficha.seleccionada)
+					ficha.dibujarDestinos(e);
+			}
+		}
+	}
+	if(!seleccionada)
+	{
+		// Destacar casilla con click
+		ctx.fillStyle = '#C8E6C9';
+		ctx.lineWidth = 3;
+		ctx.fillRect(columna*dim, fila*dim, dim, dim);
+	}
+	else
+	{
+		// Destacar casilla a la que no puedes ir con click
+		ctx.fillStyle = '#FAC';
+		ctx.lineWidth = 3;
+		ctx.fillRect(columna*dim, fila*dim, dim, dim);
+	}
+	dibujarFichas(cv);
 }
 
 function mouse_move(e)
