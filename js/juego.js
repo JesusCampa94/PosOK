@@ -1070,6 +1070,7 @@ function mouse_click(e)
 				if(fichasB[j].seleccionada)
 				{
 					seleccionada = true;
+					posFi = j;
 					ficha = fichasB[j];
 				}
 			}
@@ -1174,8 +1175,8 @@ function mouse_move(e)
 	if(cv.getAttribute('data-down'))
 	{
 		//recuperamos los atributos del canvas
-		let fichaEquipo = cv.getAttribute('ficha-equipo'),
-			posArray = cv.getAttribute('pos-array');
+		fichaEquipo = cv.getAttribute('ficha-equipo');
+		let posArray = cv.getAttribute('pos-array');
 
 		//na vez que los tenemos, los borramos
 
@@ -1200,12 +1201,15 @@ function mouse_move(e)
 		//estoy arrastrando la ficha
 		if(ficha.posicion.x != columna || ficha.posicion.y != fila)
 		{
+			let perfecto = true;
 			//si es del equipo A, parte izquierda del campo
 			if(fichaEquipo == 'A')
 			{
 				//si no esta dentro de su campo
 				if(x < (1 * dim) || x > 10 * dim - 1 || y < 1 || y > cv.height-1)
-					return false;
+				{
+					perfecto = false;
+				}
 				//si esta dentro de su campo
 				else
 				{
@@ -1213,8 +1217,8 @@ function mouse_move(e)
 					{
 						filA = fichasA[i].posicion.y;
 						colA = fichasA[i].posicion.x;
-						if(filF == filA && colF == colA)
-							return false;
+						if(fila == filA && columna == colA)
+							perfecto = false;
 					}
 				}
 			}
@@ -1222,8 +1226,8 @@ function mouse_move(e)
 			else if(fichaEquipo == 'B')
 			{
 				//si no estan en su campo
-				if(x < (10 * dim) - 1 || x > cv.width - 1 * dim - 1 || y < 1 || y > cv.height-1)
-					return false;
+				if(x < (10 * dim) + 1 || x > cv.width - 1 * dim - 1 || y < 1 || y > cv.height-1)
+					perfecto = false;
 				//si esta dentro de su campo
 				else
 				{
@@ -1231,20 +1235,23 @@ function mouse_move(e)
 					{
 						filB = fichasB[j].posicion.y;
 						colB = fichasB[j].posicion.x;
-						if(filF == filB && colF == colB)
-							return false;
+						if(fila == filB && columna == colB)
+							perfecto = false;
 					}
 				}
 			}
-			ficha.posicion.x = columna;
-			ficha.posicion.y = fila;
-			dibujarCuadricula();
-			//destacar casilla de la ficha
-			ctx.fillStyle = '#C8E6C9';
-			ctx.lineWidth = 3;
-			ctx.fillRect(ficha.posicion.x * dim, ficha.posicion.y * dim, dim, dim);
+			if(perfecto)
+			{
+				ficha.posicion.x = columna;
+				ficha.posicion.y = fila;
+				dibujarCuadricula();
+				//destacar casilla de la ficha
+				ctx.fillStyle = '#C8E6C9';
+				ctx.lineWidth = 3;
+				ctx.fillRect(ficha.posicion.x * dim, ficha.posicion.y * dim, dim, dim);
 
-			dibujarFichas(cv);
+				dibujarFichas(cv);
+			}
 		}
 	}
 }
@@ -1353,7 +1360,7 @@ function posCorrecta(x, y, cv, ficha)
 	else
 	{
 		//si no estan en su campo
-		if(x < (10 * dim) - 1 || x > cv.width - 1 * dim - 1 || y < 1 || y > cv.height-1)
+		if(x < (10 * dim) + 1 || x > cv.width - 1 * dim - 1 || y < 1 || y > cv.height-1)
 		{
 			if (y > 3 * dim && y < 6 * dim)
 			{
