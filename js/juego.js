@@ -40,6 +40,30 @@ class Ficha
 		}
 	}
 
+	//comprueba que la posicion no coincida con ninguna ficha
+	colisionaFichas(col, fil)
+	{
+		let filA, filB, colA, colB;
+		//con las fichas del equipo A
+		for(let i=0; i < fichasA.length; i++)
+		{
+			filA = fichasA[i].posicion.y;
+			colA = fichasA[i].posicion.x;
+			if(fil == filA && col == colA)
+				return false;
+		}
+		//con las fichas del equipo B
+		for(let i=0; i < fichasB.length; i++)
+		{
+			filB = fichasB[i].posicion.y;
+			colB = fichasB[i].posicion.x;
+			if(fil == filB && col == colB)
+				return false;
+		}
+
+		return true;
+	}
+
 	//actualiza el array de posiciones a las que puede ir la ficha seleccionada
 	actualizarDestinos(e)
 	{
@@ -53,7 +77,7 @@ class Ficha
 
 		//comprobamos que las posiciones validas a las que puede ir la ficha
 		//casilla a la derecha
-		if(comprobarLimites((x + num) * dim, y * dim + 1, e, dim))
+		if(comprobarLimites((x + num) * dim, y * dim + 1, cv, dim) && fichaClick.colisionaFichas(x + num, y))
 		{
 			fichaClick.destinos[0] = new Posicion((x + num), y);
 		}
@@ -62,7 +86,7 @@ class Ficha
 			fichaClick.destinos[0] = new Posicion(-1, -1);
 		}
 		//casilla a la izquierda
-		if(comprobarLimites((x - num) * dim + 2, y * dim + 1, e, dim))
+		if(comprobarLimites((x - num) * dim + 2, y * dim + 1, cv, dim) && fichaClick.colisionaFichas(x - num, y))
 		{
 			fichaClick.destinos[1] = new Posicion((x - num), y);
 		}
@@ -71,7 +95,7 @@ class Ficha
 			fichaClick.destinos[1] = new Posicion(-1, -1);
 		}
 		//casilla arriba
-		if(comprobarLimites(x * dim, (y - num)* dim + 2, e, dim))
+		if(comprobarLimites(x * dim, (y - num)* dim + 2, cv, dim) && fichaClick.colisionaFichas(x, y - num))
 		{
 			fichaClick.destinos[2] = new Posicion(x , (y - num));
 		}
@@ -80,7 +104,7 @@ class Ficha
 			fichaClick.destinos[2] = new Posicion(-1, -1);
 		}
 		//casilla abajo
-		if(comprobarLimites(x * dim, (y + num)* dim, e, dim))
+		if(comprobarLimites(x * dim, (y + num)* dim, cv, dim) && fichaClick.colisionaFichas(x, y + num))
 		{
 			fichaClick.destinos[3] = new Posicion(x , (y + num));
 		}
@@ -89,7 +113,7 @@ class Ficha
 			fichaClick.destinos[3] = new Posicion(-1, -1);
 		}
 		//casilla diagonal superior derecha
-		if(comprobarLimites((x + num) * dim + 2, (y - num)* dim + 2, e, dim))
+		if(comprobarLimites((x + num) * dim + 2, (y - num)* dim + 2, cv, dim) && fichaClick.colisionaFichas(x + num, y - num))
 		{
 			fichaClick.destinos[4] = new Posicion((x + num) , (y - num));
 		}
@@ -98,7 +122,7 @@ class Ficha
 			fichaClick.destinos[4] = new Posicion(-1, -1);
 		}
 		//casilla diagonal superior izquierda
-		if(comprobarLimites((x - num) * dim + 2, (y - num)* dim + 2, e, dim))
+		if(comprobarLimites((x - num) * dim + 2, (y - num)* dim + 2, cv, dim) && fichaClick.colisionaFichas(x - num, y - num))
 		{
 			fichaClick.destinos[5] = new Posicion((x - num) , (y - num));
 		}
@@ -107,7 +131,7 @@ class Ficha
 			fichaClick.destinos[5] = new Posicion(-1, -1);
 		}
 		//casilla diagonal inferior derecha
-		if(comprobarLimites((x + num) * dim + 2, (y + num)* dim + 2, e, dim))
+		if(comprobarLimites((x + num) * dim + 2, (y + num)* dim + 2, cv, dim) && fichaClick.colisionaFichas(x + num, y + num))
 		{
 			fichaClick.destinos[6] = new Posicion((x + num) , (y + num));
 		}
@@ -116,7 +140,7 @@ class Ficha
 			fichaClick.destinos[6] = new Posicion(-1, -1);
 		}
 		//casilla diagonal inferior izquierda
-		if(comprobarLimites((x - num) * dim + 2, (y + num)* dim + 2, e, dim))
+		if(comprobarLimites((x - num) * dim + 2, (y + num)* dim + 2, cv, dim) && fichaClick.colisionaFichas(x - num, y + num))
 		{
 			fichaClick.destinos[7] = new Posicion((x - num) , (y + num));
 		}
@@ -124,8 +148,6 @@ class Ficha
 		{
 			fichaClick.destinos[7] = new Posicion(-1, -1);
 		}
-
-		console.log(fichaClick.destinos);
 	}
 
 	//comprueba que las coordenadas pasadas estan dentro de los posibles destinos de la ficha
@@ -248,6 +270,10 @@ class Marcador
 		spanTurno.innerHTML = getPropiedad(this.turno, 'nombre');
 		spanTurno.classList.add('color-' + getPropiedad(this.turno, 'color'));
 		this.puedoTirar = true;
+		//reiniciamos el dado a 0
+		this.dado = 0;
+		let spanDado = document.getElementById('dado');	
+		spanDado.innerHTML = this.dado;
 	}
 
 	tirarDado()
@@ -713,8 +739,13 @@ function comprobarLimites(x, y, cv, dim)
 			{
 				//puedo llegar hasta el final del canvas
 				if(x < 1 || x > cv.width-1 || y < 1 || y > cv.height-1)
+				{
 					return false;
+				}
 			}
+			//si esta a menos de la 0 o mas de la 19
+			else if(x < 1 || x > cv.width - 1)
+				return false;
 		}
 		//si no esta en ninguna de los lugares especiales
 		else
@@ -801,6 +832,8 @@ function mouse_click(e)
 	//Jugando
 	else if(marcador.dado != 0)
 	{
+		//creamos un numero para saber la posicion del array de las fichas
+		let posFi = 0;
 		if(marcador.turno == 'A')
 		{
 			//recorremos el array de fichas para ver si hemos pinchado en alguna y la seleccionamos
@@ -820,16 +853,18 @@ function mouse_click(e)
 
 					//Si esta seleccionada, la deseleccionamos, y viceversa
 					fichasA[i].seleccionada = !fichasA[i].seleccionada;
+
 					break;
 				}
 			}
 			//recorremos el array y cogemos la ficha seleccionada
-			for(let i = 0; i < fichasA.length; i++)
+			for(let j = 0; j < fichasA.length; j++)
 			{
-				if(fichasA[i].seleccionada)
+				if(fichasA[j].seleccionada)
 				{
 					seleccionada = true;
-					ficha = fichasA[i];
+					posFi = j;
+					ficha = fichasA[j];
 				}
 			}
 		}
@@ -850,28 +885,21 @@ function mouse_click(e)
 						}
 					}
 
-					//si no esta seleccionada, la seleccionamos
-					if(!fichasB[i].seleccionada)
-						fichasB[i].seleccionada = true;
-
-					//si la ficha ya estaba seleccionada, la quitamos
-					else
-						fichasB[i].seleccionada = false;
-
+					//Si esta seleccionada, la deseleccionamos, y viceversa
+					fichasB[i].seleccionada = !fichasB[i].seleccionada;
 					break;
 				}
 			}
 			//recorremos el array y cogemos la ficha seleccionada
-			for(let i = 0; i < fichasB.length; i++)
+			for(let j = 0; j < fichasB.length; j++)
 			{
-				if(fichasB[i].seleccionada)
+				if(fichasB[j].seleccionada)
 				{
 					seleccionada = true;
-					ficha = fichasB[i];
+					ficha = fichasB[j];
 				}
 			}
 		}
-		console.log(seleccionada);
 		if(seleccionada)
 		{
 			//destacar casilla de la ficha
@@ -891,9 +919,18 @@ function mouse_click(e)
 					ficha.posicion.x = columna;
 					ficha.posicion.y = fila;
 					//la cambiamos en el session storage
+					pos = new Posicion(Math.floor(columna), Math.floor(fila));
+					let posiciones = getPropiedad(ficha.equipo, 'posiciones');
+					posiciones[posFi] = pos;
+					setPropiedad(ficha.equipo, 'posiciones', posiciones);
+					//actualizamos los destinos de la ficha que hemos movido
 					ficha.actualizarDestinos(e);
+					//le quitamos la seleccion
 					ficha.seleccionada = false;
+					//comprobamos si ha marcado gol
 					ficha.enPorteria();
+					//se cambia el turno del equipo
+					marcador.cambiarTurno();
 					dibujarCuadricula();
 				}
 				if(ficha.seleccionada)
@@ -1032,8 +1069,8 @@ function posCorrecta(x, y, cv, ficha)
 		{
 			for(let i=0; i < fichasA.length; i++)
 			{
-				filA = fichasA[i].posicion.x;
-				colA = fichasA[i].posicion.y;
+				filA = fichasA[i].posicion.y;
+				colA = fichasA[i].posicion.x;
 				if(filF == filA && colF == colA)
 					return false;
 			}
@@ -1050,8 +1087,8 @@ function posCorrecta(x, y, cv, ficha)
 		{
 			for(let j=0; j < fichasB.length; j++)
 			{
-				filB = fichasB[j].posicion.x;
-				colB = fichasB[j].posicion.y;
+				filB = fichasB[j].posicion.y;
+				colB = fichasB[j].posicion.x;
 				if(filF == filB && colF == colB)
 					return false;
 			}
