@@ -25,6 +25,7 @@ class Ficha
 		this.equipo = img.parentNode.id.replace('fichas-', '');
 	}
 
+
 	//comprueba que la ficha haya entrado a una porteria y llama a la funcion gol
 	enPorteria()
 	{
@@ -33,11 +34,19 @@ class Ficha
 		{
 			//si esta en la columna 0, es la porteria del equipo A
 			if(this.posicion.x == 0)
+			{
 				marcador.gol('B');
+				return true;
+			}
 			//si esta en la columna 19, es la porteria del equipo B
 			else if(this.posicion.x == 19)
+			{
 				marcador.gol('A');
+				return true;
+			}
 		}
+
+		return false;
 	}
 
 	//comprueba que la posicion no coincida con ninguna ficha
@@ -50,7 +59,9 @@ class Ficha
 			filA = fichasA[i].posicion.y;
 			colA = fichasA[i].posicion.x;
 			if(fil == filA && col == colA)
+			{
 				return false;
+			}
 		}
 		//con las fichas del equipo B
 		for(let i=0; i < fichasB.length; i++)
@@ -58,7 +69,9 @@ class Ficha
 			filB = fichasB[i].posicion.y;
 			colB = fichasB[i].posicion.x;
 			if(fil == filB && col == colB)
+			{
 				return false;
+			}
 		}
 
 		return true;
@@ -317,6 +330,26 @@ class Marcador
 		document.body.appendChild(fondo);
 	}
 
+	mensajeGol(equipo)
+	{
+		let fondo = document.createElement('div'),
+			contenedor = document.createElement('article'),
+			mensaje = '';
+
+		fondo.appendChild(contenedor);
+
+		mensaje += '<h3>GOOOL!!!</h3>';
+		mensaje += '<p>Gol de <span class="color-' + getPropiedad(equipo, 'color') + ' negrita">' + getPropiedad(equipo, 'nombre') + '</p>';
+		mensaje += '<p>Vais ' + this.goles['A'] + ' - ' + this.goles['B'] + '</p>';
+		mensaje += '<button onclick="this.parentNode.parentNode.remove();" class="boton">Aceptar</button>';
+		
+		contenedor.innerHTML = mensaje;
+		fondo.classList.add('fondo-mensaje');
+		contenedor.classList.add('contenedor-mensaje');
+
+		document.body.appendChild(fondo);
+	}
+
 	heGanado(equipo)
 	{
 		if (this.goles[equipo] >= 5)
@@ -336,25 +369,26 @@ class Marcador
 		this.goles[equipo]++;
 		this.refrescar();
 		setPropiedad(equipo, 'goles', this.goles[equipo]);
+		this.mensajeGol(equipo);
 		this.heGanado(equipo);
 	}
 
 	cambiarTurno()
 	{
-		let spanTurno = document.getElementById('turno');
+		let spanTurno = document.getElementById('turno'),
+			spanDado = document.getElementById('dado');	
 		
 		//Quitamos la clase del turno anterior y ponemos la del nuevo
 		spanTurno.classList.remove('color-' + getPropiedad(this.turno, 'color'));
-		setPropiedad(this.turno, 'turno', false);
 		this.turno = (this.turno == 'A' ? 'B' : 'A');
-		setPropiedad(this.turno, 'turno', true);
+		sessionStorage.turno = this.turno;
 		spanTurno.innerHTML = getPropiedad(this.turno, 'nombre');
 		spanTurno.classList.add('color-' + getPropiedad(this.turno, 'color'));
 		this.puedoTirar = true;
+
 		//reiniciamos el dado a 0
 		this.dado = 0;
-		let spanDado = document.getElementById('dado');	
-		spanDado.innerHTML = this.dado;
+		spanDado.innerHTML = 'Esperando...';
 	}
 
 	tirarDado()
@@ -365,6 +399,7 @@ class Marcador
 		let spanDado = document.getElementById('dado');			
 
 		this.dado = Math.floor(Math.random() * (7 - 1) + 1);
+		sessionStorage.dado = this.dado;
 		spanDado.innerHTML = this.dado;
 		this.puedoTirar = false;
 	}
@@ -413,13 +448,13 @@ var fichasB = new Array();
 //Escribe los nombres de los equipos y carga los colores de las fichas
 function obtenerDatos()
 {
-	//En el login
+	//Login
 	let p = document.querySelector('#login-container>p');
 	let html = '<span class="color-' + getPropiedad('A', 'color') + ' negrita">' +  getPropiedad('A', 'nombre') + '</span> <span id="puntos-A">' + getPropiedad('A', 'goles') + '</span> - <span id="puntos-B">' + getPropiedad('B', 'goles') + '</span> <span class="color-' + getPropiedad('B', 'color') + ' negrita">' +  getPropiedad('B', 'nombre') + '</span>';
 
 	p.innerHTML = html;
 
-	//En el marcador
+	//Goles marcador
 	p = document.querySelector('#zona-marcador>div>p');
 	html = '<span class="color-' + getPropiedad('A', 'color') + ' negrita">' +  getPropiedad('A', 'nombre') + '</span> <span id="goles-A">' + getPropiedad('A', 'goles') + '</span> - <span id="goles-B">' + getPropiedad('B', 'goles') + '</span> <span class="color-' + getPropiedad('B', 'color') + ' negrita">' +  getPropiedad('B', 'nombre') + '</span>';
 	p.innerHTML = html;
@@ -428,10 +463,19 @@ function obtenerDatos()
 	marcador.goles.A = getPropiedad('A', 'goles');
 	marcador.goles.B = getPropiedad('B', 'goles');
 
-	//Turno inicial
+	//Dado
+	let spanDado = document.getElementById('dado');
+	spanDado.innerHTML = (sessionStorage.dado == 0 ? 'Esperando...' : sessionStorage.dado);
+
+	marcador.dado = sessionStorage.dado;
+
+	//Turno
 	let spanTurno = document.getElementById('turno');
-	spanTurno.innerHTML = getPropiedad('A', 'nombre');
-	spanTurno.classList.add('color-' + getPropiedad('A', 'color'));
+
+	spanTurno.innerHTML = getPropiedad(sessionStorage.turno, 'nombre');
+	spanTurno.classList.add('color-' + getPropiedad(sessionStorage.turno, 'color'));
+
+	marcador.turno = sessionStorage.turno;
 
 	//En la zona de fichas
 	let h3 = document.querySelectorAll('#zona-fichas h3');
@@ -581,10 +625,8 @@ function listo(button)
 
 
 //Coloca las fichas de un equipo aleatoriamente
-function aleatorio(button)
+function aleatorio(equipo)
 {
-	let equipo = button.parentNode.parentNode.querySelector('div').id.replace('fichas-','');
-
 	if (getPropiedad(equipo, 'estado') == 'LISTO')
 		return;
 
@@ -831,17 +873,62 @@ function comprobarLimites(x, y, cv, dim)
 			}
 			//si esta a menos de la 0 o mas de la 19
 			else if(x < 1 || x > cv.width - 1)
+			{
 				return false;
+			}
 		}
 		//si no esta en ninguna de los lugares especiales
 		else
 		{
 			//solo puedo llegar hasta el final del campo
 			if(x < (1 * dim) || x > cv.width - 1 * dim - 1 || y < 1 || y > cv.height-1)
+			{
 				return false;
+			}
 		}
 		return true;
 	}
+}
+
+//Muestra distintos mensajes de error
+function mensajeError(error)
+{
+	let fondo = document.createElement('div'),
+		contenedor = document.createElement('article'),
+		mensaje = '';
+
+	fondo.appendChild(contenedor);
+
+	if (error == 'ocupada')
+	{
+		mensaje += '<h3>Casilla ocupada</h3>';
+		mensaje += '<p>La casilla de destino ya está ocupada por otra ficha.</p>';
+	}
+
+	else if (error == 'campo equivocado')
+	{
+		mensaje += '<h3>Campo equivocado</h3>';
+		mensaje += '<p>Las fichas deben colocarse en su campo al inicio.</p>';
+	}
+
+	else if (error == 'porteria')
+	{
+		mensaje += '<h3>Buen intento majo ;)</h3>';
+		mensaje += '<p>Marcar un gol no puede ser tan fácil.</p>';
+	}
+
+	else if (error == 'incorrecta')
+	{
+		mensaje += '<h3>Posición incorrecta</h3>';
+		mensaje += '<p>La posición no es correcta. Elija una de las resaltadas.</p>';
+	}
+	
+	mensaje += '<button onclick="this.parentNode.parentNode.remove();" class="boton">Aceptar</button>';
+	contenedor.innerHTML = mensaje;
+	fondo.classList.add('fondo-mensaje');
+	contenedor.classList.add('contenedor-mensaje');
+
+	document.body.appendChild(fondo);
 }
 
 
@@ -1014,8 +1101,35 @@ function mouse_click(e)
 					ficha.actualizarDestinos(e);
 					//le quitamos la seleccion
 					ficha.seleccionada = false;
+					
 					//comprobamos si ha marcado gol
-					ficha.enPorteria();
+					if (ficha.enPorteria())
+					{
+						if (ficha.equipo == 'A')
+						{
+							fichasA.splice(posFi,1);
+
+							let posA = getPropiedad('A', 'posiciones');
+							posA.splice(posFi, 1);
+							setPropiedad('A', 'posiciones', posA);
+
+							if (fichasA.length == 0)
+								aleatorio('A');
+						}
+
+						else if (ficha.equipo == 'B')
+						{
+							fichasB.splice(posFi,1);
+
+							let posB = getPropiedad('B', 'posiciones');
+							posB.splice(posFi, 1);
+							setPropiedad('B', 'posiciones', posB);
+
+							if (fichasB.length == 0)
+								aleatorio('B');
+						}
+					}
+
 					//se cambia el turno del equipo
 					marcador.cambiarTurno();
 					dibujarCuadricula();
@@ -1206,7 +1320,20 @@ function posCorrecta(x, y, cv, ficha)
 	{
 		//si no esta dentro de su campo
 		if(x < (1 * dim) || x > 10 * dim - 1 || y < 1 || y > cv.height-1)
+		{
+			if (y > 3 * dim && y < 6 * dim)
+			{
+				//Porteria
+				if (x < dim || x > 19 * dim)
+				{
+					mensajeError('porteria');
+					return false;
+				}
+			}
+
+			mensajeError('campo equivocado');
 			return false;
+		}
 		//si esta dentro de su campo
 		else
 		{
@@ -1215,7 +1342,10 @@ function posCorrecta(x, y, cv, ficha)
 				filA = fichasA[i].posicion.y;
 				colA = fichasA[i].posicion.x;
 				if(filF == filA && colF == colA)
+				{
+					mensajeError('ocupada');
 					return false;
+				}
 			}
 		}
 	}
@@ -1224,7 +1354,20 @@ function posCorrecta(x, y, cv, ficha)
 	{
 		//si no estan en su campo
 		if(x < (10 * dim) - 1 || x > cv.width - 1 * dim - 1 || y < 1 || y > cv.height-1)
+		{
+			if (y > 3 * dim && y < 6 * dim)
+			{
+				//Porteria
+				if (x < dim || x > 19 * dim)
+				{
+					mensajeError('porteria');
+					return false;
+				}
+			}
+
+			mensajeError('campo equivocado');
 			return false;
+		}
 		//si esta dentro de su campo
 		else
 		{
@@ -1233,7 +1376,10 @@ function posCorrecta(x, y, cv, ficha)
 				filB = fichasB[j].posicion.y;
 				colB = fichasB[j].posicion.x;
 				if(filF == filB && colF == colB)
+				{
+					mensajeError('ocupada');
 					return false;
+				}
 			}
 		}
 	}

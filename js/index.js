@@ -182,6 +182,8 @@ function listo(form)
 
 		if (listos['A'] == 'OK' && listos['B'] == 'OK')
 		{
+			sessionStorage.turno = 'A';
+			sessionStorage.dado = 0;
 			mostrarMensaje();
 		}
 	}

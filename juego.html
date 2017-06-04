@@ -47,12 +47,12 @@
 				<h2>Juego</h2>
 				<p>Gana el primer equipo en alcanzar un mínimo de 5 goles y 2 de ventaja</p>
 				<hr />
-				<div id="zona-marcador"  class="">
+				<div id="zona-marcador"  class="oculto">
 					<div class="tarjeta">
 						<p></p>
 						<div>
 							<p>Dado: <span id="dado" class="negrita">-</span></p>
-							<p>Turno: <span id="turno" class="negrita">-</span></p>
+							<p>Turno: <span id="turno" class="negrita">Esperando...</span></p>
 						</div>
 						<div>
 							<button class="boton" onclick="marcador.tirarDado();">Tirar dado</button>
@@ -72,7 +72,7 @@
 							<button class="boton oculto" onclick="listo(this);">Listo</button>
 						</div>
 						<div>							
-							<button class="boton" onclick="aleatorio(this);">Aleatorio</button>
+							<button class="boton" onclick="aleatorio('A');">Aleatorio</button>
 						</div>
 					</div>
 					<div class="tarjeta">
@@ -81,7 +81,7 @@
 							<button class="boton oculto" onclick="listo(this);">Listo</button>					
 						</div>
 						<div>
-							<button class="boton" onclick="aleatorio(this);">Aleatorio</button>
+							<button class="boton" onclick="aleatorio('B');">Aleatorio</button>
 						</div>
 					</div>
 				</div>
