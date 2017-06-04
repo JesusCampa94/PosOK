@@ -6,14 +6,11 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700"><!-- Ubuntu Web Font -->	
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"><!-- Material Icons -->
 		<link rel="stylesheet" type="text/css" href="css/estilos.css">
-		<script src="js/basico.js" async defer></script>
 		<title>Acerca de OKBall</title>
 	</head>
 	<body>
-		<input type="checkbox" id="burger-ckb">
 		<header>
 			<div>
-				<label for="burger-ckb"><i class="material-icons">&#xE5CF;</i></label>
 				<div id="logo-container">
 					<img src="img/logo.png" height="500" width="500" alt="Logo OKBall" onclick="window.location.href = 'index.html';">
 					<div>
@@ -22,18 +19,6 @@
 					</div>
 				</div>
 			</div>
-			<div id="login-container">
-				<p>Cargando nombre de usuario...</p>
-				<div>
-					<p>Cargando enlaces...</p>
-				</div>
-			</div>
-			<nav>
-				<ul>
-					<li><a href="index.html"><i class="material-icons">&#xE88A;</i>Inicio</a></li>
-					<li><a href="buscar.html"><i class="material-icons">&#xE8B6;</i>Buscar</a></li>					
-				</ul>
-			</nav>
 		</header>
 		<main>
 			<section>
@@ -41,7 +26,7 @@
 				<hr>
 				<article class="texto">
 					<h3>Descripción</h3>
-					<p>El website PosOK&copy; es la práctica 2 de la asginatura Programación Hipermedia II, la cual pertenece al tercer curso del Grado en Ingeniería Multimedia de la Universidad de Alicante.</p>
+					<p>El website OkBall&copy; es la práctica 3 de la asginatura Programación Hipermedia II, la cual pertenece al tercer curso del Grado en Ingeniería Multimedia de la Universidad de Alicante.</p>
 				</article>
 				<article class="texto">
 					<h3>Autores</h3>
@@ -70,15 +55,17 @@
 				<hr>
 				<article class="texto">
 					<h3>Puntos realizados</h3>
-					<p>Se han realizado casi todos los apartados especificados en el enunciado de la práctica, pero hay uno que no hemos podido completar. A la hora de registrarse en la página web aparece un mensaje cuando se ha registrado un usuario correctamente, pero dicho mensaje no aparece con una animacion de css.</p>
+					<p>Se han realizado casi todos los apartados especificados en el enunciado de la práctica, pero hay áspectos que no hemos podido completar. Antes de comenzar el partido, sólo es posible desplazar las fichas por el campo arrastrandolas con el ratón. Del mismo modo, al empezar el partido sólo es posible controlar las fichas mediante clicks en la pantalla.</p>
+					<p>Tampoco se muestran todos los mensajes emergentes durante el desarrollo del juego.</p>
 				</article>
 				<article class="texto">
 					<h3>Problemas e incompatibilidades</h3>
 					<p>Hemos encontrado algunos problemas a la hora de realizar la práctica:</p>
 					<ul>
-						<li>Los campos tipo <code>date</code> no son compatibles con ciertos navegadores, como Firefox. Para aquellos que no disponen de compatibilidad con dicho tipo, se ha implementado una solucion mediante javascript que muestra un calendario alternativo.</li>
-						<li>El usuario podría colar fotos más grandes que el tamaño máximo permitido quitando las clases "foto-muy-grande" de los contenedores de la imagen. Sin embargo, también está comprobando del lado del servidor, por lo que la imagen no terminaría entrando en la Base de Datos.</li>
-						<li>A la hora de realizar la validación aparece un "warning" que nos avisa de que estamos usando "Áreas Privadas de Unicode". Se trata de los códigos de los iconos material desing usados en la página. Aunque Google ofrece una alternativa usando los nombres ingleses de los iconos, decidimos usar esta opción debido a su mayor compatibilidad con las versiones antiguas de Internet Explorer.</li>
+						<li>Cuando recargamos la página de juego desde sessionStorage no se muestran las fichas en el campo de juego, aunque sus posiciones sí que están guardadas. Para poder visualizarlas es necesario hacer click en cualquier parte del canvas.</li>
+						<li>A la hora de realizar la validación aparece un "warning" que nos avisa de que estamos usando "Áreas Privadas de Unicode". Se trata del código del icono material desing usado en el header de la versión móvil. Aunque Google ofrece una alternativa usando alias en inglés de los iconos, decidimos usar esta opción debido a su mayor compatibilidad con las versiones antiguas de Internet Explorer.</li>
+						<li>Como no especificaba que hacer con una ficha que ha entrado en la porteria, nosotros hemos optado por hacerla desaparecer, lo cual hace que la dificualtad crezca inversamente proporcional al numero de fichas disponibles. Una vez que el jugador ha marcado con las 5 fichas, estas se colocan en el campo en posiciones aleatorias, siempre que cumplan los requisitos de colocación inicial de fichas.</li>
+						<li>Un problema relacionado con este último es que no hemos hecho nada para evitar que el jugador se quede sin poder hacer ningún movimiento debido a que sus escasas fichas no tienen posiciones a las que ir. Esto conlleva a que es posible que tenga que rendirse debido a que no puede realizar su turno.</li>
 					</ul>
 				</article>
 			</section>

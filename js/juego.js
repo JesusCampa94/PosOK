@@ -1192,6 +1192,7 @@ function mouse_move(e)
 		 seleccionada = false,
 		 ficha = 'undefined',
 		 fichaEquipo ='undefined',
+		 posArray = 0,
 		 ctx = cv.getContext('2d');
 
 	//solo podra moverse mientras este colocando
@@ -1199,7 +1200,7 @@ function mouse_move(e)
 	{
 		//recuperamos los atributos del canvas
 		fichaEquipo = cv.getAttribute('ficha-equipo');
-		let posArray = cv.getAttribute('pos-array');
+		posArray = cv.getAttribute('pos-array');
 
 		//na vez que los tenemos, los borramos
 
@@ -1264,7 +1265,12 @@ function mouse_move(e)
 				}
 			}
 			if(perfecto)
-			{
+			{	
+				let pos = new Posicion(columna, fila),
+				    posiciones = getPropiedad(ficha.equipo, 'posiciones');
+				posiciones[posArray] = pos;
+				setPropiedad(ficha.equipo, 'posiciones', posiciones);
+
 				ficha.posicion.x = columna;
 				ficha.posicion.y = fila;
 				dibujarCuadricula();
@@ -1286,29 +1292,37 @@ function mouse_down(e)
 		y 		  = e.offsetY,
 		dim 	  = cv.width/20,
 		fila    = Math.floor(y/dim),
-		columna = Math.floor(x/dim);
+		columna = Math.floor(x/dim),
+		estadoA = getPropiedad('A', 'estado'),
+		estadoB = getPropiedad('B', 'estado');
 
 	//comprobamos si hemos seleccionado alguna ficha
-	for (let i = 0; i < fichasA.length; i++)
+	if(estadoA == 'COLOCANDO')
 	{
-		if (fichasA[i].posicion.x == columna && fichasA[i].posicion.y == fila)
+		for (let i = 0; i < fichasA.length; i++)
 		{
-			cv.setAttribute('data-down', 'true');
-			cv.setAttribute('ficha-equipo', 'A');
-			cv.setAttribute('pos-array', i);
-			break;
+			if (fichasA[i].posicion.x == columna && fichasA[i].posicion.y == fila)
+			{
+				cv.setAttribute('data-down', 'true');
+				cv.setAttribute('ficha-equipo', 'A');
+				cv.setAttribute('pos-array', i);
+				break;
+			}
 		}
 	}
 
-	for (let i = 0; i < fichasB.length; i++)
+	if(estadoB == 'COLOCANDO')
 	{
-		if (fichasB[i].posicion.x == columna && fichasB[i].posicion.y == fila)
+		for (let i = 0; i < fichasB.length; i++)
 		{
-			cv.setAttribute('data-down', 'true');
-			cv.setAttribute('ficha-equipo', 'B');
-			cv.setAttribute('pos-array', i);
-			break;
-		}
+			if (fichasB[i].posicion.x == columna && fichasB[i].posicion.y == fila)
+			{
+				cv.setAttribute('data-down', 'true');
+				cv.setAttribute('ficha-equipo', 'B');
+				cv.setAttribute('pos-array', i);
+				break;
+			}
+		}	
 	}
 }
 

@@ -13,7 +13,7 @@
 body
 {
 	margin: 0;
-	min-width: 640px;
+	min-width: 340px;
 	min-height: 100vh;
 	font-family: "Ubuntu", Arial, Helvetica, sans-serif;
 	font-size: 10pt;
@@ -21,6 +21,11 @@ body
 
 	display: flex;
 	flex-direction: column;
+}
+
+body.cuerpo-ancho
+{
+	min-width: 640px;
 }
 
 img
