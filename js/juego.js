@@ -488,13 +488,6 @@ function obtenerDatos()
 
 	cargarFichas();
 	posicionarFichas();
-
-	//Ocultar o pintar de verde los cuadros
-	if (getPropiedad('A', 'estado') == 'LISTO')
-		listo(document.querySelector('#fichas-A>button'));
-
-	if (getPropiedad('B', 'estado') == 'LISTO')
-		listo(document.querySelector('#fichas-B>button'));
 }
 
 //Cargamos 5 fichas para cada equipo
@@ -539,14 +532,41 @@ function posicionarFichas()
 	{
 		fichasA[i] = new Ficha(imgA);
 		fichasA[i].posicion = posicionesA[i];
-		imgsA[i].classList.add('oculto');
 	}
 	for(let i = 0; i < posicionesB.length; i++)
 	{
 		fichasB[i] = new Ficha(imgB);
 		fichasB[i].posicion = posicionesB[i];
-		imgsB[i].classList.add('oculto');
 	}
+
+	if (getPropiedad('A', 'estado') == 'LISTO' || getPropiedad('A', 'estado') == 'JUGANDO')
+	{
+		for(let i = 0; i < 5; i++)
+			imgsA[i].classList.add('oculto');
+
+		listo(document.querySelector('#fichas-A>button'));
+	}
+
+	else
+	{
+		for(let i = 0; i < posicionesA.length; i++)
+			imgsA[i].classList.add('oculto');
+	}
+
+	if (getPropiedad('B', 'estado') == 'LISTO' || getPropiedad('B', 'estado') == 'JUGANDO')
+	{
+		for(let i = 0; i < 5; i++)
+			imgsB[i].classList.add('oculto');
+
+		listo(document.querySelector('#fichas-B>button'));
+	}
+
+	else
+	{
+		for(let i = 0; i < posicionesB.length; i++)
+			imgsB[i].classList.add('oculto');		
+	}
+
 	dibujarCuadricula();
 	dibujarFichas(document.getElementById('campo'));
 
@@ -554,9 +574,9 @@ function posicionarFichas()
 	let botonA = document.querySelector('#fichas-A>button'),
 		botonB = document.querySelector('#fichas-B>button');
 
-	if(posicionesA.length == 5)
+	if(posicionesA.length == 5 && getPropiedad('A', 'estado') != 'LISTO')
 		botonA.classList.remove('oculto');
-	if(posicionesB.length == 5)
+	if(posicionesB.length == 5 && getPropiedad('B', 'estado') != 'LISTO')
 		botonB.classList.remove('oculto');
 }
 
@@ -600,11 +620,14 @@ function mostrarListo(div)
 //Marca un equipo como listo
 function listo(button)
 {
-	let div = button.parentNode.parentNode;
+	let div = button.parentNode.parentNode,
+		divAleatorio = div.querySelector('div:nth-of-type(2)');
+
 	div.classList.add('equipo-listo');
 
-	button.parentNode.innerHTML += '<p>¡LISTO!</p>';
 	button.classList.add('oculto');
+	button.parentNode.innerHTML += '<p>¡LISTO!</p>';
+	divAleatorio.classList.add('oculto');
 
 	let equipo = div.querySelector('div').id.replace('fichas-','');
 	setPropiedad(equipo, 'estado', 'LISTO');

@@ -456,7 +456,7 @@ main
 					text-align: center;
 				}
 
-				#zona-fichas>div>p
+				#zona-fichas>div>div:first-of-type>p
 				{
 					font-size: 1.25em;
 					font-weight: bold;
