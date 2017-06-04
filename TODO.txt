@@ -65,8 +65,8 @@ Hecho		Calificación	Tarea
 [X]		0.5				Cargar fichas con svg externo
 [X]		0.5				Zona de marcador
 [ ]		0.75				Colocar fichas mediante clic
-[ ]		1.25				Colocar fichas mediante Drag & Drop
-[ ]		0.5				Botón para colocar fichas aleatoriamente
+[X]		1.25				Colocar fichas mediante Drag & Drop
+[X]		0.5				Botón para colocar fichas aleatoriamente
 [X]		0.5				Botón Listo. Sólo debe aparecer cuando todas las fichas están colocadas.
 [ ]		2					Mover fichas en el campo (incluye mensajes emergentes y lógica del juego)
 [ ]		0.5				Recordar estado del juego

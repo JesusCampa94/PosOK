@@ -261,9 +261,20 @@ var estadoEquipos = new Array();
 //Llama a las funciones necesarias para inicializar todo
 ! function inicializar()
 {
+	// console.log(fichasA);
+	// console.log(fichasB);
 	obtenerDatos();
-	dibujarCanvas();
+	// console.log(fichasA);
+	// console.log(fichasB);
 	iniciarDragNDrop();
+	// console.log(fichasA);
+	// console.log(fichasB);
+	dibujarCuadricula();
+	// console.log(fichasA);
+	// console.log(fichasB);
+	dibujarFichas(document.getElementById('campo'));
+	// console.log(fichasA);
+	// console.log(fichasB);
 }();
 
 //Escribe los nombres de los equipos y carga los colores de las fichas
@@ -324,11 +335,11 @@ function posicionarFichas()
 {
 	let posicionesA = getPropiedad('A', 'posiciones'),
 		posicionesB = getPropiedad('B', 'posiciones');
-		console.log(posicionesA);
-		console.log(posicionesB);
+		// console.log(posicionesA);
+		// console.log(posicionesB);
 
 	//si algun array esta vacio no continuamos
-	if(typeof posicionesA[0] === 'undefined' || typeof posicionesB[0] === 'undefined')
+	if(typeof posicionesA[0] === 'undefined' && typeof posicionesB[0] === 'undefined')
 		return;
 
 	let imgA = document.querySelector('#fichas-A>img'),
@@ -354,6 +365,7 @@ function posicionarFichas()
 	}
 	dibujarCuadricula();
 	dibujarFichas(document.getElementById('campo'));
+
 	//ahora mostramos el boton de listo
 	let botonA = document.querySelector('#fichas-A>button'),
 		botonB = document.querySelector('#fichas-B>button');
@@ -364,16 +376,19 @@ function posicionarFichas()
 		botonB.classList.remove('oculto');
 }
 
-//resalta la ficha seleccionada y la prepara para colocarla en el canvas
+//Resalta la ficha seleccionada y la prepara para colocarla en el canvas
 function seleccionarFicha(ficha)
 {
-	let fichas = ficha.parentNode.querySelectorAll('img');
+	let fichas = document.querySelectorAll('#zona-fichas img'),
+		equipo = ficha.parentNode.id.replace('fichas-', '');
 
 	for(let i=0; i < fichas.length; i++)
 	{
 		fichas[i].classList.remove('ficha-resaltada');
 	}
+
 	ficha.classList.add('ficha-resaltada');
+	estadoEquipos[equipo] = 'INCLUYENDO';
 }
 
 //Muestra el boton "Listo" cuando no le quedan fichas a un equipo
@@ -425,9 +440,12 @@ function listo(button)
 //Coloca las fichas de un equipo aleatoriamente
 function aleatorio(button)
 {
+	let equipo = button.parentNode.parentNode.querySelector('div').id.replace('fichas-','');
 
-	let equipo = button.parentNode.parentNode.querySelector('div').id.replace('fichas-',''),
-		cv = document.getElementById('campo'),
+	if (estadoEquipos[equipo] == 'LISTO')
+		return;
+
+	let cv = document.getElementById('campo'),
 		i = 0, j, ocupada = false, randomF, randomC;
 
 	if (equipo == 'A')
@@ -531,6 +549,7 @@ function aleatorio(button)
 /* ----------------------------------------------- CANVAS ----------------------------------------------- */
 function dibujarCuadricula()
 {
+	// console.log('Cuadricula');
 	let cv = document.getElementById('campo'),
 		ctx = cv.getContext('2d'),
 		dim = cv.width/20;
@@ -580,12 +599,13 @@ function dibujarCuadricula()
 			ctx.lineTo(cv.width - 1* dim, i * dim);
 		}
 
-		for (let j = 1; j <= 19; j++)
-		{
-			// Lineas verticales
-			ctx.moveTo(j * dim, 0);
-			ctx.lineTo(j * dim, cv.height);	
-		}
+	}
+
+	for (let j = 1; j <= 19; j++)
+	{
+		// Lineas verticales
+		ctx.moveTo(j * dim, 0);
+		ctx.lineTo(j * dim, cv.height);	
 	}
 
 	ctx.stroke();
@@ -622,23 +642,17 @@ function dibujarCuadricula()
 
 }
 
-function dibujarCanvas()
-{
-	let cv = document.getElementById('campo'),
-		 ctx = cv.getContext('2d'),
-		 dim = cv.width/20;
-
-	cv.width = cv.width;
-	dibujarCuadricula();
-}
-
 //Dibuja las fichas
 function dibujarFichas(cv)
 {
+	// console.log('Fichas');
 	let ctx = cv.getContext('2d'),
 		dim = cv.width / 20,
 		imagenA = document.querySelector('#fichas-A>img'),
 		imagenB = document.querySelector('#fichas-B>img');
+
+	// console.log(imagenA);
+	// console.log(imagenB);
 
 	//dibujamos las fichas del equipo A
 	for(let i=0; i < fichasA.length; i++)
@@ -653,6 +667,7 @@ function dibujarFichas(cv)
 	{
 		fil = fichasB[j].posicion.y;
 		col = fichasB[j].posicion.x;
+		// console.log('Estoy dibujando la ficha');
 		ctx.drawImage(imagenB, col * dim, fil * dim, dim, dim);
 	}
 }
@@ -703,26 +718,61 @@ function mouse_click(e)
 		fila    = Math.floor(y/dim),
 		columna = Math.floor(x/dim);
 
-	if(!comprobarLimites(e, dim))
+	if(!comprobarLimites(x, y, cv, dim))
 		return;
 
 	console.log(`CLICK=>fila: ${fila} - columna: ${columna}`);
 
 	// Limpiar canvas
-	cv.width = cv.width;
 	dibujarCuadricula();
 
 	let ctx = cv.getContext('2d'),
 		 img = new Image();
 
-	//si al hacer click pinchamos en la ficha
-	if(fila == ficha.fila && columna == ficha.columna && ficha.seleccionada == false)
+	//Agregando fichas de fuera
+	if (estadoEquipos['A'] == 'INCLUYENDO' || estadoEquipos['B'] == 'INCLUYENDO')
 	{
-		ficha.seleccionada = true;
+		let fichaSeleccionada = document.querySelector('#zona-fichas .ficha-resaltada');
+
+		if(posCorrecta(x, y, cv, fichaSeleccionada))
+		{
+			//Creamos la ficha y la metemos al array del equipo que le corresponda
+			let ficha = new Ficha(fichaSeleccionada),
+				pos = new Posicion(Math.floor(x / dim), Math.floor(y / dim));
+
+			ficha.posicion = pos;
+			if(ficha.equipo == 'A')
+				fichasA.push(ficha);
+
+			else
+				fichasB.push(ficha);
+
+			let posiciones = getPropiedad(ficha.equipo, 'posiciones');
+			posiciones.push(pos);
+			setPropiedad(ficha.equipo, 'posiciones', posiciones);
+
+			dibujarFichas(cv);
+
+			//Para "quitarla" de su contenedor
+			fichaSeleccionada.classList.add('oculto');
+			mostrarListo(fichaSeleccionada.parentNode);
+
+			estadoEquipos[ficha.equipo] = 'COLOCANDO';
+		}
+
+		else
+		{
+			dibujarCuadricula();
+			dibujarFichas(cv);
+		}
 	}
-	else if(fila == ficha.fila && columna == ficha.columna && ficha.seleccionada == true)
+
+
+
+	//si al hacer click pinchamos en la ficha
+	if(fila == ficha.fila && columna == ficha.columna)
 	{
-		ficha.seleccionada = false;
+		ficha.seleccionada = !ficha.seleccionada;
 	}
 
 	img.onload = function()
@@ -773,7 +823,7 @@ function mouse_move(e)
 			{
 				ficha.columna = columna;
 				ficha.fila = fila;
-				dibujarCanvas();
+				dibujarCuadricula();
 
 				//destacar casilla de la ficha
 				ctx.fillStyle = '#C8E6C9';
@@ -798,10 +848,22 @@ function mouse_down(e)
 			fila    = Math.floor(y/dim),
 			columna = Math.floor(x/dim);
 
-		if(ficha.columna == columna && ficha.fila == fila)
+		if (marcador.turno == 'A')
 		{
-			//hay ficha
-			cv.setAttribute('data-down', 'true');
+			for (let i = 0; i < fichasA.length; i++)
+			{
+				if (fichasA[i].posicion.x == columna && fichasA[i].posicion.y == fila)
+					cv.setAttribute('data-down', 'true');
+			}
+		}
+
+		else
+		{
+			for (let i = 0; i < fichasB.length; i++)
+			{
+				if (fichasB[i].posicion.x == columna && fichasB[i].posicion.y == fila)
+					cv.setAttribute('data-down', 'true');
+			}
 		}
 	}
 }
