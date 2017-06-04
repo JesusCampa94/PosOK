@@ -16,6 +16,7 @@ function crearEquipo(equipo)
 	let objeto = new Object();
 	objeto.nombre = '';
 	objeto.color = -1;
+	objeto.estado = 'COLOCANDO';
 	objeto.turno = (equipo == 'A' ? true : false);
 	objeto.goles = 0;
 	objeto.posiciones = new Array();

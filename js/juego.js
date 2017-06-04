@@ -227,7 +227,7 @@ class Marcador
 		mensaje += '<h3>Fin del partido</h3>';
 		mensaje += '<p><span class="color-' + getPropiedad(ganador, 'color') + ' negrita">' + getPropiedad(ganador, 'nombre') + '</span> ha ganado</p>';
 		mensaje += '<p>Resultado: ' + this.goles['A'] + ' - ' + this.goles['B'] + '</p>';
-		mensaje += '<a href="index.html" onclick="this.parentNode.parentNode.remove();" class="boton">Jugar de nuevo</a>';
+		mensaje += '<button onclick="marcador.abandonarPartido();" class="boton">Jugar de nuevo</button>';
 		
 		contenedor.innerHTML = mensaje;
 		fondo.classList.add('fondo-mensaje');
@@ -244,7 +244,7 @@ class Marcador
 
 			if (this.goles[equipo] - this.goles[equipoContrario] >= 2)
 			{
-				console.log("Ha ganado el equipo " + equipo);
+				// console.log("Ha ganado el equipo " + equipo);
 				this.mensajeGanador(equipo);
 			}
 		}
@@ -299,10 +299,6 @@ class Marcador
 var marcador = new Marcador();
 var fichasA = new Array();
 var fichasB = new Array();
-var estadoEquipos = new Array();
-	estadoEquipos['A'] = 'COLOCANDO';
-	estadoEquipos['B'] = 'COLOCANDO';
-
 
 
 
@@ -367,6 +363,13 @@ function obtenerDatos()
 
 	cargarFichas();
 	posicionarFichas();
+
+	//Ocultar o pintar de verde los cuadros
+	if (getPropiedad('A', 'estado') == 'LISTO')
+		listo(document.querySelector('#fichas-A>button'));
+
+	if (getPropiedad('B', 'estado') == 'LISTO')
+		listo(document.querySelector('#fichas-B>button'));
 }
 
 //Cargamos 5 fichas para cada equipo
@@ -444,7 +447,7 @@ function seleccionarFicha(ficha)
 	}
 
 	ficha.classList.add('ficha-resaltada');
-	estadoEquipos[equipo] = 'INCLUYENDO';
+	setPropiedad(equipo, 'estado', 'INCLUYENDO');
 }
 
 //Muestra el boton "Listo" cuando no le quedan fichas a un equipo
@@ -475,14 +478,17 @@ function listo(button)
 	let div = button.parentNode.parentNode;
 	div.classList.add('equipo-listo');
 
+	button.parentNode.innerHTML += '<p>¡LISTO!</p>';
+	button.classList.add('oculto');
+
 	let equipo = div.querySelector('div').id.replace('fichas-','');
-	estadoEquipos[equipo] = 'LISTO';
+	setPropiedad(equipo, 'estado', 'LISTO');
 
 	//Si acabo de poner uno a LISTO, esto se cumple cuando ambos lo estan
-	if (estadoEquipos['A'] == estadoEquipos['B'])
+	if (getPropiedad('A', 'estado') == getPropiedad('B', 'estado'))
 	{
-		estadoEquipos['A'] = 'JUGANDO';
-		estadoEquipos['B'] = 'JUGANDO';
+		setPropiedad('A', 'estado', 'JUGANDO');
+		setPropiedad('B', 'estado', 'JUGANDO');
 
 		let zonaMarcador = document.getElementById('zona-marcador'),
 			zonaFichas = div.parentNode;
@@ -498,7 +504,7 @@ function aleatorio(button)
 {
 	let equipo = button.parentNode.parentNode.querySelector('div').id.replace('fichas-','');
 
-	if (estadoEquipos[equipo] == 'LISTO')
+	if (getPropiedad(equipo, 'estado') == 'LISTO')
 		return;
 
 	let cv = document.getElementById('campo'),
@@ -792,7 +798,7 @@ function mouse_click(e)
 		 seleccionada = false;
 
 	//Agregando fichas de fuera
-	if (estadoEquipos['A'] == 'INCLUYENDO' || estadoEquipos['B'] == 'INCLUYENDO')
+	if (getPropiedad('A', 'estado') == 'INCLUYENDO' || getPropiedad('B', 'estado') == 'INCLUYENDO')
 	{
 		let fichaSeleccionada = document.querySelector('#zona-fichas .ficha-resaltada');
 
@@ -819,7 +825,7 @@ function mouse_click(e)
 			fichaSeleccionada.classList.add('oculto');
 			mostrarListo(fichaSeleccionada.parentNode);
 
-			estadoEquipos[ficha.equipo] = 'COLOCANDO';
+			setPropiedad(ficha.equipo, 'estado', 'COLOCANDO');
 		}
 
 		else

@@ -456,6 +456,13 @@ main
 					text-align: center;
 				}
 
+				#zona-fichas>div>p
+				{
+					font-size: 1.25em;
+					font-weight: bold;
+					color: #4CAF50;
+				}
+
 				#zona-fichas>div>div
 				{
 					display: flex;
