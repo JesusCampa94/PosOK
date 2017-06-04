@@ -324,25 +324,44 @@ function posicionarFichas()
 {
 	let posicionesA = getPropiedad('A', 'posiciones'),
 		posicionesB = getPropiedad('B', 'posiciones');
+		console.log(posicionesA);
+		console.log(posicionesB);
 
-	//TODO: Si CUALQUIER array esta vacio, fuera
+	//si algun array esta vacio no continuamos
+	if(typeof posicionesA[0] === 'undefined' || typeof posicionesB[0] === 'undefined')
+		return;
 
 	let imgA = document.querySelector('#fichas-A>img'),
-		imgB = document.querySelector('#fichas-B>img');
+		imgB = document.querySelector('#fichas-B>img'),
+		imgsA = document.querySelectorAll('#fichas-A>img'),
+		imgsB = document.querySelectorAll('#fichas-B>img');
 		
 
 	fichasA = new Array();
 	fichasB = new Array();
 
-	for(let i = 0; i < 5; i++)
+	for(let i = 0; i < posicionesA.length; i++)
 	{
 		fichasA[i] = new Ficha(imgA);
 		fichasA[i].posicion = posicionesA[i];
+		imgsA[i].classList.add('oculto');
+	}
+	for(let i = 0; i < posicionesB.length; i++)
+	{
 		fichasB[i] = new Ficha(imgB);
 		fichasB[i].posicion = posicionesB[i];
+		imgsB[i].classList.add('oculto');
 	}
-
+	dibujarCuadricula();
 	dibujarFichas(document.getElementById('campo'));
+	//ahora mostramos el boton de listo
+	let botonA = document.querySelector('#fichas-A>button'),
+		botonB = document.querySelector('#fichas-B>button');
+
+	if(posicionesA.length == 5)
+		botonA.classList.remove('oculto');
+	if(posicionesB.length == 5)
+		botonB.classList.remove('oculto');
 }
 
 //resalta la ficha seleccionada y la prepara para colocarla en el canvas
@@ -413,6 +432,7 @@ function aleatorio(button)
 
 	if (equipo == 'A')
 	{
+		setPropiedad('A', 'posiciones', new Array());
 		fichasA = new Array();
 		dibujarCuadricula();
 		let imgA = document.querySelector('#fichas-A>img');
@@ -439,13 +459,18 @@ function aleatorio(button)
 				fichasA[i] = new Ficha(imgA);
 				fichasA[i].posicion.x = randomC;
 				fichasA[i].posicion.y = randomF;
+				let pos = new Posicion(randomC, randomF),
+				    posiciones = getPropiedad('A', 'posiciones');
+				posiciones.push(pos);
+				setPropiedad('A', 'posiciones', posiciones);
 				i++;	
 			}		
 		}
 	}
 
 	else
-	{		
+	{	
+		setPropiedad('B', 'posiciones', new Array());
 		fichasB = new Array();
 		dibujarCuadricula();
 		let imgB = document.querySelector('#fichas-B>img');
@@ -472,6 +497,10 @@ function aleatorio(button)
 				fichasB[i] = new Ficha(imgB);
 				fichasB[i].posicion.x = randomC;
 				fichasB[i].posicion.y = randomF;
+				let pos = new Posicion(randomC, randomF),
+				    posiciones = getPropiedad('B', 'posiciones');
+				posiciones.push(pos);
+				setPropiedad('B', 'posiciones', posiciones);
 				i++;	
 			}
 		}
