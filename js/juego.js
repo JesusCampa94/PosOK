@@ -124,6 +124,8 @@ class Ficha
 		{
 			fichaClick.destinos[7] = new Posicion(-1, -1);
 		}
+
+		console.log(fichaClick.destinos);
 	}
 
 	//comprueba que las coordenadas pasadas estan dentro de los posibles destinos de la ficha
@@ -882,14 +884,16 @@ function mouse_click(e)
 			ficha.actualizarDestinos(e);
 			if(typeof ficha.destinos[0] !== 'undefined')
 			{
-				console.log(`fila: ${fila} - columna: ${columna}`);
-				console.log(ficha.enDestino(fila, columna));
+				//si pulsamos en alguno de los destinos disponibles
 				if(ficha.enDestino(fila, columna))
 				{
-					ficha.posicion.x = fila;
-					ficha.posicion.y = columna;
+					//cambiamos la posicion de la ficha
+					ficha.posicion.x = columna;
+					ficha.posicion.y = fila;
+					//la cambiamos en el session storage
 					ficha.actualizarDestinos(e);
 					ficha.seleccionada = false;
+					ficha.enPorteria();
 					dibujarCuadricula();
 				}
 				if(ficha.seleccionada)
