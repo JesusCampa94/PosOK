@@ -73,76 +73,157 @@ class Ficha
 			 x = fichaClick.posicion.x,
 			 y = fichaClick.posicion.y,
 			 num = marcador.dado,
+			 noSalta = true,//booleano para comprobar si hay alguna ficha en la fila
 			 ctx = cv.getContext('2d');
 
 		//comprobamos que las posiciones validas a las que puede ir la ficha
 		//casilla a la derecha
-		if(comprobarLimites((x + num) * dim, y * dim + 1, cv, dim) && fichaClick.colisionaFichas(x + num, y))
+		if(comprobarLimites((x + num) * dim, y * dim + 1, cv, dim))
 		{
-			fichaClick.destinos[0] = new Posicion((x + num), y);
+			//la casilla es valida, ahora vamos a ver si se salta alguna por el camino
+			for(let i=1; i <= num; i++)
+			{
+				noSalta = fichaClick.colisionaFichas(x + i, y);
+				if(!noSalta)
+					break;
+			}
+			if(noSalta)
+				fichaClick.destinos[0] = new Posicion((x + num), y);
+			else
+				fichaClick.destinos[0] = new Posicion(-1, -1);
 		}
 		else
 		{
 			fichaClick.destinos[0] = new Posicion(-1, -1);
 		}
 		//casilla a la izquierda
-		if(comprobarLimites((x - num) * dim + 2, y * dim + 1, cv, dim) && fichaClick.colisionaFichas(x - num, y))
+		if(comprobarLimites((x - num) * dim + 2, y * dim + 1, cv, dim))
 		{
-			fichaClick.destinos[1] = new Posicion((x - num), y);
+			//la casilla es valida, ahora vamos a ver si se salta alguna por el camino
+			for(let i=1; i <= num; i++)
+			{
+				noSalta = fichaClick.colisionaFichas(x - i, y);
+				if(!noSalta)
+					break;
+			}
+			if(noSalta)
+				fichaClick.destinos[1] = new Posicion((x - num), y);
+			else
+				fichaClick.destinos[1] = new Posicion(-1, -1);
 		}
 		else
 		{
 			fichaClick.destinos[1] = new Posicion(-1, -1);
 		}
 		//casilla arriba
-		if(comprobarLimites(x * dim, (y - num)* dim + 2, cv, dim) && fichaClick.colisionaFichas(x, y - num))
+		if(comprobarLimites(x * dim, (y - num)* dim + 2, cv, dim))
 		{
-			fichaClick.destinos[2] = new Posicion(x , (y - num));
+			//la casilla es valida, ahora vamos a ver si se salta alguna por el camino
+			for(let i=1; i <= num; i++)
+			{
+				noSalta = fichaClick.colisionaFichas(x, y - i);
+				if(!noSalta)
+					break;
+			}
+			if(noSalta)
+				fichaClick.destinos[2] = new Posicion(x, (y - num));
+			else
+				fichaClick.destinos[2] = new Posicion(-1, -1);
 		}
 		else
 		{
 			fichaClick.destinos[2] = new Posicion(-1, -1);
 		}
 		//casilla abajo
-		if(comprobarLimites(x * dim, (y + num)* dim, cv, dim) && fichaClick.colisionaFichas(x, y + num))
+		if(comprobarLimites(x * dim, (y + num)* dim, cv, dim))
 		{
-			fichaClick.destinos[3] = new Posicion(x , (y + num));
+			//la casilla es valida, ahora vamos a ver si se salta alguna por el camino
+			for(let i=1; i <= num; i++)
+			{
+				noSalta = fichaClick.colisionaFichas(x, y + i);
+				if(!noSalta)
+					break;
+			}
+			if(noSalta)
+				fichaClick.destinos[3] = new Posicion(x, y + num);
+			else
+				fichaClick.destinos[3] = new Posicion(-1, -1);
 		}
 		else
 		{
 			fichaClick.destinos[3] = new Posicion(-1, -1);
 		}
 		//casilla diagonal superior derecha
-		if(comprobarLimites((x + num) * dim + 2, (y - num)* dim + 2, cv, dim) && fichaClick.colisionaFichas(x + num, y - num))
+		if(comprobarLimites((x + num) * dim + 2, (y - num)* dim + 2, cv, dim))
 		{
-			fichaClick.destinos[4] = new Posicion((x + num) , (y - num));
+			//la casilla es valida, ahora vamos a ver si se salta alguna por el camino
+			for(let i=1; i <= num; i++)
+			{
+				noSalta = fichaClick.colisionaFichas(x + i, y - i);
+				if(!noSalta)
+					break;
+			}
+			if(noSalta)
+				fichaClick.destinos[4] = new Posicion(x + num, y - num);
+			else
+				fichaClick.destinos[4] = new Posicion(-1, -1);
 		}
 		else
 		{
 			fichaClick.destinos[4] = new Posicion(-1, -1);
 		}
 		//casilla diagonal superior izquierda
-		if(comprobarLimites((x - num) * dim + 2, (y - num)* dim + 2, cv, dim) && fichaClick.colisionaFichas(x - num, y - num))
+		if(comprobarLimites((x - num) * dim + 2, (y - num)* dim + 2, cv, dim))
 		{
-			fichaClick.destinos[5] = new Posicion((x - num) , (y - num));
+			//la casilla es valida, ahora vamos a ver si se salta alguna por el camino
+			for(let i=1; i <= num; i++)
+			{
+				noSalta = fichaClick.colisionaFichas(x - i, y - i);
+				if(!noSalta)
+					break;
+			}
+			if(noSalta)
+				fichaClick.destinos[5] = new Posicion(x - num, y - num);
+			else
+				fichaClick.destinos[5] = new Posicion(-1, -1);
 		}
 		else
 		{
 			fichaClick.destinos[5] = new Posicion(-1, -1);
 		}
 		//casilla diagonal inferior derecha
-		if(comprobarLimites((x + num) * dim + 2, (y + num)* dim + 2, cv, dim) && fichaClick.colisionaFichas(x + num, y + num))
+		if(comprobarLimites((x + num) * dim + 2, (y + num)* dim + 2, cv, dim))
 		{
-			fichaClick.destinos[6] = new Posicion((x + num) , (y + num));
+			//la casilla es valida, ahora vamos a ver si se salta alguna por el camino
+			for(let i=1; i <= num; i++)
+			{
+				noSalta = fichaClick.colisionaFichas(x + i, y + i);
+				if(!noSalta)
+					break;
+			}
+			if(noSalta)
+				fichaClick.destinos[6] = new Posicion(x + num, y + num);
+			else
+				fichaClick.destinos[6] = new Posicion(-1, -1);
 		}
 		else
 		{
 			fichaClick.destinos[6] = new Posicion(-1, -1);
 		}
 		//casilla diagonal inferior izquierda
-		if(comprobarLimites((x - num) * dim + 2, (y + num)* dim + 2, cv, dim) && fichaClick.colisionaFichas(x - num, y + num))
+		if(comprobarLimites((x - num) * dim + 2, (y + num)* dim + 2, cv, dim))
 		{
-			fichaClick.destinos[7] = new Posicion((x - num) , (y + num));
+			//la casilla es valida, ahora vamos a ver si se salta alguna por el camino
+			for(let i=1; i <= num; i++)
+			{
+				noSalta = fichaClick.colisionaFichas(x - i, y + i);
+				if(!noSalta)
+					break;
+			}
+			if(noSalta)
+				fichaClick.destinos[7] = new Posicion(x - num, y + num);
+			else
+				fichaClick.destinos[7] = new Posicion(-1, -1);
 		}
 		else
 		{
@@ -611,7 +692,6 @@ function aleatorio(button)
 /* ----------------------------------------------- CANVAS ----------------------------------------------- */
 function dibujarCuadricula()
 {
-	// console.log('Cuadricula');
 	let cv = document.getElementById('campo'),
 		ctx = cv.getContext('2d'),
 		dim = cv.width/20;
@@ -871,6 +951,7 @@ function mouse_click(e)
 					seleccionada = true;
 					posFi = j;
 					ficha = fichasA[j];
+					break;
 				}
 			}
 		}
@@ -963,87 +1044,143 @@ function mouse_click(e)
 
 function mouse_move(e)
 {
-	//devuelve la posicion X e Y del raton delntro del evento
-	if(e !== 'undefined')
-	{
-		let cv      = e.target,
-			 x       = e.offsetX,
-			 y       = e.offsetY
-			 dim     = cv.width / 20,
-			 fila    = Math.floor(y / dim),
-			 columna = Math.floor(x / dim),
-			 ctx = cv.getContext('2d');
+	//devuelve la posicion X e Y del raton dentro del evento
+	let cv      = e.target,
+		 x       = e.offsetX,
+		 y       = e.offsetY
+		 dim     = cv.width / 20,
+		 fila    = Math.floor(y / dim),
+		 columna = Math.floor(x / dim),
+		 seleccionada = false,
+		 ficha = 'undefined',
+		 fichaEquipo ='undefined',
+		 ctx = cv.getContext('2d');
 
-		if(!comprobarLimites(e, dim))
+	//solo podra moverse mientras este colocando
+	if(cv.getAttribute('data-down'))
+	{
+		//recuperamos los atributos del canvas
+		let fichaEquipo = cv.getAttribute('ficha-equipo'),
+			posArray = cv.getAttribute('pos-array');
+
+		//na vez que los tenemos, los borramos
+
+		if(fichaEquipo == 'A')
+		{
+			ficha = fichasA[posArray];
+			ficha.seleccionada = true;
+			seleccionada = true;
+		}
+		else
+		{
+			ficha = fichasB[posArray];
+			ficha.seleccionada = true;
+			seleccionada = true;
+		}
+		if(!comprobarLimites(x, y, e, dim))
 			return;
 
-		//console.log(`Posición: ${x} - ${y}`);//de este modo podemos interpolar variables y sustituirlas por su valor
-		//console.log('Posición' + 'x' + ' - ' + 'y');//ambos son equivalentes
-		if(cv.getAttribute('data-down'))
+	}
+	if(seleccionada)
+	{
+		//estoy arrastrando la ficha
+		if(ficha.posicion.x != columna || ficha.posicion.y != fila)
 		{
-			//estoy arrastrando la ficha
-			if(ficha.columna != columna || ficha.fila != fila)
+			//si es del equipo A, parte izquierda del campo
+			if(fichaEquipo == 'A')
 			{
-				ficha.columna = columna;
-				ficha.fila = fila;
-				dibujarCuadricula();
-
-				//destacar casilla de la ficha
-				ctx.fillStyle = '#C8E6C9';
-				ctx.lineWidth = 3;
-				ficha.fila = fila;
-				ficha.columna = columna;
-				ctx.fillRect(ficha.columna*dim, ficha.fila*dim, dim, dim);
-				ficha.seleccionada = false;
+				//si no esta dentro de su campo
+				if(x < (1 * dim) || x > 10 * dim - 1 || y < 1 || y > cv.height-1)
+					return false;
+				//si esta dentro de su campo
+				else
+				{
+					for(let i=0; i < fichasA.length; i++)
+					{
+						filA = fichasA[i].posicion.y;
+						colA = fichasA[i].posicion.x;
+						if(filF == filA && colF == colA)
+							return false;
+					}
+				}
 			}
+			//si son del equipo B, parte derecha del campo
+			else if(fichaEquipo == 'B')
+			{
+				//si no estan en su campo
+				if(x < (10 * dim) - 1 || x > cv.width - 1 * dim - 1 || y < 1 || y > cv.height-1)
+					return false;
+				//si esta dentro de su campo
+				else
+				{
+					for(let j=0; j < fichasB.length; j++)
+					{
+						filB = fichasB[j].posicion.y;
+						colB = fichasB[j].posicion.x;
+						if(filF == filB && colF == colB)
+							return false;
+					}
+				}
+			}
+			ficha.posicion.x = columna;
+			ficha.posicion.y = fila;
+			dibujarCuadricula();
+			//destacar casilla de la ficha
+			ctx.fillStyle = '#C8E6C9';
+			ctx.lineWidth = 3;
+			ctx.fillRect(ficha.posicion.x * dim, ficha.posicion.y * dim, dim, dim);
+
+			dibujarFichas(cv);
 		}
 	}
 }
 
 function mouse_down(e)
 {
-	if(e !== 'undefined')
+	let cv     = e.target,
+		x		  = e.offsetX,
+		y 		  = e.offsetY,
+		dim 	  = cv.width/20,
+		fila    = Math.floor(y/dim),
+		columna = Math.floor(x/dim);
+
+	//comprobamos si hemos seleccionado alguna ficha
+	for (let i = 0; i < fichasA.length; i++)
 	{
-		let cv     = e.target,
-			x		  = e.offsetX,
-			y 		  = e.offsetY,
-			dim 	  = cv.width/20,
-			fila    = Math.floor(y/dim),
-			columna = Math.floor(x/dim);
-
-		if (marcador.turno == 'A')
+		if (fichasA[i].posicion.x == columna && fichasA[i].posicion.y == fila)
 		{
-			for (let i = 0; i < fichasA.length; i++)
-			{
-				if (fichasA[i].posicion.x == columna && fichasA[i].posicion.y == fila)
-					cv.setAttribute('data-down', 'true');
-			}
+			cv.setAttribute('data-down', 'true');
+			cv.setAttribute('ficha-equipo', 'A');
+			cv.setAttribute('pos-array', i);
+			break;
 		}
+	}
 
-		else
+	for (let i = 0; i < fichasB.length; i++)
+	{
+		if (fichasB[i].posicion.x == columna && fichasB[i].posicion.y == fila)
 		{
-			for (let i = 0; i < fichasB.length; i++)
-			{
-				if (fichasB[i].posicion.x == columna && fichasB[i].posicion.y == fila)
-					cv.setAttribute('data-down', 'true');
-			}
+			cv.setAttribute('data-down', 'true');
+			cv.setAttribute('ficha-equipo', 'B');
+			cv.setAttribute('pos-array', i);
+			break;
 		}
 	}
 }
 
 function mouse_up(e)
 {
-	if(e !== 'undefined')
-	{
-		let cv     = e.target,
-			x		  = e.offsetX,
-			y 		  = e.offsetY,
-			dim 	  = cv.width/20,
-			fila    = Math.floor(y/dim),
-			columna = Math.floor(x/dim);
 
-		cv.removeAttribute('data-down');
-	}
+	let cv     = e.target,
+		x		  = e.offsetX,
+		y 		  = e.offsetY,
+		dim 	  = cv.width/20,
+		fila    = Math.floor(y/dim),
+		columna = Math.floor(x/dim);
+
+	cv.removeAttribute('data-down');
+	cv.removeAttribute('ficha-equipo');
+	cv.removeAttribute('pos-array');
 }
 
 
